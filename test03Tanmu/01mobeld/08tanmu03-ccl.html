@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="ccl/style.css" />
+		<script src="ccl/CommentCoreLibrary.js"></script>
+		<style>
+			
+			html,body{
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+			}
+			body{
+				overflow-y:scroll;
+			}
+			.container{
+			height: 90%;
+			}
+			#abpVideo{
+			width: 100%;
+			height: 100%;
+			overflow: hidden;
+			}
+			.controls{
+				text-align: center;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="m20 abp" id="player">
+		<video id="abpVideo" poster="http://content.bitsontherun.com/thumbs/bkaovAYt-720.jpg" controls="none">
+			<source src="video/m2.mp4" type="video/mp4">
+			<source src="http://content.bitsontherun.com/videos/bkaovAYt-27m5HpIu.webm" type="video/webm">
+			<p class="warning">Your browser does not support HTML5 video.</p>
+		</video>	
+		<div id="commentCanvas" class="container"></div>
+		<div class="controls">
+		<form action="">
+			<p>选择颜色:<select name="" id="chose">
+						<option value="0xff0000">红色</option>
+						<option value="0x7fff00">绿色</option>
+						<option value="0xffff56">黄色</option>
+			</select>
+			输入内容:<input type="" name="main" id="main" value="" /> <button id="send">发送</button>
+			</p>
+		</form>
+		</div>
+			
+	</div>
+	</body>
+</html>
+<script>
+	
+	window.addEventListener('load', function () {
+    // 在窗体载入完毕后再绑定
+    function $(id){
+    	return document.getElementById(id);
+    }
+    var CM = new CommentManager($('commentCanvas'));
+    CM.init();
+    // 先启用弹幕播放（之后可以停止）
+    CM.start();
+    // 开放 CM 对象到全局这样就可以在 console 终端里操控
+    window.CM = CM;
+    //创建弹幕列表对象
+	var list={
+	//这些属性都可以在官网文档找到答案 这里就不详细说明了
+	"dur": 10000,
+	"size": 25,
+	"stime": 0,
+	"mode": 1,
+}
+ 
+    $("send").addEventListener("click",function(event){
+    	//text属性为弹幕文字
+    	list.text=$("main").value
+    	//color为弹幕颜色同时转化为10进制
+    	list.color=(parseInt(($("chose").value)));
+    	//这条就是发送弹幕功能了
+    	CM.send(list);
+    	
+    	event.stopPropagation();
+    	event.preventDefault();
+    })
+    
+});
+	
+</script>

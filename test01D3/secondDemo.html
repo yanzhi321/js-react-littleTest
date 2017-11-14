@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/d3.min.js"></script>
+</head>
+<body>
+    <svg width="300" height="300">
+        <circle cx="40" cy="30" r='10'></circle>
+        <circle cx="40" cy="60" r='10'></circle>
+        <circle cx="40" cy="90" r='10'></circle>
+    </svg>
+    <div class="box"></div>
+</body>
+</html>
+<script>
+
+   /* var circle = d3.selectAll('circle');
+  circle.style('fill','purple');
+  circle.attr('r',30);
+  //通过匿名函数改变cy的值
+  circle.attr('cy',function(){
+      return Math.random()*720;
+  })*/
+
+   //绑定数据传参d,
+  /* circle.data([32,57,112]);
+   circle.attr('r',function(d){
+   	return Math.sqrt(d);//返回平方根
+   })*/
+   
+   //selectAll + data + enter + append方法被称为顺序
+   var svg = d3.select('svg');
+   /*var circle = svg.selectAll('circle').data([33,66,99,100]);
+   var circleEnter = circle.enter().append('circle');
+   //利用绑定的数据来计算属性和值,d是绑定的数据data，i是索引，来顺序定位顺序
+   circleEnter.attr("cy",60);
+   circleEnter.attr('cx',function(d,i){
+   	return  i*100 +30;
+   })
+   circle.attr('r',function(d){
+   	return Math.sqrt(d);
+   })*/
+   
+   //selectAll + data + enter + append一起用,生成的新圆
+ 	var circle = svg.selectAll('circle')
+    .data([33,66,99],function(d){
+    	return d;
+    })
+  circle.enter().append("circle")
+    .attr("cx", 60)
+    .attr("cy", function(d, i) { return i * 30 + 30; })
+    .attr("r", function(d) { return Math.sqrt(d); });
+   	circle.exit().remove();
+   	
+   	//如果没有该元素则创建，.text是文本；
+   	d3.select('body').selectAll('div')
+   	.data([4,8,9,10,12,30])
+   	.enter().append('div')
+   	.text(function(d){
+   		return d
+   	})
+   	//添加属性
+   	d3.selectAll('div').attr('index',function(d,i){
+   		return i;
+   	}).style('background',function(){
+   		return 'red'
+   	})
+   	
+   	//宽高加单位
+   	d3.select('.box').style('background','pink').style('width','200px').style('height','200px')
+   	//使用函数来实现style样式的改变
+   	function styleMore(selection){
+   		selection
+   		.style('color','#fff')
+   		.style('font-size','30px')
+   	}
+   	//调用函数，另一种call方法调用
+   	//styleMore(d3.selectAll('div'));
+   	d3.selectAll('div').call(styleMore)
+   	
+   	//d3.selection用于设置复选框的checked属性
+   	d3.selection.prototype.checked = function(value){
+   		return arguments.length < 1 
+   			? this.property('checked')
+   			: this.property('checked',value);
+   		
+   	}
+   	
+   	//d3的transition过渡
+ 	d3.select('.box')
+ 		.transition()
+ 			.style('position','absolute')
+ 			.style('left','500px')
+ 		.transition()
+ 			.style('background','purple')
+ 		.transition()
+ 			.delay(1000)
+ 			.style('width','500px')
+ 		.transition()
+ 			.style('background','transparent')
+ 		
+ 	//select + data + enter + append顺序一起用,有该元素则不生成，若无则生成
+ 	d3.select('body').selectAll('p')
+ 		.data([11,22,33,44,55])
+ 		.enter().append('p')
+ 		.text(function(d,i){
+ 			return i*10
+ 		})
+ 		
+  	//d3选中所有的圆的transition过渡
+  	/*d3.selectAll('circle')
+  		.transition()
+  			.style('fill','#eee')
+  		.transition()
+  			.style('fill','#666')
+  		.transition()
+  			.delay(300)
+  			.style('fill','red')*/
+  	//
+  	d3.selectAll("circle").transition()
+    .delay(function(d, i) { return i * 50; })
+    .on("start", function repeat() {
+        d3.active(this)
+            .style("fill", "red")
+          .transition()
+            .style("fill", "green")
+          .transition()
+            .style("fill", "blue")
+          .transition()
+            .on("start", repeat);
+      });
+      
+      //运用一个函数无限循环一个动画.on
+      d3.selectAll('p').transition()
+      .delay(function(d,i){
+      	console.log(i);
+      	return i*50
+      })
+      .on('start',function repeat(){
+      	d3.active(this)
+      		.style('color','red')
+      	.transition()
+      		.style('color','green')
+      	.transition()
+      		.style('color','blue')
+      	.transition()
+      		.on('start',repeat)
+      })
+      
+      
+   
+      
+  		
+</script>

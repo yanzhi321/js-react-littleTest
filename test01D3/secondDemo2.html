@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/d3.min.js"></script>
+	</head>
+	<body>
+		<svg width="300" height="300">
+			<circle cx="20" cy="20" r="20" class="cir"></circle>
+		</svg>
+		<div class="box"></div>
+		<div id="red"></div>
+	</body>
+</html>
+<script>
+	
+	var svg  = d3.select('svg');
+	//selectAll + data + enter + append;
+	svg.selectAll('circle')
+		.data([11,22,33,44,55])
+		.enter().append('circle')
+		.attr('cx',function(d){
+			return d*5;
+		})
+		.attr('cy',50)
+		.attr('r',function(d,i){
+			return i+10
+		})
+		
+		
+	//transition过渡函数,循环
+	svg.selectAll('circle').transition()
+		.delay(function(d,i){
+			return i*30
+		})
+		.on('start',function repeat(){
+			d3.active(this)
+				.style('fill','red')
+			.transition()
+				.style('fill','blue')
+			.transition()
+				.style('fill','green')
+			.transition()
+				.on('start',repeat)
+		})
+	
+	svg.style('background','#ccc');
+	
+	//给添加的div随机颜色
+	d3.select('body').selectAll('div').data([0,1,2,3,4])
+	.enter().append('div')
+	.style('width','100px')
+	.style('height','100px')
+	.style("background", function() {
+    		return "hsl(" + Math.random() * 360 + ",100%,50%)";
+	});
+	
+	//填充
+	d3.select('body').select('.box')
+	
+	
+	//D3.js是一个基于数据操作文档的JavaScript库。D3可以帮助您使用HTML，
+	//SVG和CSS将数据带入生活。D3对Web标准的强调为您提供了现代浏览器的全部功能，无需将自己与专有框架相结合，
+	//将强大的可视化组件和数据驱动的DOM操作方法相结合
+	
+	
+	
+</script>

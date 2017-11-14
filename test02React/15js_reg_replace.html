@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="jq/jquery.min.js"></script>
+		<style>
+			
+			.out{
+				width:100px;
+				height:30px;
+				border:1px solid #ccc;
+			}
+			.result{
+				width:100px;
+				height:60px;
+				border:1px solid #00BCD4
+			}
+			.result img{
+				width:99px;
+				height:59px;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<input type="text" class="beg" placeholder="输入傻|痴|呆"/>
+		<input type="text" class="end" placeholder="end" />
+		<div class="out" value="out"></div>
+		
+		<input type="text" class="start" placeholder="输入美|帅" />
+		<div class='result' >result</div>
+		
+		
+		<input type="checkbox" checked="checked" name="ch"/>
+		
+	</body>
+</html>
+<script>
+	
+	$(function(){
+		
+		//input输入框绑定键盘事件
+		$('.beg').keyup(function(){
+			
+			$('.out').html($(this).val())
+			_filter2($('.out'));			
+			
+			$('.end').val($(this).val());
+			_filter_method($('.end'))
+			
+			//_filter_method($(this))
+			
+		})
+		
+		$('.end').keyup(function(){
+			$('.out').html($(this).val());
+			_filter2($('.out'))
+			
+			$('.beg').val($(this).val());
+			_filter_method($('.end'));
+		})
+		
+		var keywords = ['傻','痴','呆']
+		//封装输出框为input框时
+		function _filter_method(obj){  
+	    //获取文本输入框中的内容  
+	    var value = $(obj).val();  
+	    //遍历敏感词数组  
+	    for(var i=0;i<keywords.length;i++){  
+	        //全局替换  
+	        var reg = new RegExp(keywords[i],"g");  
+	        //判断内容中是否包括敏感词  
+	        if(value.indexOf(keywords[i])!=-1){  
+	            var result = value.replace(reg,"*");  
+	            value = result;  
+	            $(obj).val(result);  
+	        }  
+	    }  
+	}  
+	
+	//输出框为div等时
+	function _filter2(obj){
+		var html = $(obj).html();
+		//遍历敏感词
+		for(var i=0; i<keywords.length; i++){
+			//全局替换
+			var reg = new RegExp(keywords[i],'g');
+			//判断内容中是否有敏感词
+			if(html.indexOf(keywords[i]) != -1){
+				var result = html.replace(reg,'*');
+				html = result;
+				$(obj).html(result);
+			}
+		}
+	}
+	
+	//试试大小写字母转换
+	var word = ['a','b','c'];
+	var str = '';
+	for(var i=0; i<word.length; i++){
+		str += word[i].toUpperCase()
+	}
+	console.log(str.split(''))
+	
+	//正则匹配首字母
+	var str="xi nAn shi you xUe yuan china people"   
+	alert(str.replace(/\s[a-z]/g,function($1){return $1.toLocaleUpperCase()}).replace(/^[a-z]/,function($1){return $1.toLocaleUpperCase()}))   
+	//正则匹配替换小写字母 
+	var strr = "adf1231243dfsdf";
+	var strr2 = '';
+	for(var i=0; i<strr.split(',').length; i++){
+		var strr2  = strr.split(',')[i].replace(/[a-z]/g,function(word){
+			return word.split(',')[i].toLocaleUpperCase()
+		});
+	}
+	console.log(strr2);
+	
+	
+	//w3c例子替换首字母大写
+	var name = 'aaa bbb ccc';
+	var uw=name.replace(/\b\w+\b/g, function(word){
+	  return word.substring(0,1).toUpperCase()+word.substring(1);}
+	  );
+
+	//替换例子
+	function filter1(){
+	        var filter1="蠢,蛤";
+	        var filter2=["笑|images/cursor.png","哭|k_1.jpg"];
+	        var txt=document.getElementById("text").value;
+	        var b;
+	        for(var i=0;i<filter1.split(",").length;i++)
+	        {
+	            txt=txt.replace(eval("/"+filter1.split(",")[i]+"/g"),"*");
+	        }
+	        for (var j=0;j<filter2.length;j++)
+	        {
+	            txt=txt.replace(eval("/"+filter2[j].split("|")[0]+"/g"),"<img src="+filter2[j].split("|")[1]+"/>");
+	        }
+	        return txt;
+	    }
+		
+		
+		
+		
+		//字母大小写图片正则替换
+		function filter3(){
+			
+			var filters = ['帅|images/cursor.png','美|images/www.jpg'];
+			var filters2 = ['a|A','b|B','c|C'];
+			var filters3 = ['c','d','e'];
+			
+			
+			var res = $('.start').val()
+			console.log(res);
+			 for (var j=0;j<filters.length;j++)
+	        {
+	            res=res.replace(eval("/"+filters[j].split("|")[0]+"/g"),"<img src="+filters[j].split("|")[1]+"/>");
+	        }
+	        
+	        for(var i = 0; i<filters2.length; i++){
+	        	res = res.replace(eval('/'+filters2[i].split('|')[0] + "/g"),filters2[i].split('|')[1])
+	        }
+	        
+			return res;
+		}
+		
+		$('.start').keyup(function(){
+			
+			$('.result').html(filter3()) ;
+			
+		})
+		
+		//对于遍历一个数组，用$.each()来处理，简直爽到了极点。例如：
+
+		$.each([{'name':'limeng','hover':"xfjylimeng"},{'name':'hhh','email':'yaya'}],function(i,n){
+		
+			alert('索引：'+i + ',对应值为:'+ n.name);
+		});
+
+		//参数i为遍历索引值，n为当前的遍历对象.
+		/*var dd = ['q','w','e'];
+			$.each(dd, function(){
+			alert(this.toUpperCase());
+		});*/
+		
+		//$().each,对于这个方法，在dom处理上面用的较多。如果页面有多个input标签类型为checkbox，对于这时用$().each来处理多个checkbook，例如：
+
+
+		
+		
+	})
+	
+</script>

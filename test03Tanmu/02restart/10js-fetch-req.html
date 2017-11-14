@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	 <title>React 实例</title>
+    <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+	<script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+	<script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+</head>
+<body>
+	
+	 <div id="example"></div>
+	<script type="text/babel">
+	     
+
+		
+		let Website = React.createClass({
+
+			getInitialState: function(){
+
+				return{
+					name: "阿水",
+					site: "https://github.com",
+					sex: "man",
+					sexUrl: 'https://www.baidu.com'
+				}
+			},
+			
+			render: function(){
+				
+				return(
+					<div>
+						<Name name={this.state.name} />
+						<Site site={this.state.site} />
+						<Sex sex={this.state.sex} sexUrl={this.state.sexUrl} />
+					</div>
+				)
+			
+			}
+		
+		})
+		
+		let Name = React.createClass({
+			
+			render: function(){
+				
+				return(
+					<h1>{this.props.name}</h1>
+				)
+
+			}
+
+		})
+
+		let Site = React.createClass({
+			
+			render: function(){
+				return(
+					<div>
+						<h2>this is github.com</h2>
+						<a href= {this.props.site} target="_blank">{this.props.site}</a>
+					</div>
+				)	
+			}
+		
+		})
+
+
+		let Sex = React.createClass({
+
+			render: function(){
+				return(
+					<div>
+						<p>are you kidding</p>
+						<a href={this.props.sexUrl} target="_blank" >{this.props.sex}</a>
+					</div>
+				)
+			}
+
+		})
+		
+		ReactDOM.render(
+			<Website />,
+			document.getElementById('example')
+		);
+
+    </script>
+
+
+    <script>
+    	
+		  /*var HelloMessage = React.createClass({
+	     
+	       render: function() {
+	         return (
+	     				<div>
+	     					
+	     					<h1>Hello {this.props.name}</h1>
+	     					<p>this is {this.props.message}</p>
+	     					<h2>change it </h2>
+	     
+	     				</div>
+	         )
+	       }
+	     });
+	     		
+	     ReactDOM.render(
+	       <HelloMessage name="Runoob" message="message-more" />,
+	       document.getElementById('example')
+	     );*/ 
+
+    </script>
+</body>
+</html>

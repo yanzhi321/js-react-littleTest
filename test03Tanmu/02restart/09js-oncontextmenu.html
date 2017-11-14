@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js-oncontextmenu</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		ul{
+			list-style: none;
+		}
+
+		.list{
+			width: 100px;
+			height: 120px;
+			background: purple;
+		}
+
+		.list li{
+			width: 100%;
+			height: 40px;
+			border: 1px solid pink;
+			box-sizing: border-box;
+			text-align: center;
+			line-height: 40px;
+		}
+	</style>
+</head>
+<body>
+	<div class="wrap-list">
+		<h2 onClick = "SelectText()">oncontextmenu</h2>
+		<h3 class="text-cop">复制文本</h3>
+		<textarea name="" class="text-copy">come on</textarea>
+		<ul class="list">
+			<li class="copy">copy</li>
+			<li class="paste">paste</li>
+			<li class="cut">cut</li>
+		</ul>
+
+		<input type="text" name="">
+	</div>
+	
+	
+	<script>
+		
+      onload = function(){
+
+        let listNode = document.getElementsByClassName('list')[0]
+        let liArr = document.querySelectorAll('li')
+        let copy  = document.querySelector('.copy')
+        let paste = document.querySelector('.paste')
+        let cut = document.querySelector('.cut')
+
+        console.log(window.execCommand)
+        console.log(document.execCommand)
+
+        document.oncontextmenu = function(){
+
+           return false;
+
+        }
+
+        //stop the default right menu
+        document.onmousedown = function(evt){
+        	let e = evt || window.event
+        	if(e.button == 2){
+        		listNode.style.display = 'block'
+        		listNode.style.position = 'absolute'
+        		listNode.style.left = e.clientX + 'px'
+        		listNode.style.top = e.clientY + 'px'
+
+        	}else if(e.button == 0){
+        		listNode.style.display = 'none'
+        	}
+
+        }
+
+        //stopPropagation
+        for(let i = 0; i<liArr.length; i++){
+        	liArr[i].onmousedown = function(evt){
+        		let e = evt || window.event;
+        		console.log(e)
+        		e.cancelBubble = true || e.stopPropagation()
+        		liArr[i].style.backgroundColor = 'blue'
+        	}
+
+        	liArr[i].onmouseenter = function(evt){
+        		liArr[i].style.backgroundColor = '#eee'
+        		liArr[i].style.cursor = 'pointer'
+        	}
+
+        	liArr[i].onmouseleave = function(evt){
+        		liArr[i].style.backgroundColor = 'purple'
+        	}
+        }
+
+
+        //text copy
+        // https://www.cnblogs.com/tylerdonet/p/4533782.html
+        // http://blog.csdn.net/woshinia/article/details/18664903 
+        // document.execCommand()用法
+        // https://developer.mozilla.org/zh-CN/docs/Web/API/Document/execCommand
+        function textCopy(){
+       		let textC = document.getElementsByClassName('text-copy')[0]
+       		textC.select();
+       		//textC.style.background = '#ccc'
+
+       		document.execCommand('copy', 'false', null)
+
+       		//alert('copied success')
+        }
+
+        copy.onclick = function(){
+        	document.execCommand('paste', 'false', null)
+        }
+
+        //双击选中全部
+        document.ondblclick = function(){
+        	document.execCommand('selectAll')
+        }
+
+
+        //paste
+        function textPaste(){
+        	let textP = document.getElementsByClassName('.text-pas')
+        }
+        paste.onclick = function(){
+        	textCopy()
+        }
+
+        //SelectText
+        console.log(window.getSelection)
+        console.log(window.select)
+		function SelectText(){
+
+			try{
+				let selecter = window.getSelection();
+
+				if(selecter != null && selector.trim() != ""){
+					alert(selector)
+				}
+
+
+			}catch(err){
+						let selecter = document.selection.createRange()
+						let s = selecter.text;
+
+						if(s != null  && s.trim() != ""){
+							alert(s)
+						}
+				}
+
+				String.prototype.trim = function(){
+					return this.replace(/(^\s*)|(\s*$)/g,"")
+				}
+			}
+
+      }
+
+	</script>
+</body>
+</html>

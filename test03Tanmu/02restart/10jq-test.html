@@ -1,0 +1,86 @@
+<!DOCTYPE HTML> 
+<html>
+<head>
+<title>中国烟草</title>
+<meta charset="utf-8">
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1.0'/>
+<script src="js/jquery.min.js"></script>
+
+<style>
+/*poem_con*/
+.poem_body{
+    background:url(images/peom/poem-bg.png) no-repeat bottom;
+}
+.poem_con{
+	padding-top:30px;
+	color:#525341;
+	font:14px "微软雅黑";
+	text-align:center;
+}
+.poem_con span{
+    display:block;
+	color:#525341;
+	line-height:38px;
+	text-shadow:none;
+	transition:color 1s ease 0s;
+	transition:text-shadow 1s ease 0s;
+}
+.poem_con span.focus{
+    color:#9e2e2e;
+	text-shadow:1px 1px 3px #611b1b;
+}
+.poem_con h1{
+    background:url(images/peom/poemH2.png) no-repeat center;
+	display:block;
+	height:58px;
+	font-size:22px;
+	line-height:22px;
+	text-shadow:0 1px 2px #38392c;
+}
+</style>
+<script type="text/javascript">
+    $(function(){
+	    var $window = $(window);
+		
+		//诗动画
+		var poemStr = '',
+			num = 0,
+			poemCon = $('#poemCon');
+		$.ajax({
+			url: 'txt/poem.txt',
+			dataType: 'text',
+			success: function(data) {
+				poemAnimate(data);
+			}
+		});
+		function poemAnimate(data){
+			var arr = data.split('\n');
+			$('<h1>'+arr[0]+'</h1>').appendTo(poemCon);
+			arr.shift();
+			$.each(arr, function(i){
+				poemStr = poemStr + '<span>'+arr[i]+'</span>'
+			});
+			$(poemStr).appendTo(poemCon);
+			poemCon.children('span').hide();
+			poemCon.css('min-height', $window.height());
+			setInterval(spanShow, 2000);
+			function spanShow(){
+				var eleSPan = poemCon.children('span').eq(num);
+				eleSPan.height(0);
+				poemCon.children('span').removeClass('focus');
+				eleSPan.addClass('focus');
+				eleSPan.fadeIn(1000).animate({'height' : '38px'}, {duration: 1000, queue: false});
+				var et = eleSPan.offset().top;
+				if(et >= parseInt($window.height())){
+					$("html,body").animate({scrollTop : et},1000);
+				}
+				num ++;
+			}
+		};
+	});
+</script>
+</head>
+<body class="poem_body">
+	<div class="poem_con" id="poemCon"></div>
+</body>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="jq/jquery.min.js"></script>
+		<style>
+			.box {
+				width: 200px;
+				height: 200px;
+				border: 1px solid #ccc;
+				background: pink;
+				margin: 50px;
+				position: relative;
+			}
+			
+			.circle {
+				width: 30px;
+				height: 30px;
+				border-radius: 50%;
+				background: #AFEEEE;
+				position: absolute;
+				top: 0;
+				left: 0;
+				animation: go 3s infinite linear;
+			}
+			
+			.squer {
+				width: 500px;
+				height: 50px;
+				border: 1px solid #ADD8E6;
+				margin: 50px;
+				position: relative;
+			}
+			
+			.squer .inset {
+				width: 40px;
+				height: 40px;
+				position: absolute;
+				background: purple;
+				margin: 5px 0;
+			}
+			
+			div {
+				position: relative;
+				line-height: 30px;
+			}
+			
+			.radio{
+				width:20px;
+				height:20px;
+				box-shadow: 0 0 10px #666 inset;
+				position: absolute;
+				border-radius:50%;
+			}
+			/*.inner{
+				width:10px;
+				height:10px;
+				background:red;
+				border-radius:50%;
+				position:absolute;
+				top:0;
+				left:0;
+				bottom:0;
+				right:0;
+				margin:auto;
+			}*/
+			.rad::after{
+				content:'';
+				width:10px;
+				height:10px;
+				background:purple;
+				border-radius:50%;
+				position:absolute;
+				top:0;
+				left:0;
+				bottom:0;
+				right:0;
+				margin:auto;
+			}
+			
+			.radd{
+				width:30px;
+				height:30px;
+				
+			}
+			
+			@keyframes go {
+				0% {
+					top: 0;
+					left: 0;
+				}
+				25% {
+					top: 0;
+					left: 170px;
+				}
+				50% {
+					top: 170px;
+					left: 170px;
+				}
+				75% {
+					top: 170px;
+					left: 0;
+				}
+				100% {
+					top: 0;
+					left: 0;
+				}
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="box">
+
+			<div class="circle"></div>
+
+		</div>
+
+		<input type="button" class="btn" value="click" />
+
+		<div class="squer">
+
+			<div class="inset"></div>
+
+		</div>
+
+		<div class="horse">
+
+			<!--<ul class="list">
+				<li>1</li>
+				<li>2</li>
+				<li>3</li>
+				<li>4</li>
+				<li>5</li>
+			</ul>-->
+
+			<div class="radio">
+				<div class="inner"></div>
+			</div>
+			<br />
+			<br />
+			<input type="radio" class="radd"/>
+		</div>
+
+	</body>
+
+</html>
+<script>
+	/*var box = document.getElementsByClassName('box')[0];
+			var btn = document.getElementsByClassName('btn');
+			var horse = document.getElementsByClassName('horse')[0]
+			var list = document.getElementsByClassName('list')[0];
+			
+			var squer = document.getElementsByClassName('squer')[0];
+			var inset = document.getElementsByClassName('inset')[0];*/
+
+	$(function() {
+
+		/*var jsons = {
+			'result':[
+				{"aid":'499',"catid"}
+			]
+		}*/
+		//来回
+		var n = 0;
+		$('.btn').click(function() {
+
+			if(n == 0) {
+
+				$('.inset').animate({
+						left: 460
+					}, 1000)
+					++n
+			} else if(n == 1) {
+				$('.inset').animate({
+					left: 0
+				}, "slow")
+				n = 0;
+			}
+
+		})
+		
+		
+		var a = 0;
+		//单选按钮
+		$('.radio').click(function(){
+			
+			if(a == 0){
+				
+				$('.radio').addClass('rad');
+				++a;
+				console.log(a);
+			}else if(a == 1){
+				$('.radio').removeClass('rad');
+				a = 0;
+				console.log(a);
+			}
+			
+		})
+		
+		
+		//一个ajax请求
+		//http://www.phonegap100.com/appapi.php?a=getPortalList&catid=20&page=1
+		
+		//随机色函数
+		function randomColor(){
+			
+			var str = '';
+			var arr = [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f'];
+			for(var i = 0; i<6; i++){
+				var n = Math.floor(Math.random()*15);
+				str += arr[n]
+			}
+			return '#' + str
+		}
+		
+		console.log(randomColor())
+		//定时器函数
+		function apply(){
+			$('.circle').css('background',randomColor())
+		}
+		//var colorTimer = setInterval(apply,100)
+		
+		//数组固定随机数
+		var arr = ["red","blue","purple","yellow"];
+		var c = 0;
+		setInterval(function(){
+			
+			if(c == arr.length){
+				c = 0;
+				return;
+			}
+			$('.circle').css('background',arr[c++])
+			
+		},1000)
+		
+			//localStorage
+			function local(){
+				var arr = [0,1,2,3]
+				if(window.localStorage){
+					localStorage.setItem("menuTitle",arr)
+				}else{
+					Cookie.write('menuTitle',arr)
+				}
+			}
+			local();
+			
+			
+		})
+	
+	
+	
+	
+	
+</script>

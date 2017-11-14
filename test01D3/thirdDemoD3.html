@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/d3.min.js"></script>
+</head>
+<body>
+    <svg width="300" heihgt="300">
+
+    </svg>
+    <div class="viz"></div>
+
+</body>
+</html>
+<script>
+
+    //selectAll + data + enter + append
+    var svg = d3.select('svg');
+
+    var arr = ['red','blue','yellow','green','cyan','purple'];
+
+    svg.selectAll('circle')
+        .data([1,2,3,4,5,6])
+        .enter().append('circle')
+        .attr('cx',function(d,i){
+            return d*40
+        })
+        .attr('cy',function(d,i){
+            return 50
+        })
+        .attr('r',function(d,i){
+            return d*3
+        })
+        .attr('fill',function(d,i){
+            return 'black'
+        })
+
+    //定义一个repeat重复的函数
+    svg.selectAll('circle').transition()
+        .delay(function(d,i){
+            return i*300
+        })
+        .on('start',function repeat(){
+            d3.active(this)
+                .transition()
+                    .attr('fill',function(){
+                        var n = Math.floor(Math.random()*6);
+                        return arr[n]
+                    })
+                .transition()
+                    .attr('fill',function(d,i){
+                        return arr[i]
+                    })
+                .transition()
+                    .on('start',repeat)
+        })
+
+
+    //i的结果
+    d3.selectAll('div')
+        .data([11,22,33,33,33])
+        .enter().append('div')
+        .style('background',function(d,i){
+            console.log(i);
+            return arr[i]
+        })
+        .style('width','50px')
+        .style('height','50px')
+        .transition()
+        .delay(100)
+        .style('background',function(d,i){
+            console.log(i);//[0,1,2,3,4]
+            return arr[i+1]
+        })
+
+        //在on这个函数里的i是第一个
+        d3.selectAll('div').transition()
+            .delay(function(d,i){
+                return i*60
+            })
+        .on('start',function repeat(){
+            d3.active(this)
+                .style('width','300px')
+                .transition()
+                    .style('border-radius',function(d,i){
+                        return i+"%"
+                    })
+                .transition()
+                    .style('background',function(d,i){
+                        console.log(d)
+                        //var num = Math.ceil(Math.random()*4)
+                        return randomColor();
+                    })
+                    .style('width','50px')
+                .transition()
+                    .on('start',repeat)
+        })
+
+        //randomColor
+        function randomColor(){
+            var numArr = [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f']
+            var str  = '';
+            for(var i = 0; i<6; i++){
+                var number = Math.ceil(Math.random()*15);
+                str += numArr[number]
+            }
+            return '#'+str;
+        }
+        console.log(randomColor());
+
+
+
+    //.viz
+    var viz = d3.select('.viz')
+        .append('svg')
+        .attr('width',100)
+        .attr('height',100)
+
+    viz.append('circle')
+        .style('stroke','grey')
+        .style('fill','whilte')
+
+    //arc的使用
+   /* var arc = d3.arc();
+
+    arc({
+        innerRadius: 0,
+        outerRadius: 100,
+        startAngle: 0,
+        endAngle: Math.PI / 2
+    });
+
+    var line = d3.line();
+    var data = [
+        {date: new Date(2007, 3, 24), value: 93.24},
+        {date: new Date(2007, 3, 25), value: 95.35},
+        {date: new Date(2007, 3, 26), value: 98.84},
+        {date: new Date(2007, 3, 27), value: 99.92},
+        {date: new Date(2007, 3, 30), value: 99.80},
+        {date: new Date(2007, 4,  1), value: 99.47},
+    ];
+
+    var line = d3.line()
+        .x(function(d) { return x(d.date); })
+        .y(function(d) { return y(d.value); });*/
+
+</script>

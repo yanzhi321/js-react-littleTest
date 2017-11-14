@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+   <script src="react/browser.min.js"></script>
+	<script src="react/react.min.js"></script>
+	<script src="react/react-dom.min.js"></script>
+</head>
+
+<body>
+
+    <div id="app"></div>
+
+    <script type="text/babel">
+
+
+        var Todolist=React.createClass({    
+
+            getInitialState(){
+
+                    return{
+
+                        value:'',
+
+                        list:[]
+                    }
+            },
+
+            inputChange(e){
+                console.log(e.target.value);  /*获取文本框的值*/
+
+
+                this.setState({
+
+                    value:e.target.value
+                })
+
+            },
+
+            addData(){
+                //获取文本框的值
+
+              
+                //拿到state 上面list的值
+               // var listData=this.state.list;
+
+
+              //  console.log(listData.push(this.state.value));
+
+               this.state.list.push(this.state.value);
+
+               this.setState({
+
+                    list:this.state.list
+                })
+               
+
+            },
+
+            deleteData(index){
+               //alert('111');
+
+               console.log(index);
+
+               this.state.list.splice(index,1);
+
+                this.setState({
+
+                    list:this.state.list
+                })
+               
+            },
+            render(){
+
+                var that=this;  
+                return(
+                    <div>
+
+                        <div className="input-text">
+
+                            <input type="text"  defaultValue={this.state.value} onChange={this.inputChange} />
+
+                            <button onClick={this.addData}>增加</button>
+                        </div>
+
+                        <ul>
+                           {
+
+                                that.state.list.map(function(value,key){
+
+                                    return <li key={key}> {value} -- <button onClick={that.deleteData.bind(that,key)}>删除</button></li>
+                                })
+                           }
+                        </ul>
+                    </div>
+                )
+            }
+        })
+     
+        ReactDOM.render(
+            <div>
+               <Todolist></Todolist>
+            </div> , 
+            document.getElementById('app') 
+
+        )
+
+    </script>
+
+</body>
+
+</html>

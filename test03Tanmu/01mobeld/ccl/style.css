@@ -1,0 +1,154 @@
+.abp{
+  position:relative;
+}
+.abp .container{
+  -webkit-transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1);
+          transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1);
+  position: absolute;
+  display: block;
+  overflow: hidden;
+  margin: 0;
+  border: 0;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 9999;
+  touch-callout: none;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+.abp .container .cmt{
+  -webkit-transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1);
+          transform: matrix3d(1,0,0,0,0,1,0,0,0,0,1,0,0,0,0,1);
+  -webkit-transform-origin: 0% 0%;
+      -ms-transform-origin: 0% 0%;
+          transform-origin: 0% 0%;
+  position: absolute;
+  margin: 0;
+  color: #fff;
+  text-decoration: none;
+  -webkit-text-size-adjust: none;
+      -ms-text-size-adjust: none;
+          text-size-adjust: none;
+  letter-spacing: 0;
+  word-break: keep-all;
+  white-space: pre;
+
+}
+.abp .container .cmt.noshadow{
+  text-shadow: none;
+}
+.abp .container .cmt.rshadow{
+  text-shadow: -1px 0 white, 0 1px white, 1px 0 white, 0 -1px white;
+}
+
+/** Aliases for Chinese named fonts because they don't work on *nix **/
+@font-face{
+  font-family: "\9ED1\4F53";
+  src:local('SimHei');
+}
+
+@font-face{
+  font-family: "\5B8B\4F53";
+  src:local('SimSun');
+}
+
+@font-face{
+  font-family: "\534E\6587\6977\4F53";
+  src:local('SimKai');
+}
+
+@font-face{
+  font-family: "\5E7C\5706";
+  src:local('YouYuan');
+}
+
+@font-face{
+  font-family: "\5FAE\8F6F\96C5\9ED1";
+  src:local('Microsoft YaHei');
+}
+
+html{
+				font-size:62.5%;
+			}
+			
+			#feng-player{
+	    		width:100%
+	    		height:500px;
+	    		position: relative;
+    		
+    		}
+    	
+	    	#commentCanvas{
+	    		padding:100px 0;
+	    		width:100%;
+	    		height:300px;
+	    		margin:0 auto;
+	    	}
+    	
+			.form-group{
+				width:100%;
+				height:30%;
+				position:absolute;
+				bottom: 10%;
+			}
+			
+			.form-control{
+				width:60%;
+				margin:3% 20%;
+				word-break: break-all; 
+			}
+			.btn{
+				width:60%;
+				margin:3% 20%;
+			}
+			
+			.file_input{
+				width:60%;
+				height:6rem;
+				border: 1px solid #ccc;
+				margin:0 auto;
+			}
+			
+			#exampleInputFile{
+				color:#ccc;
+				width:30%;
+				height:3rem;
+				position:absolute;
+				cursor: pointer;
+				opacity: 0;
+				
+			}
+		
+			
+			[contenteditable=true] {
+			    display: inline-block;
+			    width: 60%;
+			    margin:1% 20%;
+			    vertical-align: middle;
+			    min-height: (3em * line-height);/*1个input的高度*/
+			    /*这里写一个输入框应该有的样式*/
+			   border:1px solid #ccc;
+			   background:#fff;
+			   box-shadow: 0 0 1px darkgray inset;	   
+			   padding:1rem;
+			   font-size:1rem;
+			   
+			}
+			.file_up{
+				
+				width:20%;
+				height:3rem;
+				background:lavender;
+				position:absolute;
+				border-radius:0.5rem ;
+				text-align: center;
+				line-height: 3rem;
+				font-size:1rem;
+				color:purple;
+				cursor: pointer;
+			}
+			

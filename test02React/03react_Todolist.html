@@ -1,0 +1,59 @@
+<!DOCTYPE HTML>
+<html lang="ru-RU">
+<head>
+
+  <meta charset="UTF-8">
+<style type="text/css">
+
+.url{
+width:300px;
+border:1px solid olive;
+height:40px;
+padding-left:10px;
+margin-top:1px;
+line-height:40px;
+
+}
+</style>
+  <title> relay graphQL</title>
+<script src="http://cdn.bootcss.com/react/0.14.0-alpha1/react.min.js"></script>
+<script src="http://cdn.bootcss.com/react/0.14.0-alpha1/JSXTransformer.js"></script>
+<script src="http://cdn.bootcss.com/react/0.14.0-alpha1/react-with-addons.min.js"></script>
+</head>
+<body>
+
+<div id='l'></div>
+<script type="text/jsx">
+
+var UrlList = React.createClass({
+render: function() {
+return (
+        <ul>
+           {   this.props.data.map(function (url) {
+
+               return <li className="url"><b></b><a  href={url.href}>{url.text}  </a></li>
+               })
+           }
+        </ul>
+
+      );
+   }        
+    });
+
+
+var urls=[
+	{href:"http://www.youtube.com",text:'youtube'},
+	
+	{href:"http://video.sina.com.cn",text:'新浪'},
+	{href:"http://www.tutou.com",text:'土豆'},
+	{href:"http://tv.sohu.com",text:'搜狐'},
+	{href:"http://tv.leshi.com",text:'乐视'},
+	{href:"http://www.youku.com",text:'youku'},
+];
+
+React.render(<UrlList data={urls} />, document.getElementById('l'));
+
+</script>
+  
+</body>
+</html>

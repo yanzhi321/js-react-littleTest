@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<meta name="viewport" content="initial-scale=1.0,maximum-scale=1,user-scalable=no">
+		<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="ccl/style.css" />
+		<link rel="stylesheet" href="ccl/demo.css" />
+		<script src="js/jquery.min.js"></script>
+		<script src="ccl/zepto.js"></script>
+		<script src="ccl/CommentCoreLibrary.js"></script>
+		<script src="ccl/tanmu2.js"></script>
+		<style>
+			
+			html{
+				font-size:62.5%;
+			}
+			
+			#feng-player{
+	    		width:100%
+	    		height:50%;
+	    		position: relative;
+    		
+    		}
+    	
+	    	#commentCanvas{
+	    		width:100%;
+	    		height:80%;
+	    	}
+    	
+			.form-group{
+				width:100%;
+				height:30%;
+				position:absolute;
+				bottom: 10%;
+			}
+			
+			.form-control{
+				width:60%;
+				margin:3% 20%;
+				word-break: break-all; 
+			}
+			.btn{
+				width:60%;
+				margin:3% 20%;
+			}
+			
+			.file_input{
+				width:60%;
+				height:6rem;
+				border: 1px solid #ccc;
+				margin:0 auto;
+			}
+			
+			#exampleInputFile{
+				color:#ccc;
+				width:20%;
+				height:3rem;
+				position:absolute;
+				cursor: pointer;
+				opacity: 0;
+			}
+		
+			
+			[contenteditable=true] {
+			    display: inline-block;
+			    width: 60%;
+			    margin:1% 20%;
+			    vertical-align: middle;
+			    min-height: (3em * line-height);/*1个input的高度*/
+			    /*这里写一个输入框应该有的样式*/
+			   border:1px solid #ccc;
+			   background:#fff;
+			   box-shadow: 0 0 1px darkgray inset;	   
+			   padding:1rem;
+			   font-size:1rem;
+			   
+			}
+			.file_up{
+				
+				width:20%;
+				height:3rem;
+				background:lavender;
+				position:absolute;
+				border-radius:0.5rem ;
+				text-align: center;
+				line-height: 3rem;
+				font-size:1.5rem;
+				color:purple;
+				cursor: pointer;
+			}
+			
+			.em-box{
+				width:2rem;
+				height:2rem;
+				border:1px solid purple;
+			}
+			.box{
+				width:60%;
+				margin:1% 15%;
+			}
+			.list-box{
+				width:60%;
+				height:50%;
+				overflow: auto;
+				border:1px solid pink;
+				position: absolute;
+				display: none;
+			}
+			.list-box li{
+				float:left;
+				border:1px solid pink;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="container">
+			
+		</div>
+			<div class="feng-ccl-panel">
+			    <div class="abp" id="feng-player">
+			        <div id="commentCanvas" class="container"></div>
+			        	<div class="video">
+			        		
+					        <video width="100%" height="40%" controls autoplay="autoplay">
+							  <source src="video/movie.mp4"  type="video/mp4">
+							  <source src="movie.ogg"  type="video/ogg">
+							</video>
+						</div>
+	
+			    </div>
+			</div>
+		
+	  	<form action="" name="" method="" class="form-group">
+	  		
+		  	<div class="file_input">
+		  			<div class="file_up">
+		  				上传头像
+		  			</div>
+					<label for="exampleInputFile" id="exampleInputFile">File input</label>
+	    			<input type="file"  id="exampleInputFile">	
+			</div>
+		  	
+		  	<!--contenteditable-->
+		  	<div contenteditable="true" class="send_box">break-word</div>
+		  	
+		  	<!--box-->
+		  	<div class="box">
+				<div class="em-box">
+					<a href="#"><img src="img/f1.jpg"/></a>
+				</div>
+				<ul class="list-box">
+					<li><img src="js-qqface/arclist/1.gif" alt="" /></li>
+					<li><img src="js-qqface/arclist/2.gif"/></li>
+				</ul>
+			</div>
+			
+		  	<input type="text" class="form-control send_input" id="exampleInputName2" placeholder="say something">
+		  	
+		  	<button type="button" class="btn btn-default btn-lg btn-block send_btn">enter</button>
+	  	</form>
+	  	
+	</body>
+</html>
+<script src="js/jquery.min.js"></script>
+<script>
+	
+	$(function(){
+		
+		//em-box
+		var n = 1;
+		$('.em-box').click(function(){
+			if(n == 1){
+				$('.list-box').show();
+				n = 0;
+			}else if(n==0){
+				
+				$('.list-box').hide();
+				n = 1;
+			}
+		
+		})
+		
+		//on事件委托
+		$('.list-box').on('click', 'li img', function(){
+			
+			/*$('.editor').append($(this))
+			console.log($('.list-box').html())*/
+			
+			$('.send_box').append($(this).clone())
+			$('.send_input').append($(this).clone())
+			
+		})
+		
+		for(var i = 1; i<76; i++){
+			$('<li><img src="js-qqface/arclist/'+i+'.gif" /></li>').appendTo($('.list-box'))
+		}
+		
+	})
+	
+</script>

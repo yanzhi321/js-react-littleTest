@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="Content-Type" content="text/html;charset=utf-8">  
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title></title>
+		<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+		<style>
+			
+			*{
+				margin:0;
+				padding:0;
+			}
+			ul{
+				list-style: none;
+			}
+			
+			
+			
+			#container {
+			  width: calc(100% - 50px);
+			  height: calc(100% - 50px);
+			  min-height: 300px;
+			  background:#ccc;
+			  position: relative;
+			}
+			
+			#shape {
+			  position: absolute;
+			  transition: all 1s ease 0s;
+			}
+			
+			.circle {
+			  border-radius: 100%;
+			  width: 50px;
+			  height: 50px;
+			  background:pink;
+			}
+			
+			.square {
+			  width: 50px;
+			  height: 50px;
+			  background:red;
+			}
+			
+			.todo{
+				width:calc(100% - 50px);
+				height:calc(100% -30px);
+				min-height: 300px;
+				border:1px solid #E0E0E0;
+			}
+			
+			.todo-list{
+				width:100%;
+				height:100%;
+			}
+			.todo-list li{
+				width:calc(100% - 10px);
+				height:calc(80% - 10px);
+				min-height: 30px;
+				border:1px  solid #ccc;
+				margin:10px;
+			}
+			.todo-list li .del{
+				float:right;
+				min-height: 30px;
+			}
+			.todo-list li .li-text{
+				width:calc(90% - 12px);
+				min-height: 30px;
+				
+			}
+		</style>
+	</head>
+	<body>
+		
+		<div id="container">
+			<div id="shape">
+				
+			</div>
+		</div>
+		
+		<div class="todo">
+			<div class="todo-input">
+				<input type="text" placeholder="Enter data" class="txt"/>
+				<button class="add">add</button>
+				<button class="remove">remove</button>
+			</div>
+			<h3 class = "todo-count">剩余多少个</h3>
+			<ul class="todo-list">
+				<li><input type="text" class="li-text"/> <button class="del">delete</button></li>
+			</ul>
+			<input type="text" class="trys"/>
+		</div>
+		
+		<script src="js/jquery.min.js"></script>
+		<script src="deepstream.io-client-js/deepstream.min.js"></script>
+		<script>
+			
+			// Connect to deepstreamHub
+			let client = deepstream('wss://035.deepstreamhub.com?apiKey=88608cc8-5ece-419f-ad20-0b21d70c7526')
+			
+			// Login
+			client.login();
+			
+			//Listen to the record changes
+			
+			let shapeElement = document.querySelector( '#shape' );
+			let record = client.record.getRecord('dsh-demo/bouncy-ball');
+			record.subscribe(function(data) {
+			  shapeElement.style.left = data.position.x + '%';
+			  shapeElement.style.top = data.position.y + '%';
+			  shapeElement.style.backgroundColor = data.color;
+			  shapeElement.className = data.shape;
+			})
+			
+			$(function(){
+				// Connect to deepstreamHub
+				let ds = deepstream('wss://035.deepstreamhub.com?apiKey=88608cc8-5ece-419f-ad20-0b21d70c7526')
+				
+				// Login
+				ds.login();
+				
+				
+				//count
+				function count(){
+					
+					let len = $('.todo-list').children().length;
+					$('.todo-count').html(len > 0 ? 'this have--'+len+'---left' : 'this have--'+0+'---left')
+					
+				}
+				count();
+				
+				//add
+				/*$('.add').on('click',function(){
+
+					//$('<li>'+$('.txt').val() +'</li>').appendTo($('.todo-list'))
+					$('<li><input type="text" class="li-text" value="' + $('.txt').val()  + '" /> <button class="del">delete</button></li>').appendTo($('.todo-list'));
+					count();
+					
+				})*/
+				
+				//delete
+				/*$('.todo-list').on('click','li .del', function(){
+					
+					$(this).parents('li').remove()
+					count();
+				})*/
+				
+				//remove
+				$('.remove').on('click',function(){
+					$('.todo-list').children().remove();
+					count();
+				})
+				
+				//deepstream input-record
+				let myRecord = ds.record.getRecord('try/trys');
+				myRecord.set({
+					firstname:'hello',
+					secondname:'world',
+					threename:'come'
+				})
+				//txt
+				let txt = $('.txt');
+				myRecord.subscribe('firstname', function(data){
+					txt.val(data)
+
+				})
+				
+				txt.on('keyup', function(){
+					myRecord.set('firstname', txt.val())
+					console.log("success")
+					
+				})
+				
+				//li-text
+				let ano = $('.li-text');
+				//console.log(ano.val("hhhhhh"));
+				myRecord.subscribe('threename', function(data){
+					ano.val(data);
+				})
+				
+				ano.on('keyup', function(){
+					myRecord.set('threename', ano.val())
+				})
+				
+				//trys
+				let trys = $('.trys');
+				myRecord.subscribe('secondname', function(data){
+					trys.val(data);
+				})
+				trys.on('keyup', function(){
+					myRecord.set('secondname', trys.val())
+				})
+				//li - input
+				
+				// Whenever the user clicks the button
+				//add --event
+				$('.add').on('click',function(){
+					
+					ds.event.emit('test-event',  $('.txt').val())
+					
+				})
+				// Subscribe to `test-event`
+				ds.event.subscribe( 'test-event', function( eventData) {
+					var html = '<li><input type="text" class="li-text" value="' + eventData  + '" /> <button class="del">delete</button></li>';
+					$('.todo-list').append(html);
+					count();
+				})
+				
+				//delete --event
+				$('.todo-list').on('click', 'li .del', function(){
+					ds.event.emit('del-event', $(this).parents('li'))
+				})
+				//subscribe to 'del-event'
+				ds.event.subscribe( 'del-event', function(eventData) {
+					console.log(eventData)
+					eventData.remove();
+					count();
+				})
+				
+				/*$('.todo-list').map( (i, con) => {
+					console.log(con)
+					
+				})*/
+				/*$('.todo-list').on('click','li .del', function(){
+					
+					$(this).parents('li').remove()
+					count();
+				})*/
+				
+				//rpc
+			
+				
+			})
+			
+			
+			function loadData() {
+			    $.ajax({
+					url:'json/data.json',
+					success:function (res) {
+						var str_ = '';
+						for(var i = 0;i< res.length;i++) {
+							str_ += '<li>';
+							str_ += '<div class="dataName">'+res[i].name+'</div>';
+							str_ += '<div>'+res[i].describe+'</div>';
+							str_ += '<div>'+res[i].amount+'</div>';
+							str_ += '<input type="checkbox" class="checkbox">';
+							str_ += '</li>';
+						}
+						$('.liTbodyWrap').find('ul').append(str_);
+			        }
+				})
+			}
+			
+		</script>
+	</body>
+</html>

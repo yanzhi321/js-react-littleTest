@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Redux basic</title>
+    <script src="https://unpkg.com/redux@latest/dist/redux.min.js"></script>
+  </head>
+  <body>
+    <div>
+      <p><span id="colorEl">Watch my color.</span>
+         <button id="red">RED</button>
+         <button id="green">GREEN</button>
+         <button id="toggle">TOGGLE</button>
+    </div>
+    <script type="text/javascript">
+        /*var initialState = {
+            color: 'red'
+        }
+				
+				//Reducer 只是一些纯函数，它接收先前的 state 和 action，并返回新的 state。
+        function color(state, action) {
+            if(typeof state === 'undefined') {
+                return initialState
+            }
+
+            switch(action.type) {
+                case 'RED' : 
+                    return { color: 'red'}
+                case 'GREEN' : 
+                    return { color: 'green'}
+                case 'TOGGLE' :
+                    return state.color === 'red' ? {color:'green'} : {color:'red'}
+                default :
+                    return state
+            }
+        }*/
+				
+				var initialState = {
+					color: 'red'
+				}
+				
+				//Reducer 只是一些纯函数，它接收先前的state 和action, 并返回新的state.
+				function color( state, action){
+					
+					console.log(state);//状态对象{color:'red'}
+					console.log(action);//对象{type:'GREEN'}
+					if(typeof state === 'undefined'){
+						return initialState
+					}
+					
+					switch(action.type){
+						case 'RED' :
+							return { color: 'red' }
+						case 'GREEN' :
+							return { color: 'green' }
+						case 'TOGGLE' :
+							return state.color === 'red' ? {color:'green'} : {color:'red'}
+						default :
+							return state
+					}
+					
+				}
+				
+				//唯一改变state的方法就是触发一个action，action是一个普通的JavaScript对象，
+				//用来描述发生了什么。每个action对象都要有一个type属性，你可以理解为是唯一标识这个action的名字。
+        var store = Redux.createStore(color)
+        var colorEl = document.getElementById('colorEl')
+
+        function renderValue() {
+            colorEl.style.color = store.getState().color
+        }
+
+        renderValue()
+        //注册监听器
+        store.subscribe(renderValue)
+
+        document.getElementById('red').addEventListener('click', function(){
+            store.dispatch({
+                type: 'RED'
+            })
+        })
+
+        document.getElementById('green').addEventListener('click', function(){
+            store.dispatch({
+                type: 'GREEN'
+            })
+        })
+
+        document.getElementById('toggle').addEventListener ('click', function(){
+          store.dispatch({
+            type: 'TOGGLE'
+          })
+        })
+        
+        //可见整个redux流程的逻辑非常清晰，数据流是单向循环的，就像一个生产的流水线：
+        //store（存放状态） -> container（显示状态） -> reducer （处理动作）-> store，这一点对精细化分工协作很有好处。
+        var  store = Redux.createStore(color)
+        var colorEl = document.getElementById('colorEl');
+        
+        function renderValue() {
+        	colorEl.style.color = store.getState().color
+        }
+        renderValue();
+        //注册监听器
+        store.subscribe(renderValue)
+        document.getElementById('red').addEventListener('click', function(){
+        	store.dispatch({
+        		type: 'RED'
+        	})
+        })
+        
+        document.getElementById('green').addEventListener('click', function(){
+        	store.dispatch({
+        		type: 'GREEN'
+        	})
+        })
+        
+        document.getElementById('toggle').addEventListener('click', function(){
+        	store.dispatch({
+        		type: 'TOGGLE'
+        	})
+        })
+				
+				
+				
+    </script>
+  </body>
+</html>

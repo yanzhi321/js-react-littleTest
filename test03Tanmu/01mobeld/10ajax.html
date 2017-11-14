@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		
+		<title></title>
+		<style>
+			
+			[contenteditable=true] {
+			    display: inline-block;
+			    width: 60%;
+			    margin:1% 20%;
+			    vertical-align: middle;
+			    min-height: (3em * line-height);/*1个input的高度*/
+			    /*这里写一个输入框应该有的样式*/
+			   border:1px solid #ccc;
+			   background:#fff;
+			   box-shadow: 0 0 1px darkgray inset;	   
+			   padding:1rem;
+			   font-size:1rem;
+			   
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			
+			<input type="text"  class="input"/>
+			
+		</div>
+		<div contenteditable="true" class="send_box"></div>
+		
+		<form style="position:relative">
+
+		    <input type="file" style="position:absolute;opacity:0; width:50px;height:50px" >
+			<img src="img/f2.jpg" alt="" width="50" height="50"/>
+		
+		</form>
+		
+	</body>
+</html>
+<script src="js/jquery.min.js"></script>
+<script src="deepstream.io-client-js/deepstream.min.js"></script>
+<script>
+	
+	$(function(){
+		
+		
+		function getData(barragesContent){
+			
+			$.ajax({
+				type:"get",
+				url:"http://119.23.48.68/barrage",
+				async:true,
+				dataType:'json',
+				data:{
+					barragesContent:"77777"
+				},
+				success:function(data){
+					console.log(data)
+				}
+			});
+			
+		}
+		
+		var arr = [];
+		getData(arr)
+		
+		
+	})
+	
+	
+</script>

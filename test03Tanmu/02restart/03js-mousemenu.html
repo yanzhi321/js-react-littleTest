@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		
+		.menu{
+			width: 130px; /*设置为0 隐藏自定义菜单*/
+			height: 125px;
+			overflow: hidden; /*隐藏溢出的元素*/
+			box-shadow: 0 1px 1px #888,1px 0 1px #ccc;
+			position: absolute; /*自定义菜单相对与body元素进行定位*/
+			left: 50px;
+			top: 0;
+		}
+
+		.menu div{
+			width: 130px;
+			height: 25px;
+			line-height: 25px;
+			padding: 0 10px;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="menu">
+		<div>功能1</div>
+		<div>功能2</div>
+		<div>功能3</div>
+		<div>功能4</div>
+		<div>功能4</div>
+	</div>
+
+	<script>
+		
+		window.onload = function(){
+
+			/*window.oncontextmenu = function(e){
+
+				let menu = document.querySelector('.menu');
+				menu.style.left = e.clientX + 'px';
+				menu.style.top = e.clientY + 'px';
+				menu.style.width = '125px'
+				console.log(menu.style.width)
+				return false;
+			}
+			
+			//close the right mouse
+			window.onclick = function(){
+				
+				document.querySelector('.menu').style.display = 'none'
+				return
+				
+			}*/
+			
+			document.oncontextmenu = function(){
+				return false;
+			}
+			
+			let menu = document.querySelector('.menu');
+			document.onmouseup = function(evt){
+				
+				e = evt || window.event;
+				if(e.button == 2){
+					menu.style.left = e.clientX + 'px'
+					menu.style.top = e.clientY + 'px'
+					menu.style.display = 'block'
+				}else if(e.button == 0){
+					
+					menu.style.display = 'none'
+				}
+				
+			}
+
+		}
+
+	</script>
+
+</body>
+</html>

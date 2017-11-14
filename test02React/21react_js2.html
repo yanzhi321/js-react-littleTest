@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+   <script src="react/browser.min.js"></script>
+	<script src="react/react.min.js"></script>
+	<script src="react/react-dom.min.js"></script>
+</head>
+
+<body>
+
+    <div id="app"></div>
+    
+    
+    <a href="#">#就是#top</a>
+	<!--//这里表示这个链接不做跳转动作，执行onClick事件。-->
+	<a href="javascript:void(0);" onclick="alert('ok');"></a>
+	
+	<!--//Javascript中void是一个操作符，该操作符指定要计算一个表达式但是不返回值。-->
+	<A HREF="javascript:void(0)">单此处什么也不会发生</A>
+	
+	<!--下面的代码创建了一个超级链接，用户单时会提交表单-->
+	<A HREF="javascript:void(document.form.submit())">单此处提交表单</A>
+	
+	<embed src="swf/clock.swf"></embed>
+	
+</body>
+
+</html>
+
+<script>
+	
+	//embed src=url
+ 
+	//说明：embed可以用来插入各种多媒体，格式可以是 Midi、Wav、AIFF、AU、MP3等等，Netscape及新版的IE 都支持。url为音频或视频文件及其路径，可以是相对路径或绝对路径。
+	
+	//a href=#与 a href=javascript:void(0) 的区别 链接的几种办法
+	/*#包含了一个位置信息
+	默认的锚是#top 也就是网页的上端
+	而javascript:void(0)   仅仅表示一个死链接
+	这就是为什么有的时候页面很长浏览链接明明是#是
+	跳动到了页首
+	而javascript:void(0) 则不是如此
+	所以调用脚本的时候最好用void(0)
+	或者<input onclick>
+	<div onclick>等*/
+	
+	
+</script>

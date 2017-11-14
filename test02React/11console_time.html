@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+</html>
+
+<script>
+	
+	//一个函数可以作为另一个函数接收一个参数。我们可以先定义一个函数，然后传递，也可以在传递参数的地方直接定义函数。
+	//函数传递
+	function func(world){
+		console.log(world);//打印出hello
+	}
+	function result(someFunction,value){
+		someFunction(value);
+	}
+	var con = result(func,"hello")
+	console.time("first",con);
+	console.timeEnd("first",con);
+	
+	//函数催传递简写
+	function result(someFunction,value){
+		someFunction(value);
+	}
+	var con2 = result(function(world){console.log(world)},"hello");
+	console.time("second",con2);
+	console.timeEnd("second",con2);
+	
+</script>

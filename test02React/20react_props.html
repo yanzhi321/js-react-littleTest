@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+   <script src="react/browser.min.js"></script>
+	<script src="react/react.min.js"></script>
+	<script src="react/react-dom.min.js"></script>
+</head>
+
+<body>
+
+    <div id="app"></div>
+
+    <script type="text/babel">
+
+		//Dump组件
+        let DumpComponent = React.createClass({
+        	
+        	//定义了一个方法
+        	handleClick() {
+        		this.props.onClick();
+        	},
+        	//渲染
+        	render() {
+        		
+        		console.log('render dump')
+        		return(
+        			<div onClick = {this.handleClick}>
+        				I am dump
+        			</div>
+        		)
+        	}
+        })
+        
+       
+        //Smart组件
+        let SmartComponent = React.createClass({
+        	
+        	render(){
+        		let onClick = () =>{
+        			console.log('nothing happend')
+        		}
+        		return(
+        			<div>
+						<DumpComponent onClick={onClick} />
+						Clcik Count: {this.props.count}
+        			</div>
+        		)
+        	}
+        	
+        })
+        
+        let App = React.createClass({
+        	
+        	getInitialState(){
+        		return{
+        			count:0
+        		}
+        	},
+        	
+        	onAdd(){
+        		this.setState({
+        			count:this.state.count + 1
+        		})
+        	},
+        	
+        	render(){
+        		
+        		return(
+        			
+        			<div>
+        			
+        				<SmartComponent count={this.state.count} />
+        				<br />
+        				<button onClick={this.onAdd}>add</button>
+        			
+        			</div>
+        			
+        		)
+        		
+        	}
+        	
+        })
+        
+     
+        ReactDOM.render(
+            <div>
+               <App></App>
+            </div> , 
+            document.getElementById('app') 
+
+        )
+
+    </script>
+
+</body>
+
+</html>

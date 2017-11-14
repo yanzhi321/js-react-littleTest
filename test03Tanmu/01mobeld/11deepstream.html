@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title></title>
+		<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+		<style>
+			
+			[contenteditable=true] {
+			    display: inline-block;
+			    width: 60%;
+			    margin:1% 20%;
+			    vertical-align: middle;
+			    min-height: (3em * line-height);/*1个input的高度*/
+			    /*这里写一个输入框应该有的样式*/
+			   border:1px solid #ccc;
+			   background:#fff;
+			   box-shadow: 0 0 1px darkgray inset;	   
+			   padding:1rem;
+			   font-size:1rem;
+			   
+			}
+			
+		</style>
+		
+		
+	</head>
+	<body>
+		<p>firstname</p>
+		<input type="text"  id = "firstname" />
+		<p>lastname</p>
+		<input type="text"  id = "lastname"  />
+		
+		<p>contentedit</p>
+		<div contenteditable="true" class="send_box"></div>
+		<input type="text" class="form-control" />
+		
+		
+		<script src="js/jquery.min.js"></script>
+		<script src="deepstream.io-client-js/deepstream.min.js"></script>
+	</body>
+</html>
+<script>
+	
+	window.onload=function(){
+		
+		var ds = deepstream( 'ws://119.23.48.68:6001/deepstream' );
+	
+		var client = ds.login()
+	
+		var list = client.record.getList('barragesList')
+
+		list.subscribe( function( data ) {
+		 //do something
+		 console.log(data);
+		})
+		
+
+	
+
+	
+	var myRecord = client.record.getRecord( 'test/johndoe' );
+	myRecord.set({
+	    firstname: 'John',
+	    lastname: 'Doe',
+	    editCon:'deepstream'
+	});
+	
+	var first = $( '#firstname' );
+	var last = $('#lastname');
+	var edit = $('.send_box');
+	// Update the input when the record changes
+	myRecord.subscribe( 'firstname', function( firstname ){
+	    first.val( firstname );
+	    console.log("sdfsdf")
+	});
+	
+	myRecord.subscribe('lastname',function(lastname){
+		last.val(lastname)
+	})
+	
+	myRecord.subscribe('editCon', function(editCon){
+		edit.html(editCon)
+	})
+	
+	// Update the record when the input changes
+	first.on( 'keyup', function(){
+	    myRecord.set( 'firstname', first.val() );
+	});
+	
+	last.on('keyup',function(){
+		myRecord.set('lastname',last.val())
+	})
+	
+	edit.on('keyup', function(){
+		myRecord.set('editCon',edit.text())
+	})
+	
+}
+	
+</script>

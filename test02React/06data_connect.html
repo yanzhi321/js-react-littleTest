@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="jq/jquery.min.js"></script>
+		<script src="echarts-3.5.2/echarts.min.js"></script>
+		<style>
+			*{
+				margin:0;
+				padding:0;
+			}
+			ul{
+				list-style: none;
+			}
+			.data{
+				width:500px;
+				height:500px;
+				border:1px solid #ccc;
+			}
+			
+			.header{
+				width:500px;
+				height:50px;
+				background:#ADD8E6;
+				border:1px solid #fff;
+				box-sizing: border-box;
+				
+			}
+			
+			.header li{
+				float:left;
+				width:25%;
+				height:100%;
+				border:1px solid #ccc;
+				box-sizing: border-box;
+				line-height: 50px;
+				text-align: center;
+			}
+			
+			.zIndex{
+				width:500px;
+				height:300px;
+				background:#ccc;
+				position: relative;
+			}
+			.zIndex li{
+				width:300px;
+				height:100px;
+				border:1px solid #800080;
+				text-align: center;
+				position: relative
+			}
+			
+			
+			.content li{
+				width: 500px;
+				height:40px;
+				line-height: 40px;
+			}
+			/*.content li input{
+				float:left;
+				width:25%;
+				height:20px;
+				text-align: center;
+				border-right: 1px solid #ccc;
+				display: block;
+				margin-top:10px
+			}*/
+			.content li div{
+				float:left;
+				width:25%;
+				height:40px;
+				border:1px solid #ccc;
+				box-sizing: border-box;
+				line-height: 40px;
+				text-align: center;
+			}
+			
+			#charts{
+				width:300px;
+				height:300px;
+				background:#AFEEEE
+			}	
+		
+		</style>
+	</head>
+	<body>
+		<div class="data">
+			
+			<ul class="header">
+				<li>选择数据集</li>
+				<li>名称</li>
+				<li>描述</li>
+				<li>数据量</li>
+			</ul>
+			
+			<ul class="content">
+				<!--<li>
+					<div>
+						<input type="checkbox" class="checkbox" />
+					</div>
+					
+					<div>离网数据</div>
+					<div>离网数据2</div>
+					<div>离网数据3</div>
+				</li>-->
+			</ul>
+			
+		</div>
+		
+		<div  id="charts"></div>
+		
+		<!--<ul class="zIndex">
+				
+		</ul>-->
+	
+	</body>
+</html>
+<script>
+	
+	$(function(){
+		
+
+		$('.zIndex li').each(function(){
+			//正则匹配
+			var reg = /h/
+			var tag = '3'
+			console.log($(this).text())
+			
+			if(reg.test($(this).text())){
+				$('.zIndex').prepend($(this))
+			}else{
+				
+			}
+			
+			/*if($(this).text().indexOf(3) != -1  ){
+				$('.zIndex').prepend($(this))
+			}else{
+				
+			}*/
+		})
+		var pattern = /的/,
+			str = '';
+		console.log(pattern.test(str));
+		
+		
+		
+		//ajax 请求数据
+		/*$.ajax({
+			type:"get",
+			url:"json/data.json",
+			async:true,
+			success:function(res){
+				console.log(res.data[0])
+				
+				var str = '';
+				for(var i = 0; i < res.data.length; i++){
+					str += '<li>';
+					str += '<div><input type="checkbox" class="checkbox" /></div>';
+					str += '<div>'+res.data[i].name+'</div>';
+					str += '<div>'+res.data[i].describe+'</div>';
+					str += '<div>'+res.data[i].amount+'</div>';
+				}
+				
+				$('.content').append(str);
+				console.log(res.chadata)
+				
+			}
+		});
+		
+		$('.content').on('click','.checkbox',function(){
+			
+			$(this).prop('checked');
+			$(this).parent().parent().siblings().find('.checkbox').prop('checked',false);
+			//$(this).parents('li').siblings().find('.checkbox').attr('checked',false);
+			$.ajax({
+				type:"get",
+				url:"json/data.json",
+				async:true,
+				success:function(res){
+					console.log($(this).parents('li').index())
+					//console.log($(this).index())
+					charts(res.chadata[0],res.downname[0])
+					
+				}
+			});
+			
+		})*/
+		
+		//自定义数据
+		var data = [
+					{"name":"离线网络1","describe":"离线网络1描述","amount":"2000"},
+					{"name":"离线网络2","describe":"离线网络2描述","amount":"4000"},
+					{"name":"离线网络3","describe":"离线网络3描述","amount":"6000"}
+				   ]
+		console.log(data);
+		var downname = [['x','y'],['a','b'],['c','d']];
+		var chadata =  [[10,30],[20,50],[30,90]];
+		
+		function openData(){
+			
+			var str = '';
+			for(var i = 0; i < data.length; i++){
+				str += '<li>';
+				str += '<div><input type="checkbox" class="checkbox" /></div>';
+				str += '<div>'+data[i].name+'</div>';
+				str += '<div>'+data[i].describe+'</div>';
+				str += '<div>'+data[i].amount+'</div>';
+				
+			}
+			$('.content').append(str);
+			
+			$('.content li').each(function(){
+				
+				$(this).click(function(){
+					console.log($(this).index())
+				})
+				$(this).on('click','.checkbox',function(){
+					
+					$(this).prop('checked');
+					//$(this).parent().parent().siblings().find('.checkbox').prop('checked',false)
+					$(this).parents('li').siblings().find('.checkbox').attr('checked',false);
+					
+					charts(chadata[$(this).parents('li').index()],downname[$(this).parents('li').index()])
+					
+					
+				})
+				
+			})
+		}
+		
+		openData();
+		
+		
+		//绑定数据
+		/*var chaData = ["333","90"]
+		var downname = ["x",'y']
+		
+		charts(chaData,downname)*/
+		//echarts加载柱状图
+		function charts(chaData,downName){
+		
+			var myChart = echarts.init(document.getElementById('charts'));
+	
+			 var option = {
+		    color: ['#25b4ef'],
+		    tooltip : {
+		        trigger: 'axis',
+		        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+		            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+		        }
+		    },
+		     grid: {
+		        left: '3%',
+		        right: '2%',
+		        bottom: '2%',
+		        containLabel: true
+		    },
+		   
+		    xAxis : [
+		        {
+		            type : 'category',
+		            data : downName,
+		            axisTick: {
+		                alignWithLabel: true
+		            }
+		        }
+		    ],
+		    yAxis : [
+		        {
+		            type : 'value'
+		        }
+		    ],
+		    series : [
+		        {
+		            name:'直接访问',
+		            type:'bar',
+		            barWidth: '40%',
+		            data:chaData
+		        }
+		    ]
+		};
+		
+			myChart.setOption(option);
+		
+	}
+		
+		
+		
+		
+		//ajax1请求加载数据
+		/*function loadData() {
+		    $.ajax({
+				url:'json/data.json',
+				success:function (res) {
+					var str_ = '';
+					for(var i = 0;i< res.length;i++) {
+						str_ += '<li>';
+						str_ += '<div class="dataName">'+res[i].name+'</div>';
+						str_ += '<div>'+res[i].describe+'</div>';
+						str_ += '<div>'+res[i].amount+'</div>';
+						str_ += '<input type="checkbox" class="checkbox">';
+						str_ += '</li>';
+					}
+					$('.liTbodyWrap').find('ul').append(str_);
+		        }
+			})
+		}*/
+		
+		/*var commitFlg_ = false;
+	    $(document).on('click','.checkbox',function () {
+			if($(this).is(':checked')) {
+				$(this).prop('checked');
+	            commitFlg_ = true;
+				$(this).parent().siblings().find('.checkbox').prop('checked',false);
+				$('.list_dat span').html($(this).siblings('.dataName').text());
+	        }else {
+	            commitFlg_ = false;
+			}
+    	});*/
+		
+		
+		
+	})
+	
+</script>

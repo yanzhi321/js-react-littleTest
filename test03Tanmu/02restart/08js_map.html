@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="yes" name="apple-touch-fullscreen">
+		<meta content="telephone=no,email=no" name="format-detection">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+		<script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+		<link rel="stylesheet" href="css/07rem-flexible.css" />
+		<link rel="apple-touch-icon" href="favicon.png">
+		<link rel="Shortcut Icon" href="img/loading.png" type="image/x-icon">
+		<title>js-map</title>
+		<style>
+			
+			.list-item {
+			    position: absolute;
+			    width: 320px;
+			    height: 90px;
+			    overflow: visible;
+			    pointer-events: auto;
+			    border-radius: 4px;
+			    color: rgb(153, 153, 153);
+			    line-height: 96px;
+			    padding: 0 32px;
+			    font-size: 20px;
+			    font-weight: 400;
+			    background-color: rgb(255, 255, 255);
+			    box-sizing: border-box;
+			    -webkit-box-sizing: border-box;
+			    cursor: url(img/loading.png) 39 39, auto;
+			    text-overflow: ellipsis;
+			  	overflow: hidden;
+			  	white-space: nowrap;
+			  	margin:0 50px;
+			  }
+			  
+			.destroy {
+			  display: none;
+			  position: absolute;
+			  top: 0;
+			  right: 10px;
+			  bottom: 0;
+			  width: 40px;
+			  height: 40px;
+			  margin: 25px 0;
+			  font-size: 30px;
+			  line-height: 40px;
+			  color: #cc9a9a;
+			  margin-bottom: 11px;
+			  transition: color 0.2s ease-out;
+			}
+			
+			 .destroy:hover {
+			  color: #af5b5e;
+			}
+			
+			 .destroy:after {
+			  content: '×';
+			}
+			
+			 .list-item:hover .destroy {
+			  display: block;
+			 cursor: pointer;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app"></div>
+			<div style="width:300px; height:150; border:1px solid #ccc; background:#fff; position:relative ">
+					<div style=' position:absolute; width:300px; height:20px; background:#fff '></div>
+					<div style=' position:absolute; width:300px; height:30px; background:#fff; bottom:0px '></div>
+					
+					<embed src="swf/honehone_clock_wh.swf" style='width:300px; height:150px '></embed>
+			</div>
+		<div class="list-item">
+			<button class="destroy"></button>
+		</div>
+		
+		<script src="js/jquery.min.js"></script>
+		<script>
+			
+			let state = [
+					{
+						id: '0',
+						text: 'zero'
+					},{
+						id: '1',
+						text: 'one'
+					},{
+						id: '2',
+						text: 'two'
+					},{
+						id: '3',
+						text: 'three'
+					}
+				];
+			
+			let idArr = ['0', '1', '2', '3'];
+			let stateItem = [
+					{
+						id: '0',
+						text: 'zero'
+					},{
+						id: '1',
+						text: 'one'
+					},{
+						id: '2',
+						text: 'two'
+					},{
+						id: '3',
+						text: 'three'
+					}
+				];
+			console.log(stateItem)
+				//取最大长度
+			//console.log(Math.max(...state.map(i => i.id)) + 1)
+			//console.log(state.map(item => item.id === idArr ? { ...item, stateItem.text } : item))
+			let = result = state.length !== 0 ? (Math.max(...state.map(i => i.id)) + 1) : 0;
+			//console.log(result);
+			
+			//reduce() 对数组中的所有元素调用指定的回调函数。该回调函数的返回值为累积结果，并且此返回值在下一次调用该回调函数时作为参数提供。
+			function appendCurrent(frontValue, nextValue){
+				//return frontValue + "***" + nextValue
+				//return frontValue + nextValue
+				//return frontValue + Math.round(nextValue),//add四舍五入
+				
+				let nextArr
+				/*if (frontValue >= 1 && nextValue <= 10 ){
+					nextArr = frontValue.concat(nextValue)
+				}else{
+					nextArr = frontValue 
+				}*/
+				return nextArr
+			}
+			let redArr = ['a', 'b', 'c', 'd']
+			let numArr = [1, 2, 3, 4];
+			let rouArr = [14.9, 12.5, 3.9]
+			let powArr = [20, 1, -5, 6, 50, 3]
+			var emptyArray = new Array();
+			var resultArray = powArr.reduce(appendCurrent, emptyArray);
+			console.log(resultArray)
+			console.log(rouArr.reduce(appendCurrent, 0))
+			console.log(numArr.reduce(appendCurrent))// 10
+			console.log(redArr.reduce(appendCurrent))//
+			
+			//append the head
+			const shiArr = [1,2,3];
+			console.log(shiArr.unshift(0))
+			console.log(shiArr)
+			
+			
+		</script>
+	</body>
+</html>

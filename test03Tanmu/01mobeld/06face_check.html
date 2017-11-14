@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/jquery.min.js"></script>
+		<script src="facejq/jquery.facedetection.min.js"></script>
+	</head>
+	<body>
+		<img id="picture" src="img/ddd.png">
+	</body>
+</html>
+<script>
+	
+	$(function(){
+		
+		$('#picture').faceDetection({
+	        complete: function (faces) {
+	            if (faces.length == 0) { //说明没有检测到人脸
+	                alert("无人脸")
+	            } else {
+	                for (var i in faces) {
+	                    draw(faces[i].x, faces[i].y, faces[i].width, faces[i].height);
+	                }
+	            }
+	        },
+	        error: function (code, message) {
+	            alert("complete回调函数出错")
+	        }
+    	})
+		
+	})
+	
+	
+</script>

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div class="box" data-index="6">
+			<input type="text" data-index="1" class="cha" autofocus="autofocus"/>
+			<input type="text"  autofocus="autofocus"/>
+		</div>
+		<input type="range" value="10" />
+	</body>
+</html>
+<script type="text/javascript">
+	
+	/*var cha = document.getElementsByClassName('cha');
+	console.log(cha);
+	console.log(cha[0].parentNode.dataset.index)
+	console.log(cha[0].dataset.index)
+	
+	var arr = [1,2,3,4,45];
+	arr.map(i => {
+		console.log(i);
+		
+	})
+	
+	var arr2 = ["啊哈","傻逼"]
+	console.log(arr.concat(arr2))*/
+	
+	
+	//json
+	var todos = [
+				// key is creation date
+		        {n:1,key: 't1', data: {text: 'Board the plane', isDone: false}},
+		        {n:2,key: 't2', data: {text: 'Sleep', isDone: false}},
+		        {n:3,key: 't3', data: {text: 'Try to finish conference slides', isDone: false}},
+		        {n:4,key: 't4', data: {text: 'Eat cheese and drink wine', isDone: false}},
+		        {n:5,key: 't5', data: {text: 'Go around in Uber', isDone: false}},
+		        {n:6,key: 't6', data: {text: 'Talk with conf attendees', isDone: false}},
+			];
+	/*console.log(todos[0].key);
+	console.log(todos);*/
+	//
+	todos.map( i=> {
+		console.log(todos.indexOf(i))
+		console.log(i);
+	})
+	
+	console.log(todos.indexOf())
+	
+	todos.map(function(value,key){
+		console.log(value.n);
+		console.log(key)
+	})
+	
+	todos.map( (content,i) => {
+		console.log(content)
+	} )
+	
+	//id: state.length!==0 ? (Math.max(...state.map(i => i.id)) + 1) : 0;
+	
+	var arr = [1,2,3,4];
+	console.log(...arr)
+	arr.map( (con,i) => {
+		console.log(con)
+	} )
+	
+	//filter过滤过检查指定数组中符合条件的所有元素
+	/*var arr = [1,2,3,4,5,6,7];
+	var  result = arr.filter(function(con){
+		console.log(con);
+		return con >3;
+	})
+	console.log(result);//[4,5,6,7]
+	var last = result.filter( (con) => con>5 )//[6,7]
+	console.log(last)*/
+	
+	//every检测数组所有元素是否都符合指定条件（通过函数提供）
+	/*var arr2 = [11,22,33,44,545];
+	var result2 = arr2.every(function(key){
+		return key>10;
+	})
+	console.log(result2);
+	var last2 = arr2.every(  (key) => key<400 )
+	console.log(last2)*/
+	
+	
+//slice截取[start,end)不取end
+	/*var att = [0,1,2,3,4];
+	var att2 = att.slice(1);
+	console.log(att2);//[1,2,3,4]
+	
+	var att3 = att.slice(0,2);
+	console.log(att3)//[0,1];*/
+	
+	/*var list = ["dd",2,3];
+	list.map( i => {
+		console.log(i.length)
+		console.log(list.indexOf(i))
+		return i
+	})*/
+	
+	
+	
+	
+	
+</script>

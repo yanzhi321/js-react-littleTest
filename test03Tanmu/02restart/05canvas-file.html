@@ -1,0 +1,218 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <script src="https://cdn.bootcss.com/touchjs/0.2.14/touch.js"></script>
+    <style>
+        *{margin:0}
+        #clip{position: absolute;top:0;left:0;background: #000000}
+        #mask{position: absolute;top:0;left:0;z-index:20}
+        input{display: none}
+        #confirm{position: absolute;bottom:50px;left:0;right:0;display: none;margin:auto;z-index:30;height:30px;background: #ff0a07;width:120px;text-align: center;color:#fff;}
+    </style>
+</head>
+<body>
+<div class="imgClip">
+    <canvas id="clip" height="300" width="500"></canvas>
+    <canvas id="mask" height="300" width="500"></canvas>
+    <input type="file" id="file">
+    <div id="confirm">确定</div>
+</div>
+<script>
+
+
+    var option = {
+        disk:200,  //截图结果的宽高
+        btn:{      //按钮设置
+            text:"确定",
+            style:{  //button样式
+                background:"#f22",
+                color:"#fff",
+                font:"16px MicroSoft YaHei",
+                height:30,
+                width:140,
+            },
+        },
+        afterClip:function(dataURL){   //截图成功之后
+            console.log(dataURL);
+        },
+        canH:window.outerHeight,   //canvas高度
+        canW:window.outerWidth,   //canvas宽度
+        maskColor:"rgba(255,255,255,.4)",  //遮罩层颜色
+        //以下是私有,非设置
+        imgW:0,
+        imgH:0,
+        scale:1,
+        baseScale:1,
+        trans:{x:0,y:0},
+        img:null
+    }
+
+
+    function imageClip(c){
+        var can = document.getElementById("clip");
+        var pen = can.getContext("2d");
+        var mask = document.getElementById("mask");
+        var maskPen = mask.getContext("2d");
+        var input = document.getElementById("file");
+        var btn = document.getElementById("confirm");
+
+
+        can.height = mask.height = c.canH;  //设置两个canvas宽高
+        can.width = mask.width = c.canW;
+        function drawMask(){    //遮罩层
+            maskPen.fillStyle = c.maskColor;
+            maskPen.fillRect(0,0,c.canW,c.canH);
+            maskPen.clearRect((c.canW-c.disk)/2,(c.canH-c.disk)/2,c.disk,c.disk);
+        }
+
+
+        function drawText(text){   //填充文字
+            pen.fillStyle = "#000";
+            pen.fillRect(0,0,c.canW,c.canH);
+            pen.fillStyle = "#fff";
+            pen.textAlign = "center";
+            pen.font = "16px Microsoft YaHei";
+            pen.fillText(text,c.canW/2,c.canH/2,c.disk);
+        }
+        function drawBtn(){   //按钮
+            var style = c.btn.style;
+            btn.innerHTML = c.btn.text;
+            for(var s in style){
+                btn.style[s] = style[s];
+            }
+            btn.style.lineHeight = style.height + "px";
+            btn.style.display = "block";
+        }
+        function clear(){
+            pen.clearRect(0,0,c.canW,c.canH);
+        }
+        drawBtn();
+        drawMask();
+        drawText("点击此处添加图片");
+
+
+        input.addEventListener("change",function(e){    //上传图片后
+            clear();
+            drawText("图片加载中...");
+            var file = input.files[0];
+            console.log(file);
+            console.log(e);
+            var fr = new FileReader();
+            fr.readAsDataURL(file);
+            fr.addEventListener("load",function(e){    //文件加载完成
+                console.log(e);
+                var data = e.target.result;
+                var img = new Image();
+                img.src = data;
+                img.onload = function(){
+                    c.img = img;
+                    c.imgW = img.width;
+                    c.imgH = img.height;
+                    if( c.imgW/c.canW > c.imgH/c.canH){    //以图片宽高大的一边缩放图片到合适canvas大小
+                        c.baseScale = c.canW/ c.imgW;
+                        c.startY = (c.canH/c.baseScale - c.imgH)/2;
+                    }else{
+                        c.baseScale  = c.canH/c.imgH;
+                        c.startX = (c.canW/c.baseScale -  c.imgW)/2;
+                    }
+
+
+                    drawImg();
+                }
+            })
+
+
+        })
+
+
+        function drawImg(option){   //渲染图片主方法
+            option = option || {};
+            var opt = {
+                scale:option.scale || c.scale,
+                trans:option.trans || c.trans
+            };
+            if(c.img === null) return;
+            pen.save();
+            var startX = 0,startY = 0;
+            var sca = opt.scale * c.baseScale;
+            startX = (c.canW/2 + opt.trans.x)/sca - c.imgW/2;  //计算图片左上角位置
+            startY = (c.canH/2 + opt.trans.y)/sca - c.imgH/2;
+            clear();
+            pen.scale(sca,sca);   //缩放
+            pen.translate(opt.trans.x/sca,opt.trans.y/sca);   //平移
+            pen.drawImage(c.img,startX,startY);
+            pen.restore();
+        }
+
+
+        touch.on(mask,"tap",function(){   //点击,添加图片
+            if(c.img !== null) return;
+            input.click();
+            console.log("test");
+        })
+
+
+        touch.on(mask,"pinch",function(e){  //缩放手势
+            var scale = e.scale * c.scale;
+            drawImg({
+                scale:scale
+            });
+        });
+        touch.on(mask,"pinchend",function(e){  //缩放结束,保存图片缩放比例
+            c.scale = e.scale * c.scale;
+            console.log(c.scale);
+            console.log(c.baseScale);
+        });
+        touch.on(mask,"drag",function(e){   //拖拽手势
+            e.stopPropagation();
+            e.preventDefault();
+            var transX = e.distanceX + c.trans.x;
+            var transY = e.distanceY + c.trans.y;
+            drawImg({
+                trans:{
+                    x:transX,
+                    y:transY
+                }
+            });
+        });
+        touch.on(mask,"dragend",function(e){   //拖拽结束,保存拖拽位置
+            c.trans.x = e.distanceX + c.trans.x;
+            c.trans.y = e.distanceY + c.trans.y;
+            drawImg();
+        })
+
+
+        touch.on(btn,"tap",function(e){   //确定按钮,裁切图片,输出base64,运行回调
+            console.log(c.scale);
+            var scale = 1;
+            console.log(scale);
+            var imgData = pen.getImageData((c.canW - c.disk)/2/scale,(c.canH - c.disk)/2/scale,c.disk/scale,c.disk/scale);
+            clear();
+            mask.style.display = "none";
+            pen.restore();
+            pen.putImageData(imgData,(c.canW - c.disk)/2/scale,(c.canH - c.disk)/2/scale);
+            console.log(imgData);
+            var result = document.createElement("canvas");
+            var resultPen = result.getContext("2d");
+            result.height = c.disk;
+            result.width = c.disk;
+            resultPen.putImageData(imgData,0,0);
+            var dataURL = result.toDataURL();
+            c.afterClip(dataURL);   //回调
+        })
+
+
+        //最后防止chrome移动端默认下拉刷新
+        // (然而以下代码并没有什么卵用╮(╯▽╰)╭,求大神解答)
+        document.addEventListener("touchmove",function(e){
+            e.stopPropagation();
+        });
+        
+    }
+
+
+    imageClip(option);
+</script>
+</body>
+</html>

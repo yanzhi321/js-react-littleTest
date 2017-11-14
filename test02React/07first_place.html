@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="jq/jquery.min.js"></script>
+		<script src="sortable/Sortable.js"></script>
+		<style>
+			body{
+				cursor: pointer;
+			}
+			ul {
+				list-style: none;
+				margin: 0;
+				padding;
+				0;
+			}
+			
+			#ifr {
+				width: 100%;
+				height: 100%;
+			}
+			
+			.box {
+				width: 100px;
+				height: 100px;
+				background: pink;
+				margin: 50px;
+				box-shadow: 0 0 10px purple inset;
+			}
+			
+			.add_put {
+				width: 350px;
+				height: 50px;
+			}
+			
+			.add_txt{
+				height:20px;
+				width:220px;
+			}
+			
+			.dow_del {
+				padding: 0;
+			}
+			
+			.dow_del li {
+				border: 1px solid #ADD8E6;
+				width: 300px;
+				height: 30px;
+				list-style: none;
+				cursor: pointer;
+				margin:30px 0;
+			}
+			
+			.dow_del li span {
+				display: inline-block;
+				float: left;
+				text-align: left;
+				padding-left: 10px;
+				line-height: 30px;
+				width:240px;
+				height:30px;
+				overflow: auto;
+			}
+			
+			.dow_del li input {
+				float: right;
+				height: 30px;
+			}
+			
+			.sortable-fallback {
+				/*margin: 0 auto!important;
+				background: none!important;*/
+				background:paleturquoise;
+			}
+			
+			
+			
+			.sortable-ghost {
+				/*opacity: 0;*/
+				visibility: hidden;
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		<div class="box">
+			<input type="button" value="click" class="btn" />
+			<ul class="list">
+				<!--<li>1</li>
+				<li>2</li>
+				<li>3</li>-->
+			</ul>
+			<h1>0</h1>
+
+			<iframe id="ifr" src="http://www.bootcss.com/" frameborder="0"></iframe>
+			<div class="box">
+
+			</div>
+
+			<!--//add-->
+			<div class="add_put">
+				<input type="text" class="add_txt" />
+				<input type="button" class="add_btn" value="增加" />
+				<input type="button" class="rem_btn" value="移除" />
+			</div>
+
+			<ul class="dow_del">
+				<li><span>111</span><input type="button" class="del" value="删除" /></li>
+			</ul>
+
+		</div>
+	</body>
+
+</html>
+<script>
+	$(function() {
+
+		$('.btn').click(function() {
+
+			var list = []
+
+			$('.list').map(function(index) {
+
+				$('<li>' + arr[index] + '</li>').appendTo('.list');
+			});
+		})
+
+		/*this.state.list.map(function(value,key){
+			return <li key={key} onMouseDown = {that.startDrag}>
+				
+				{value} +{key}<button onClick={that.deleteData.bind(that,key)}>Delete</button>
+			</li>*/
+		var count = 0;
+		setInterval(function() {
+			$('h1').html(count)
+				++count
+		}, 100)
+
+		var hei = $(document).height();
+		console.log(hei);
+
+		//add添加li
+		$('.add_btn').click(function() {
+			//末尾append
+			//$('<li><span>'+$('.add_txt').val()+ '</span><input type="button" class="del" value="删除" /></li> ').appendTo('.dow_del')
+			//开头prepend
+			$('<li><span>' + $('.add_txt').val() + '</span><input type="button" class="del" value="删除" /></li> ').prependTo('.dow_del')
+		})
+
+		$('.rem_btn').click(function() {
+			$('.dow_del').children('li').remove()
+		})
+
+		$('.dow_del').on('click', '.del', function() {
+			$(this).parent('li').remove()
+		})
+		
+		
+		
+		//绑定键盘事件
+		$('.add_txt').keypress(function(e){
+			if(!$(this).val()){
+				console.log(e.keyCode)
+				//$(this).off('keypress')
+				//alert('Please Input')
+				return;
+				
+			}else{
+				
+				if(e.keyCode == '13'){
+					$('<li><span>' + $('.add_txt').val() + '</span><input type="button" class="del" value="删除" /></li> ').prependTo('.dow_del')
+					console.log(e)
+					$(this).val('')
+				}
+			}
+		})
+		
+		
+		
+		//sortbalejs插件调用
+		var el = document.getElementsByClassName('dow_del')[0];
+		var sortable = Sortable.create(el,{
+			/*sort: true, //通过自定义列表单元的data-id的数组对列表单元进行排序
+				 dataIdAttr: arr,
+				 toArray: arr,*/
+				 animation: 500,//过渡动画时间
+				 /*disabled: false,*///false时为可以进行排序，
+				 forceFallback: true,//true时,修改一些拖放中元素的样式等
+				 fallbackClass: "sortable-fallback",  
+				 
+				  ghostClass: "sortable-ghost",  // Class name for the drop placeholder
+    			 chosenClass: "sortable-chosen", 
+				 
+				onStart: function (evt) {
+				  	console.log(evt.oldIndex);//原序号
+			        evt.oldIndex;  
+			    },
+				
+			    // Element dragging ended
+			    onEnd: function (evt) {
+			    	console.log(evt.newIndex)
+			        evt.newIndex; //新序号 
+			    },
+		})
+		
+		
+	})
+</script>

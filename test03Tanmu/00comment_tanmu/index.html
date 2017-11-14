@@ -1,0 +1,96 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0,maximum-scale=1,user-scalable=no">
+    <title>弹幕示例</title>
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <link rel="stylesheet" type="text/css" href="./css/demo.css">
+    <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+    <script src="js/zepto.js"></script>
+	<script src="js/jquery.min.js"></script>
+	<script type="text/javascript" src="./js/CommentCoreLibrary.js"></script>
+	<script type="text/javascript" src="./js/demo.js"></script>
+    <style>
+    	body{
+    		width:100%;
+    	}
+    	
+    	#feng-player{
+    		width:100%
+    		height:500px;
+    		position: relative;
+    		
+    	}
+    	
+    	#commentCanvas{
+    		width:100%;
+    		height:500px;
+    		border:1px solid #ccc;
+    		margin:0 auto;
+    	}
+    	
+    	
+    	.send_box{
+    		width:100%;
+    		height:100%;
+    		
+    	}
+    	
+    	.send_data{
+    		width:400px;
+    		height:50px;
+    		position:absolute;
+    		bottom:30%;
+    		left:40%;
+    	}
+    	.send_input{
+    		width:80%;
+    		height:48px;
+    		background:paleturquoise;
+    		border:none;
+    		box-sizing: border-box;
+    		padding-left:30px;
+    		font-size:20px;
+    		border-radius:5px 0 0 5px;
+    	}
+    	.send_btn{
+    		width:20%;
+    		height:48px;
+    		background: purple;
+    		color:#fff;
+    		border:none;
+    		float:right;
+    		box-sizing:border-box;
+    		border-radius:0 5px 5px 0;
+    	}
+    	
+    	
+    </style>
+</head>
+<body>
+
+<div class="feng-ccl-panel">
+    <div class="abp" id="feng-player">
+        <div id="commentCanvas" class="container"></div>
+    </div>
+</div>
+<div class="send_box">
+	<!--<form action="" method="" name="">-->
+		<div class="send_data">
+			
+			<input type="email" autofocus="autofocus" class="send_input"/>
+			<input type="button" class="send_btn" value="发送"/>
+		</div>
+	<!--</form>-->
+	
+</div>
+  
+
+
+
+
+</body>
+</html>

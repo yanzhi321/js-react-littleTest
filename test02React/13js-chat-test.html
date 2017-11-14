@@ -1,0 +1,146 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        .box{
+            margin: 0 auto;
+            width: 1000px;
+            height: 600px;
+            background-color:lemonchiffon;
+        }
+        .left{
+            width: 200px;
+            height: 600px;
+            background-color:#a6ff7f;
+            float: left;
+        }
+        .center{
+            width: 600px;
+            height: 600px;
+            float: left;
+        }
+        .center_top{
+            width: 600px;
+            height: 450px;
+            overflow: auto;
+        }
+        .center_down{
+
+            width: 600px;
+            height: 150px;
+            background-color: #00bcd4;
+        }
+        .right{
+            width: 200px;
+            height: 600px;
+            background-color: #a6ff7f;
+            float: left;
+            line-height: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="left" id="left"></div>
+        <div class="center">
+            <div class="center_top" id="center_top"></div>
+            <div class="center_down">
+                <input type="text" id="text">
+                <input type="submit" id="submit" onclick="send()">
+            </div>
+        </div>
+        <div class="right">
+            1.不能发空消息 <br>
+            2.敏感字 ***显示 <br>
+            3. 图片替换 开心 尴尬 <br>
+            4.显示聊天内容和时间 <br>
+            5.每发一条信息 随机显示名称，先把一些名称定义到数组里面
+        </div>
+    </div>
+</body>
+<script type="text/javascript">
+
+    document.getElementById("left").innerHTML="当前时间为:00:00:00";
+    var time;
+//    var people;
+    function time()
+    {
+        var d=new Date;
+        var hour,minutes,seconds;
+        if (d.getHours()<10){
+            hour="0"+ d.getHours();
+        } else {
+            hour= d.getHours();
+        }
+        if (d.getMinutes()<10){
+            minutes="0"+ d.getMinutes();
+        }else {
+            minutes= d.getMinutes();
+        }
+        if (d.getSeconds()<10){
+            seconds="0"+ d.getSeconds();
+        }else {
+            seconds= d.getSeconds();
+        }
+        document.getElementById("left").innerHTML="当前时间为:"+hour+":"+ minutes+":"+ seconds;
+        time=hour+":"+ minutes+":"+ seconds;
+    }
+    setInterval(time,1000);
+    
+    
+    function people(){
+        var a=["赵","钱","孙","李"];
+        return a[parseInt(Math.random()* a.length)];
+    }
+    
+
+        var txt=document.getElementById("text").value;
+
+        if(txt.length>0){
+            document.getElementById("center_top").innerHTML=people()+":"+filter1()+" "+time+"<br>"+document.getElementById("center_top").innerHTML;//过滤函数
+        }
+       else {
+            alert("输入不能为空");
+        }
+        document.getElementById("text").value="";
+    }
+    //过滤，替换
+    function filter1(){
+        var filter1="傻,痴,蠢";
+        var filter2=["笑|images/cursor.png","哭|k_1.jpg"];
+        var txt=document.getElementById("text").value;
+        var b;
+        for(var i=0;i<filter1.split(",").length;i++)
+        {
+            txt=txt.replace(eval("/"+filter1.split(",")[i]+"/g"),"*");
+        }
+        for (var j=0;j<filter2.length;j++)
+        {
+            txt=txt.replace(eval("/"+filter2[j].split("|")[0]+"/g"),"<img src="+filter2[j].split("|")[1]+"/>");
+        }
+        return txt;
+    }
+    
+    /*function filter1(){
+    	var filter1 = "傻,痴,蠢";
+    	var filter2 = ["傻|images/cursor.png","哭|images/cursor.png"];
+    	var txt = document.getElementById("text").value;
+    	var b;
+    	for(var i=0; i<filter1.split(',').length; i++){
+    		txt = txt.replace(eval("/"+filter1.split(",")[i]+"/g"),"*")
+    	}
+    }*/
+    
+    //
+    var str = "傻,痴,的";
+    var str2;
+    for(var i=0; i<str.split(',').length; i++){
+    	str =  str.replace(eval("/"+str.split(',')[i] + '/g'), "*");
+    	console.log(str)
+    }
+	console.log(str);
+	
+	
+	
+</script>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="react/browser.min.js"></script>
+		<script src="react/react.min.js"></script>
+		<script src="react/react-dom.min.js"></script>
+		<script src="sortable/Sortable.min.js"></script>
+		<!--https://segmentfault.com/a/1190000008209715-->
+		<style>
+			
+			ul{
+				list-style: none;
+				margin:0;
+				padding:0;
+			}
+			.out-box{
+				width:500px;
+				height:400px;
+				margin:50px auto;
+				border:1px solid #ccc;
+			}
+			.input-text{
+				width:400px;
+				height:60px;
+				margin:10px auto;
+			}
+			
+			.input-text input{
+				width:240px;
+				height:20px;
+			}
+			
+			.input-text button{
+				width:60px;
+				height:30px;
+				margin:0 5px;
+			}
+			
+			.add-list{
+				width:400px;
+				height:300px;
+				border:1px solid #ccc;
+				box-shadow: 0 0 10px lightblue;
+				overflow-y: auto;
+				margin:0 auto;
+			}
+			.add-list li{
+				width:380px;
+				height:30px;
+				margin:10px auto;
+				border:1px solid purple;
+				line-height:30px;
+				text-align: center;
+				cursor:move;
+			}
+			
+			.add-list li button{
+				width:50px;
+				height:30px;
+				float:right;
+			}
+			
+			.sortable-fallback{
+				border:transparent;
+			}
+			
+		</style>
+	</head>
+	<body>
+		
+		<div id="app"></div>
+		
+	</body>
+</html>
+<script type="text/babel">
+	
+	var Todolist = React.createClass({
+		
+		getInitialState(){
+			
+			return {
+				value:'',
+				list:[],
+				items: ["aa","bb","cc"],
+				number:0
+				
+			}
+			
+		},
+		
+		
+		inputChange(e){
+			console.log(e);
+			console.log(e.target.value);
+			this.setState({
+				value:e.target.value
+			})
+		},
+		
+		addData(){
+			
+			this.state.list.push(this.state.value);
+			this.setState({
+				list:this.state.list
+			})
+			console.log(this.state.list)
+		},
+		
+		removeData(){
+			this.state.list.splice(0,this.state.list.length);
+			this.setState({
+				list:this.state.list
+			})
+		},
+		
+		deleteData(index){
+			
+			console.log(index);
+			this.state.list.splice(index,1);
+			this.setState({
+				list:this.state.list
+			})
+			
+		},
+		
+		componentDidMount(){
+			
+			var el = document.getElementById('items');
+			var el2 = document.getElementById('list');
+			var sortable2 = Sortable.create(el2,{
+				
+				 /*sort: true, //通过自定义列表单元的data-id的数组对列表单元进行排序
+				 dataIdAttr: list,
+				 toArray: list,*/
+				 animation: 500,//过渡动画时间
+				 disabled: false,//false时为可以进行排序，
+				 forceFallback: false,//true时,修改一些拖放中元素的样式等
+				 fallbackClass: "sortable-fallback",  
+				 
+				/*onStart: function (evt) {
+				  	console.log(evt.oldIndex);//原序号
+			        evt.oldIndex;  
+			    },
+			
+			    // Element dragging ended
+			    onEnd: function (evt) {
+			        evt.newIndex; //新序号 
+			    },*/
+
+			})
+
+			var sortable = Sortable.create(el,{});
+			
+		},
+		
+		render(){
+			
+			var that = this;
+			return(
+				
+				<div>
+				
+					<div className="out-box">
+					
+						<div className="input-text">
+							<input type="text" defaultValue={this.state.value} onChange = {this.inputChange} />
+							<button onClick={this.addData}>Add+{this.state.list.length}</button>
+							<button onClick={this.removeData}>Remove</button>
+						</div>
+						
+						<ul id ="list" className="add-list">
+							{
+								this.state.list.map(function(value,key){
+									
+									return <li key={key} >
+											
+												{value}<button onClick={that.deleteData.bind(that,key)}>Delete</button>
+											</li>
+								})
+							}
+						</ul>
+						
+					
+					</div>
+					
+					<ul id="items">{
+						this.state.items.map(function (text, i) {
+							return <li ref={i}>{text}</li>
+						})
+					}</ul>
+					
+
+				</div>
+				
+			)
+			
+		}
+			
+		
+	})
+	
+	ReactDOM.render(
+        <div>
+           <Todolist></Todolist>
+        </div> , 
+        document.getElementById('app') 
+
+    )
+	
+</script> 

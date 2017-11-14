@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<title></title>
+		<style>
+			
+			.box{
+				width:80%;
+				height:30px;
+				margin: 50px 10%;
+				background:#ccc;
+				display: flex;
+			}
+			.box .txt{
+				border:1px solid #AFEEEE;
+				flex:1;
+				padding-left:4%;
+			}
+			.box .btn{
+				border:1px solid #800080;
+			}
+			
+			.wrapper{
+				width:200px;
+				height:200px;
+				border-radius:50%;
+				overflow:hidden;
+				position:relative;
+				background:yellow;
+				margin:5em auto;
+			}
+			.wrapper div{
+				width:100px;
+				height:100px;
+				transform-origin:left top;
+				position:absolute;
+				left:100px;
+				top:100px;
+				border:1px solid white;
+				box-sizing:border-box;
+				background:#222222;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<form action="" name="">
+			<div class="box">
+				<input type="text" placeholder="hhhh" class="txt" />
+				<input type="button" value="submit"  class="btn"/>
+			</div>
+		</form>
+		
+		<div class="wrapper"></div>
+		
+	</body>
+</html>
+<script src="js/jquery.min.js"></script>
+<script>
+	
+	$(function(){
+		
+		for(var i=0;i<12;i++){
+			$('<div></div>').appendTo('.wrapper').css({
+		      
+		      	'transform':'rotate('+30*i+'deg)skewX(60deg)',
+		      	'background':randomColor()
+		    });
+	 	}
+		
+		//randomColor
+		function randomColor(){
+			var arr = [0,1,2,3,4,5,6,7,8,9,'a','b','c','d','e','f'];
+			var str = '';
+			for(var i = 0; i<6; i++){
+				var n = Math.floor(Math.random()*15)
+				str += arr[n]
+			}
+			return '#'+str
+		}
+		
+		//randomRgba
+		function randomRgba(){
+			let r = Math.floor(Math.random()*225),
+				g = Math.floor(Math.random()*225),
+				b = Math.floor(Math.random()*225),
+				a = Math.random()*1;
+			return rgba = `rgba(${r},${g},${b},${a})`;
+		}
+		console.log(randomColor())
+		console.log(randomRgba())
+	})
+	
+</script>

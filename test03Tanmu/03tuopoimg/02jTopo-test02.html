@@ -1,0 +1,183 @@
+<html>
+  <head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/>
+	<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE9"/>
+	<title>jTopo Demo</title>
+	<meta name="description" content="jTopo免费的基于HTML5 Canvas的网络拓扑、关系图形库">
+	<meta name="keyword" content="jTopo 网络 拓扑 图形库 HTML5 Canvas 免费 关系图形库 javascript topology">	
+
+  </head>
+		<style>  
+			html{
+				font-size:25px;
+				color: red
+			}
+			
+	    #contextmenu {  
+	        border: 1px solid #aaa;  
+	        border-bottom: 0;  
+	        background: #eee;  
+	        position: absolute;  
+	        list-style: none;  
+	        margin: 0;  
+	        padding: 0;  
+	        display: none;  
+	    }  
+	   
+	    #contextmenu li a {  
+	        display: block;  
+	        padding: 10px;  
+	        border-bottom: 1px solid #aaa;  
+	        cursor: pointer;  
+	    }  
+	   
+	    #contextmenu li a:hover {  
+	        background: #fff;  
+	    }  
+	</style>
+
+  <body>
+	
+	<canvas class="center-block" width="800"  height="600" id="canvas" style=" background-color:#797979; border:1px solid #8c8c8c; color: red">  
+    </canvas>  
+   
+	<ul id="contextmenu" style="display:none;">  
+	    <li><a>查看历史时延</a></li>  
+	    <!--    <li><a>逆时针旋转</a></li>  
+	            <li><a>更改颜色</a></li>  
+	            <li><a>放大</a></li>  
+	            <li><a>缩小</a></li>  
+	            <li><a>删除该节点</a></li>--> 
+	</ul>
+
+	<script src="js/jquery.min.js"></script>
+	 <script src="js/jquery.toolbar.min.js"></script>
+	 <script  src="js/jtopo-0.4.8-min.js"></script>
+	
+				<script id='code'>				
+					$(document).ready(function(){										
+						var canvas = document.getElementById('canvas');  
+			var stage = new JTopo.Stage(canvas);  
+			//显示工具栏  
+			//showJTopoToobar(stage);  
+			var scene = new JTopo.Scene();  
+			stage.frames = 24;  
+			//scene.background = '../images/back-ground/bg.jpg';  
+			scene.alpha = 1;  
+			scene.backgroundColor = '63,74,89';  
+			scene.color = 'red';
+			stage.add(scene);  
+			   
+			$.ajax({  
+			    type: "get",  
+			    url: "json/data.json",  
+			    dataType: "json",  
+			    success: function (data) {  
+			        var cloudNode = new JTopo.Node(data[0].a_name);  
+			        //cloudNode.radius = 10; // 半径  
+			        //cloudNode.fillColor = '50,255,0'; // 填充颜色  
+			        cloudNode.setLocation(400,300);  
+			        cloudNode.layout = {type: 'circle', radius: 250};  
+			        cloudNode.setImage('images/weizhi.png', true);  
+			        cloudNode.textOffsetY = -37; // 文本偏移量（向上37像素）  
+			        cloudNode.id = data[0].a_id;  
+			        scene.add(cloudNode);  
+			   
+			   
+			        for(var i=0; i<data.length; i++) {  
+			            var node = new JTopo.Node(data[i].z_name);  
+			            //node.fillColor = '50,255,0';  
+			            //node.radius = 10;  
+			            node.setLocation(scene.width * Math.random(), scene.height * Math.random());  
+			            node.layout = {type: 'circle', radius: 80};  
+			            node.setImage('images/weizhi.png', true);  
+			            node.textOffsetY = -37; // 文本偏移量（向上37像素）  
+			            node.id = data[i].z_id;  
+			   
+			            /*//告警start 
+			            if(data[i].delay>=120&&data[i].delay<=180){ 
+			                node.alarm = "二级告警"; 
+			            } 
+			            if(data[i].delay>180){ 
+			                node.alarm = "一级告警"; 
+			            } 
+			  
+			  
+			            setInterval(function(){ 
+			                if(node.alarm == '二级告警'){ 
+			                    node.alarm = null; 
+			                }else{ 
+			                    node.alarm = '二级告警' 
+			                } 
+			            }, 600); 
+			            //告警 end*/ 
+			            scene.add(node);  
+			   
+			   
+			            var delay = data[i].delay + "ms";  
+			            var link = new JTopo.Link(cloudNode, node,delay);  
+			            link.textOffsetY = 15; // 文本偏移量（向下15个像素）  
+			            //link.text(data[i].delay);  
+			            link.strokeColor = '50,255,0';  
+			   
+			            scene.add(link);  
+			            //添加右键点击事件  
+			            var currentNode = null;  
+			            function handler(event){  
+			                if(event.button == 2){// 右键  
+			                    // 当前位置弹出菜单（p）  
+			                    $("#contextmenu").css({  
+			                        top: event.pageY,  
+			                        left: event.pageX  
+			                    }).show();  
+			                }  
+			            }  
+			            link.addEventListener('mouseup', function(event){  
+			                currentLink = this;  
+			                handler(event);  
+			            });  
+			            stage.click(function(event){  
+			                if(event.button == 0){// 右键  
+			                    // 关闭弹出菜单（p）  
+			                    $("#contextmenu").hide();  
+			                }  
+			            });  
+			   
+			            //点击事件 end  
+			   
+			   
+			        }  
+			        JTopo.layout.layoutNode(scene, cloudNode, true);  
+			   
+			        scene.addEventListener('mouseup', function(e){  
+			            if(e.target && e.target.layout){  
+			                JTopo.layout.layoutNode(scene, e.target, true);  
+			            }  
+			        });  
+			   
+			   
+			   
+			   
+			        $("#contextmenu a").click(function() {  
+			            var text = $(this).text();  
+			   
+			            if (text == '查看历史时延') {  
+			                alert("时延："+currentLink.text+"，A节点ID："+currentLink.nodeA.id+"，Z节点ID："+currentLink.nodeZ.id);  
+			                console.log(currentLink);  
+			                console.log(currentLink.text);  
+			                console.log(currentLink.nodeA);  
+			                console.log(currentLink.nodeZ);  
+			            }  
+			            $("#contextmenu").hide();  
+			        });  
+			   
+			    },  
+			    error:function(data){  
+			        alert("网络连接失败");  
+			    }  
+			});
+					});
+	</script>
+</body>
+
+</html>

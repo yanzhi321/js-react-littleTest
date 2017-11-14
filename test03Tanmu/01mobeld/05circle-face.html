@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin:0;
+				padding:0;
+			}
+			ul{
+				list-style: none;
+			}
+			body{
+				width:100%;
+			}
+			.box{
+				width:500px;
+				height:500px;
+				border:1px solid #AFEEEE;
+				margin:50px auto;
+				border-radius:50%;
+			}
+			.innerBox{
+				border:1px solid #AFEEEE;
+				position:absolute;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			
+		</div>
+		<canvas id="myCanvas" width="" height=""></canvas>
+	</body>
+</html>
+<script>
+	
+	var c=document.getElementById("myCanvas");
+	var ctx=c.getContext("2d");
+	ctx.beginPath();
+	ctx.arc(100,75,50,0,2*Math.PI);
+	ctx.stroke();
+	
+	
+</script>

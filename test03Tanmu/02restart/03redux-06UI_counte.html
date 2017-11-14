@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+</html>
+<script>
+	
+	//一个实例。下面是一个计数器组件，它是一个纯的 UI 组件。
+	//这个 UI 组件有两个参数：value和onIncreaseClick。前者需要从state计算得到，后者需要向外发出 Action。
+	//接着，定义value到state的映射，以及onIncreaseClick到dispatch的映射。
+	class Counter extends Component {
+	  render() {
+	    const { value, onIncreaseClick } = this.props
+	    return (
+	      <div>
+	        <span>{value}</span>
+	        <button onClick={onIncreaseClick}>Increase</button>
+	      </div>
+	    )
+	  }
+	}
+	
+	function mapStateToProps(state) {
+	  return {
+	    value: state.count
+	  }
+	}
+	
+	function mapDispatchToProps(dispatch) {
+	  return {
+	    onIncreaseClick: () => dispatch(increaseAction)
+	  }
+	}
+	
+	// Action Creator
+	const increaseAction = { type: 'increase' }
+	
+	function mapStateToProps(state){
+		return{
+			value: state.count
+		}
+	}
+	
+	function mapDispatchToProps(dispatch) {
+		return {
+			value: state.count
+		}
+	}
+	
+	//然后，使用connect方法生成容器组件。
+	const App = connect(
+	  mapStateToProps,
+	  mapDispatchToProps
+	)(Counter)
+	
+	//然后，定义这个组件的 Reducer
+	// Reducer
+	function counter(state = { count: 0 }, action) {
+	  const count = state.count
+	  switch (action.type) {
+	    case 'increase':
+	      return { count: count + 1 }
+	    default:
+	      return state
+	  }
+	}
+	
+	//生成store对象，并使用Provider在根组件外面包一层。	
+	import { loadState, saveState } from './localStorage';
+
+	const persistedState = loadState();
+	const store = createStore(
+	  todoApp,
+	  persistedState
+	);
+	
+	store.subscribe(throttle(() => {
+	  saveState({
+	    todos: store.getState().todos,
+	  })
+	}, 1000))
+	
+	ReactDOM.render(
+	  <Provider store={store}>
+	    <App />
+	  </Provider>,
+	  document.getElementById('root')
+	);
+	
+	//生成store对象，并使用Provider在根组件外面包一层
+	import { loadState, saveState } from './localStorage';
+	
+	const persistedState = loadState();
+	const store = createStore(
+		todoApp,
+		persistedState
+	)
+	
+	store.subscribe( throttle( () => {
+		saveState({
+			todos: store.getState().todos
+		})
+	}, 1000))
+	
+	ReactDOM.render(
+		<Provider store = {store}>
+			<App />
+		</Provider>,
+	)
+	
+	//React-Router 路由库
+    //使用React-Router的项目，与其他项目没有不同之处，也是使用Provider在Router外面包一层，毕竟Provider的唯一功能就是传入store对象。
+    
+	const Root = ({ store }) => (
+	  <Provider store={store}>
+	    <Router>
+	      <Route path="/" component={App} />
+	    </Router>
+	  </Provider>
+	);
+	
+	const Root = ({ store }) => (
+		<Provider store = {store}>
+			<Router>
+				<Route path='/' component={App} />
+			</Router>
+		</Provider>
+	)
+	
+</script>

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js-drag</title>
+	<style>
+		
+		#div1{ 
+	       width: 100px; height: 100px; 
+	       background-color: #4D4D4D; 
+	       position: absolute; cursor: pointer; 
+	       -webkit-box-shadow: 3px 3px 0px 3px #C7C7C7; 
+	       box-shadow: 3px 3px 3px 0px #C7C7C7; 
+	   }
+	   #parent{ 
+	       width: 500px; height: 500px; 
+	       border: 1px solid #CDCDCD; 
+	       position: relative; margin: 0 auto; 
+	       background-color: #F4F4F4; 
+	   }
+	   .postText{
+	       width: 500px; height: 30px;margin: 0 auto; background-color: #F4F4F4;
+	   }
+	   .postText span{ 
+	      padding:0px 10px;
+	   }
+
+	</style>
+</head>
+<body>
+	<div id="parent">
+    	<div id="div1" onmousemove="posMove(this.id)"></div>
+	</div>
+	<div class="postText">
+	   <span>移动的距离Top:</span><span id="posTop"></span>
+	   	
+	   <span>left:</span><span id="posLeft"></span>
+	</div>
+	
+	<div id="mBox" style="width: 100px; height: 100px; background: purple; position: absolute; left: 100px; ">
+		
+	</div>
+	<script>
+		
+		function posMove(getdivid) {
+	        var oDiv = document.getElementById(getdivid);
+	        var oParent = document.getElementById('parent');
+	        var sent = {
+	            l: 10,  //设置div在父元素的活动范围，10相当于给父div设置padding-left：10;
+	            r: oParent.offsetWidth - oDiv.offsetWidth,  // offsetWidth:当前对象的宽度， offsetWidth = width+padding+border
+	            t: 10,
+	            b: oParent.offsetHeight - oDiv.offsetHeight,
+	            n: 10
+	        }
+	        drag(oDiv, sent);  
+    	}
+    	
+    	function randomColor(){
+
+    		let numArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f'];
+    		let resStr = ''
+
+    		for(let i = 0; i < 6; i++){
+    			const n = Math.ceil(Math.random() * 15);
+    			resStr += numArr[n]
+    		}
+
+    		return '#' + resStr
+
+    	}
+    	console.log(randomColor())
+
+    	function autoChange(Ele){
+
+    		let oEle = document.getElementById(Ele);
+    		let bW = document.documentElement.clientWidth || document.body.clientWidth;
+    		let bH = document.documentElement.clientHeight || document.body.clientHeight;
+    		console.log(oEle)
+
+    		eleStyle = window.getComputedStyle(Ele,null) || Ele.currentStyle
+
+
+    		let num = parseInt(eleStyle.left)
+    		let tNum = parseInt(eleStyle.height)
+    		console.log(num)
+
+/*
+    		if(parseInt(eleStyle.left) == parseInt(bW.clientWidth) - parseInt(eleStyle.offsetWidth)){
+    			eleStyle.left = 0 + 'px'
+    			return;
+    		}*/
+
+    		console.log(eleStyle.backgroundColor)
+    		setInterval(function(){
+    			
+    			console.log(eleStyle.left)
+    		})
+
+
+    	}
+
+    	autoChange(mBox)
+
+
+    	//getComputedStyle
+    	function getStyle(ele){
+
+    		let style = null
+    		if(window.getComputedStyle){
+    			style = window.getComputedStyle(ele, null)
+    		}else{
+    			style = ele.currentStyle
+    		}
+
+    		return style
+    	}
+   /**
+     *  http://www.jq22.com/jquery-info4543
+     */
+    function drag(obj,sent){
+
+        var dmW = document.documentElement.clientWidth || document.body.clientWidth;
+        var dmH = document.documentElement.clientHeight || document.body.clientHeight;
+
+        var sent = sent || {};
+        var l = sent.l || 0;
+        var r = sent.r || dmW - obj.offsetWidth;
+        var t = sent.t || 0;
+        var b = sent.b || dmH - obj.offsetHeight;
+        var n = sent.n || 10;
+
+        obj.onmousedown = function (ev){
+            var oEvent = ev || event;
+            var sentX = oEvent.clientX - obj.offsetLeft;
+            var sentY = oEvent.clientY - obj.offsetTop;
+
+            document.onmousemove = function (ev){
+                var oEvent = ev || event;
+
+                var slideLeft = oEvent.clientX - sentX;
+                var slideTop = oEvent.clientY - sentY;
+
+                if(slideLeft <= l){
+                    slideLeft = l;
+                }
+                if(slideLeft >= r){
+                    slideLeft = r;
+                }
+                if(slideTop <= t){
+                    slideTop = t;
+                }
+                if(slideTop >= b){
+                    slideTop = b;
+                }
+
+                obj.style.left = slideLeft + 'px';
+                obj.style.top = slideTop + 'px';
+                obj.style.backgroundColor = randomColor()
+
+                document.getElementById('posTop').innerHTML = slideTop;
+                document.getElementById('posLeft').innerHTML = slideLeft;
+
+            };
+            document.onmouseup = function (){
+                document.onmousemove = null;
+                document.onmouseup = null;
+            }
+
+            return false;
+        }
+    }
+
+
+	</script>
+
+</body>
+</html>

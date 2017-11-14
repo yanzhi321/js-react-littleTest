@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="js/d3.min.js"></script>
+</head>
+<body>
+    <div id="viz"></div>
+    <div class="zero"></div>
+    <div class="two"></div>
+    <div class="box"></div>
+</body>
+</html>
+<script>
+
+    var sampleSVG = d3.select("#viz")
+        //添加svg
+        .append("svg")
+        .attr("width", 100)
+        .attr("height", 100);
+
+    sampleSVG.append("circle")
+        .style("stroke", "gray")
+        .style("fill", "white")
+        .attr("r", 40)
+        .attr("cx", 50)
+        .attr("cy", 50)
+        .on("mouseover", function(){d3.select(this).style("fill", "aliceblue");})
+        .on("mouseout", function(){d3.select(this).style("fill", "white");});
+
+
+    var zero = d3.select('.zero')
+        .append('svg')
+        .attr('width',200)
+        .attr('height',200)
+
+    zero.append('circle')
+        .style('stroke','pink')
+        .style('fill','black')
+        .attr('r',50)
+        .attr('cx',100)
+        .attr('cy', 50)
+        .on('mouseenter',function(){
+            d3.select(this).style('fill','purple')
+        })
+        .on('mouseout',function(){
+                d3.select(this).style('fill','orange')
+        })
+
+    //more circle、mouseenter/mouseleave、mouseover/mouseout
+    var dataset = [];
+    for(var i = 0; i<6; i++){
+        dataset.push(Math.round(Math.random()*100))
+    }
+
+    var two = d3.select('.two')
+        .append('svg')
+        .attr('width','800px')
+        .attr('height','600px')
+        .style('margin-left',"200px")
+
+    two.selectAll('circle')
+        .data(dataset)
+        .enter().append('circle')
+        .style('stroke','#666')
+        .style('fill','pink')
+        .attr('cx',function(d,i){
+            return i*100;
+        })
+        .attr('cy',50)
+        .attr('r',50)
+        .on('mouseenter',function(){
+            d3.select(this).style('fill','blue');
+        })
+        .on('mouseleave',function(){
+            d3.select(this).style('fill','orange')
+        })
+        .on('mousedown',function(){
+            d3.select(this).style('fill','#fff').attr('r',10)
+        })
+
+    //arc
+    d3.select('.box').style('width',200)
+        .style('height',200)
+        .style('position','absolute')
+        .style('background','#666')
+
+
+
+
+
+
+</script>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+		<div class="box"> 
+			<img src="img/inpt_bg.jpg" alt="" />
+		</div>
+		<ul class="list">
+			<li>
+				<img src="img/peo2.jpg" alt="" />
+			</li>
+		</ul>
+	</body>
+</html>
+<script>
+	
+	var box = document.getElementsByClassName('box')[0];
+	console.log(box.childNodes[1])
+	console.log(box.innerHTML)
+	
+	var list = document.getElementsByClassName('list')[0];
+	var aLi = document.getElementsByTagName('li');
+	console.log(aLi[0].childNodes[1]);
+	
+	
+	
+	
+</script>

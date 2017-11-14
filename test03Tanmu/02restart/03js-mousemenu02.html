@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		
+		.menu{
+			width: 0; /*设置为0 隐藏自定义菜单*/
+			height: 125px;
+			overflow: hidden; /*隐藏溢出的元素*/
+			box-shadow: 0 1px 1px #888,1px 0 1px #ccc;
+			position: absolute; /*自定义菜单相对与body元素进行定位*/
+		}
+
+		.menu div{
+			width: 130px;
+			height: 25px;
+			line-height: 25px;
+			padding: 0 10px;
+		}
+
+	</style>
+</head>
+<body>
+	<canvas id="myCanvas" width="800" height="600"  style=" background-color:#797979; border:1px solid #8c8c8c;">  
+	<div class="box"></div>
+	
+	<div>
+		爸爸让张三去打水，张三挑着水桶到了村东头，发现没有井，于是觉得需要挖一口井
+		挖井过程遇到了石头挖不下去了，找人帮忙解决挖井遇到石头怎么办
+		有人建议用***，有人建议用金刚钻
+		张三想到个好主意，在旁边挖
+		又遇到了石头
+		在换到旁边挖
+		如此反复终于挖出了水
+		解决了问题，张三陷入了婶婶的思考中
+	</div>
+
+	<div class="menu">
+		<div>功能1</div>
+		<div>功能2</div>
+		<div>功能3</div>
+		<div>功能4</div>
+		<div>功能5</div>
+	</div>
+
+
+	<script>
+		
+		onload = function(){
+
+			//取消浏览器默认右键
+			window.oncontextmenu = function(e){
+
+				return false;
+				let menu = document.querySelector('.menu');
+				menu.style.left = e.clientX;
+				menu.style.top = e.clientY;
+				menu.style.width = '125px'
+
+			}
+
+			let myCanvas = document.getElementById('myCanvas')
+			let clCanvas = document.getElementsByClassName('box')[0]
+			console.log(myCanvas)
+			console.log(clCanvas)
+
+			myCanvas.oncontextmenu = function(){
+				//阻止右键默认事件
+				return false;
+
+			}
+
+			//鼠标左键光轮右键
+			document.onmousedown = function(event){
+
+				let e = event || window.event
+
+				if(e.button == 2){
+					alert("right mouse")
+					//get the position
+					console.log({'x': e.clientX, 'y': e.clientY});
+
+				}else if(e.button == 0){
+					alert("left mouse")
+
+				}else if(e.button == 1){
+					alert("wheel")
+				}
+ 
+			}
+
+
+			//arguments 数组 表示函数参数
+			function sayHi(){
+				if (arguments[0] == "bye") {
+				    return;
+				  }
+
+				console.log(arguments[1])
+
+			}
+			sayHi('string', 666)
+
+			
+		}
+
+	</script>
+</body>
+</html>

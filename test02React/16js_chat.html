@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			
+			*{margin:0;padding:0;}
+			.bgdiv{width:338px;height:459px;margin:60px auto 0;padding:155px 28px 130px 34px;background:url(img/320.png) no-repeat;border:1px solid pink;font-size:12px;position:relative;}
+			.name{width:100%;height:45px;line-height:45px;text-align:center;font-size:16px;font-family:'微软雅黑';color:#fff;}
+			#ul1{width:322px;height:350px;padding:10px 8px;overflow-y:auto;}
+			#ul1 li{list-style:none;width:100%;margin-bottom:10px;}
+			#ul1 li img{width:30px;height:30px;}
+			#ul1 a{max-width:140px;padding:3px;line-height:18px;display:inline-block;border:1px solid #999;border-radius:5px;color:#000;word-break:break-all;text-align:left;box-shadow:0 1px 2px #999;vertical-align: top;}
+			#ul1 a img{width:20px;height:20px;vertical-align: middle;}
+			.btdiv{position:absolute;bottom:130px;left:34px;width:337px;}
+			.ipt{width:321px;height:32px;padding:7px 8px;background:url(img/inpt_bg.jpg) repeat-x left center;}
+			.btns_1{float:left;}
+			.btns_1 a{display:inline-block;text-align:left;margin-top:3px;}
+			.btn_add{width:30px;height:31px;background:url(img/btn_1.jpg) no-repeat;background-position:0 0;}
+			.btn_face{width:30px;height:31px;background:url(img/btn_1.jpg) no-repeat;background-position:100% 0;*+margin-left:6px;}
+			form{width:280px;height:32px;float:right;}
+			#ipt1{width:222px;height:30px;padding-left:3px;line-height:30px;border:1px solid #c3c3c3;border-radius:6px;background:#fff;vertical-align:middle;}
+			#btn1{width:40px;height:32px;background:url(img/btn_sent.jpg) no-repeat;border:0;vertical-align:middle;text-indent:9999px;margin-left: 4px;}
+			#face{width:330px;overflow:hidden;padding:8px 7px 0 0;background:#CFD6DE;display:none;}
+			#face li{width:40px;height:40px;line-height:50px;margin-bottom:8px;text-align:center;margin-left:7px;float:left;list-style:none;}
+			#add{width:337px;height:156px;display:none;}
+			
+		</style>
+	</head>
+	<body>
+		<div class="bgdiv" id='wrap'>
+		    <div class="name">大大的力量</div>
+		    <ul id="ul1"></ul>
+		    <div class="btdiv">
+		        <div class="ipt">
+		            <div class="btns_1">
+		                <a href="javascript:;" class="btn_face" id="btn3"></a>
+		            </div>
+		            <form>
+		                <input type="text" id="ipt1" value="" />
+		                <input type="button" value="发送" id="btn1" />
+		            </form>
+		        </div>
+		        <ul id="face">
+		            <li><img src="img/f1.png" /></li>
+		            <li><img src="img/f1.png" /></li>
+		        </ul>
+		        <div id="add"><img src="img/add.jpg" /></div>
+		    </div>
+</div>
+	</body>
+</html>
+<script>
+window.onload=function(){
+var oDiv=document.getElementById('wrap');
+var oUl1=document.getElementById('ul1');
+var aLi=oUl1.getElementsByTagName('li');
+var oIpt=document.getElementById('ipt1');
+var oBtn1=document.getElementById('btn1');
+var oBtn2=document.getElementById('btn2');
+var oBtn3=document.getElementById('btn3');
+var oDiv1=document.getElementById('face');
+var aLi1=document.getElementsByTagName('li');
+var oDiv2=document.getElementById('add');
+oBtn1.onclick=function(){
+    if(oIpt.value==''){
+        oIpt.value='请输入内容';
+    }
+    else if(oIpt.value=='请输入内容'){
+        oUl1.innerHTML=oUl1.innerHTML;
+    }
+    else{
+        oUl1.innerHTML=oUl1.innerHTML+'<li><img src="img/peo3.jpg" /><a>'+oIpt.value+'</a></li>';
+        oIpt.value='';
+    }
+    say();
+}
+oDiv1.onOff=true;
+oBtn3.onclick=function(){
+    if(oDiv1.onOff){
+        oDiv1.style.display='block';
+        oUl1.style.height='244px' ;
+        oDiv1.onOff=false;
+    }
+    else{
+        oDiv1.style.display='none';
+        oUl1.style.height='350px' ;
+        oDiv1.onOff=true;
+
+    }    
+}
+for(var i=0;i<aLi1.length;i++){
+    aLi1[i].onmouseover=function(){
+        this.style.background='#999';
+    }
+    aLi1[i].onmouseout=function(){
+        this.style.background='';
+    }
+    aLi1[i].onclick=function(){
+        oIpt.value=oIpt.value+ this;
+        say(oIpt.value);
+    }
+    
+}
+function say(te){
+    for(var i=0;i<aLi.length;i++){
+            var oImg=aLi[i].getElementsByTagName('img')[0];
+            var oA=aLi[i].getElementsByTagName('a')[0];
+            if(i%2==0){
+                aLi[i].style.textAlign='left';
+                oA.style.background='#8bc5f2';
+                oImg.src='img/peo3.jpg';
+                oImg.style.cssFloat='left';
+                oImg.style.marginRight='6px';
+                oImg.style.styleFloat='left';
+            }
+            else{
+                aLi[i].style.textAlign='right';
+                oA.style.background='#eaebed';
+                oImg.src='img/peo2.jpg';
+                oImg.style.cssFloat='right';
+                oImg.style.marginLeft='6px';
+                oImg.style.styleFloat='right';
+            }
+        }
+    }
+	
+	
+
+}
+</script>

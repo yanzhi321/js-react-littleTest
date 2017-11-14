@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js-fetch</title>
+</head>
+<body>
+	
+	<div class="onload">
+		<ul class="list-data">
+			<li><a href="mailto:joe@example.com?subject=feedback" "email me">email me</a></li>
+		</ul>
+	</div>
+
+	<script src="js/jquery.min.js"></script>
+	<script>
+		
+		$(function(){
+
+			const url = './json/data.json'
+			//fetch
+			fetch(url)
+			.then( (res) => {
+				return res.json()
+			})
+			.then( (data) => {
+				console.log(data)
+				loadData(data.listData)
+			})
+			.catch( (err) => {
+				console.log('err message', err)
+			})
+
+			
+			let listData = document.querySelector('.list-data')
+
+			const loadData = (response) => {
+				console.log(response)
+				for(let i = 0; i<response.length; i++){
+					//$('<li>'+response[i].title +'</li>').appendTo(listData)
+					//$('<li><a href="'+response[i].url+'">'+response[i].title+'</a></li>').appendTo(listData)
+					$(`<li><a href="${response[i].url}"> ${response[i].title} </a></li>`).appendTo(listData)
+				}
+			}
+
+			//ajax
+			let xhr = new XMLHttpRequest()
+
+			console.log(xhr)
+			xhr.open('GET', url)
+			xhr.responseType = 'json'
+
+			xhr.onload = () =>{
+				console.log(xhr.response)
+				//$(`<li> <a href="${xhr.response[i].title}" > ${xhr.response[i].title} </a></li>`).appendTo(listData)
+				loadData(xhr.response.listData)
+			}
+
+			xhr.onerror = function(){
+				console.log('error')
+			}
+			xhr.send()
+
+
+		})
+
+	</script>
+</body>
+</html>

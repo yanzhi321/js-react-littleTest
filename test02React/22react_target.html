@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+   <script src="react/browser.min.js"></script>
+	<script src="react/react.min.js"></script>
+	<script src="react/react-dom.min.js"></script>
+	<script src="sortable/Sortable.min.js"></script>
+	<script src="react-bar/react-custom-scrollbars.min.js"></script>
+</head>
+
+<body>
+
+    <div id="app"></div>
+	
+	
+	<embed src="swf/clock.swf"></embed>
+	
+	
+</body>
+
+</html>
+
+<script type="text/babel">
+
+const Skill = React.createClass({
+   getInitialState: function() {
+    return {
+      data: [{
+        "ID":"1",
+        "URL": "./img/f1.png",
+        "TITLE":"Helloweba1",
+        "SUBTEXT":"WEB前端应用教程+演示+源码hhhhhhhsd看没得嘛",
+        "HREF":"javascript:void(0)"
+      }, {
+        "ID":"2",
+        "URL": "./img/f1.png",
+        "TITLE":"Helloweba2",
+        "SUBTEXT":"WEB前端应用教程+演示+源码hhhhhhhsd看没得嘛",
+        "HREF":"javascript:void(0)"
+      }, {
+        "ID":"3",
+        "URL": "./img/f1.png",
+        "TITLE":"魅族pro5随时拍",
+        "SUBTEXT":"魅族PRO 5在上年的发布至今已经有了半年多的时间了，PRO 5它不是一款完美的手机，但却是我最满意的魅族手机之一，也是我心中当之无愧的2015国产旗舰手机，它伴随着我走过了半年的时光，这半年的点滴，就让我用随手拍来回忆，看看我与PRO 5走过的半年。",
+        "HREF":"javascript:void(0)"
+      }, {
+        "ID":"4",
+        "URL": "./img/f1.png",
+        "TITLE":"Helloweba3",
+        "SUBTEXT":"WEB前端应用教程+演示+源码hhhhhhhsd看没得嘛",
+        "HREF":"javascript:void(0)"
+      }, {
+        "ID":"5",
+        "URL": "./img/f1.png",
+        "TITLE":"魅族pro5随时拍",
+        "SUBTEXT":"魅族PRO 5在上年的发布至今已经有了半年多的时间了，PRO 5它不是一款完美的手机，但却是我最满意的魅族手机之一，也是我心中当之无愧的2015国产旗舰手机，它伴随着我走过了半年的时光，这半年的点滴，就让我用随手拍来回忆，看看我与PRO 5走过的半年。",
+        "HREF":"javascript:void(0)"
+      }]
+    }
+  },
+  handleOpen(){
+     // window.open("details.html");
+      //这里该怎么获取所点击元素的URL、TITLE等数据？
+  },
+  render() {
+    return (
+    <div className="photo">
+      <h2 className="lastest-title-photo">最新作品
+      </h2>
+        <ul className="skill">
+           {
+          this.state.data.map(function(res){
+              return <li span="24" key={res.ID} ref="myTextInput">
+                <div className="slil-card" >
+                  <div className="skill-img" onClick={this.handleOpen}>
+                    <img src={res.URL} />
+                  </div>
+                  <div className="skill-content">
+                    <h2 className="skill-title"><span onClick={this.handleOpen}>{res.TITLE}</span></h2>
+                    <p className="skill-subtext">{res.SUBTEXT}</p>
+                  </div>
+                </div>
+				<embed src="swf/honehone_clock_wh.swf"></embed>
+                
+              </li>
+          },this)
+        } 
+      </ul>
+    </div>
+    );
+  }
+  
+  })
+  
+  ReactDOM.render(
+        <div>
+           <Skill></Skill>
+        </div> , 
+        document.getElementById('app') 
+
+    )
+  
+	
+</script>

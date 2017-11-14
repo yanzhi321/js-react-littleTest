@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="jq/jquery.min.js"></script>
+	</head>
+	<body>
+		<input type="checkbox" class="che" checked="checked"/>333
+		<input type="button" />
+		<input type="button" class="btn" value = "click" />
+		
+		<ul>
+			<li><span>用户名</span><input type="text" class="user" /> </li>
+			<li><span>密　码</span><input type="password" class="psd" /></li>
+			<li><input type="checkbox" calss="checked" /><span>保存用户名</span></li>
+			<li><input type="button" value = "submit" class="sub" />&nbsp;<input type="button" class="reseted" value="reset" /></li>
+			
+		</ul>
+		
+		<table border="0" width="500" cellPadding="0" cellSpacing="2"> 
+			<tr> 
+			<td height="90" bgColor="#eeeeee" align="center" vAlign="top"><script charset="Shift_JIS" src="http://chabudai.sakura.ne.jp/blogparts/honehoneclock/honehone_clock_tr.js"></script></td> 
+			<td bgColor="#eeeeee" align="center"><script charset="Shift_JIS" src="http://chabudai.sakura.ne.jp/blogparts/honehoneclock/honehone_clock_wh.js"></script></td> 
+			</tr> 
+		</table>
+		
+		<embed wmode="transparent" src="http://chabudai.sakura.ne.jp/blogparts/honehoneclock/honehone_clock_wh.swf" quality="high" bgcolor="#ffffff" width="180" height="80" name="honehoneclock" align="middle" allowscriptaccess="always" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer">
+		<embed width="180" height="180" align="middle" wmode="transparent" quality="high" src="http://images.cnblogs.com/cnblogs_com/csharp/clock.swf" pluginspage="http://www.macromedia.com/go/getflashplayer" type="application/x-shockwave-flash">
+		
+
+		
+	</body>
+</html>
+<script>
+	
+	$(function(){
+		
+		if($('.che').is(':checked')){
+			console.log("99999")
+		}
+		$('.btn').click(function(){
+			$('.che').removeAttr('checked')
+		})
+		
+		
+		if(window.localStorage){
+			
+			/*//获取浏览器里缓存的数据
+			user = localStorage.getItem("userName");
+			pwd = localStorage.getItem("password");
+			$(".user").val(user);
+			$(".password").val(pwd);
+			$(".submit").click(function(){
+				// 存储数据到缓存里面
+				localStorage.setItem("userName", $(".user").val());
+				localStorage.setItem("password", $(".password").val());
+			})
+			// 清除缓存
+			$(".reset").click(function(){
+				localStorage.clear();
+			})
+			*/
+			
+			var user = localStorage.getItem('username');
+			var pwd = localStorage.getItem('password');
+			$('.user').val(user);
+			$('.psd').val(pwd);
+				
+				console.log(!$('.checked').is(':checked'))
+				
+				if($('.checked').attr('checked',true)){
+					console.log("00")
+				}
+				
+		}
+		
+		var date = new Date();
+		//Date.now();
+		//测试时间
+		console.time(date)
+		console.timeEnd(date);
+		
+		
+		
+		//这逻辑有点深
+		function say(world){
+			console.log(world);//
+		}
+		function excute(someFunction,value){
+			someFunction(value);
+		}
+		excute(say,"hello");
+		console.time("test",excute(say,'hello'));
+		console.timeEnd("test",excute(say,'hello'));
+		
+		//简写
+		function func(oneFunction,value){
+			oneFunction(value)
+		}
+		var func1 = func(function(result){console.log(result)},"result")
+		console.time("test2",func1);
+		console.timeEnd("test2", func1);
+		
+		
+		
+	})
+	
+</script>

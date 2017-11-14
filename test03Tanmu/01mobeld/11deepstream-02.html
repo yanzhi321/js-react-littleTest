@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			
+			#container {
+			  width: calc(100% - 50px);
+			  height: calc(100% - 50px);
+			  min-height: 300px;
+			  position: relative;
+			}
+			
+			#shape {
+			  position: absolute;
+			  transition: all 1s ease 0s;
+			}
+			
+			.circle {
+			  border-radius: 100%;
+			  width: 50px;
+			  height: 50px;
+			  background:pink;
+			}
+			
+			.square {
+			  width: 50px;
+			  height: 50px;
+			  background:red;
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div id="container">
+			<div id="shape">
+				
+			</div>
+		</div>
+		
+		
+		<script src="deepstream.io-client-js/deepstream.min.js"></script>
+		<script>
+		
+		// Connect to deepstreamHub
+		var client = deepstream('wss://035.deepstreamhub.com?apiKey=88608cc8-5ece-419f-ad20-0b21d70c7526')
+		
+		// Login
+		client.login()
+		
+		// Listen to record changes
+		var shapeElement = document.querySelector( '#shape' );
+		var record = client.record.getRecord('dsh-demo/bouncy-ball');
+		record.subscribe(function(data) {
+		  shapeElement.style.left = data.position.x + '%';
+		  shapeElement.style.top = data.position.y + '%';
+		  shapeElement.style.backgroundColor = data.color;
+		  shapeElement.className = data.shape;
+		})
+		
+		</script>
+	</body>
+</html>

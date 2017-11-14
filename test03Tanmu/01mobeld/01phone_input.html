@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+		<title></title>
+	</head>
+	<body>
+		<input type="email" id="email" name="email" /><span>email</span>
+		<input type="number" id="number" name="number" /><span>number</span>
+		<input type="url" id="url" name="url" /><span>url</span>
+		<input type="tel" id="tel" name="tel" /><span>tel</span>
+		<input type="date" id="date" name="date" /><span>date</span>
+		<input type="time" id="time" name="time" /><span>time</span>
+		<input type="datetime" id="datetime" name="datetime" /><span>datetime</span>
+		<input type="month" id="month" name="month" />
+		
+		
+		<form action=""><input type="text" name="search" /></form>
+		
+	</body>
+</html>
+<script src="js/jquery.min.js"></script>
+<script>
+	
+	//http://www.cnblogs.com/johnl/p/4857307.html 关于移动段输入框
+	
+	$(function(){
+		
+		$(document).keydown(function(){
+			if(event.keyCode == 13){
+				console.log("ddddddd")
+			}
+		})
+		
+	})
+	
+
+	
+</script>

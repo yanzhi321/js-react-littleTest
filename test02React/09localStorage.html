@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap-theme.min.css" />
+		<script src="jq/jquery.min.js"></script>
+		<style>
+			
+			.box{
+				margin:50px auto;
+			}
+			.form-group{
+				margin-right:100px!important;
+			}
+			
+			.submit,.reset{
+				width:100px;
+				height:30px;
+				border:1px solid purple;
+				background:pink;
+				color:#fff;
+				text-align: center;
+				line-height: 26px;
+			}
+			
+		</style>
+	</head>
+
+	<body>
+		<!--<div class="box">
+			<form class="form-horizontal">
+				<div class="form-group">
+					<label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+					<div class="col-sm-10">
+						<input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+					<div class="col-sm-10">
+						<input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<div class="checkbox">
+							<label>
+	          <input type="checkbox" class="checked"> Remember me
+	        </label>
+						</div>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-default" id="checked">Sign in</button>
+					</div>
+				</div>
+			</form>
+		</div>-->
+		
+		
+		<div style=" width: 100%; height: 100px; line-height: 100px; text-align: center; color: #fff;">
+			输入用户名和密码之后，点击保存按钮，刷新页面，即可看到刚刚所输入的内容已经保存到输入框了
+				</div>
+				<div class="panel-lite">
+				  <div class="thumbur">
+					<div class="icon-lock"></div>
+				  </div>
+				  <h4>用户登录</h4>
+				  <div class="form-group">
+					<input required="required" class="form-control user"/>
+					<label class="form-label">用户名    </label>
+				  </div>
+				  <div class="form-group">
+					<input type="password" required="required" class="form-control password"/>
+					<label class="form-label">密　码</label>
+				  </div><a href="#" style="opacity: 0;">  </a>
+				  <div class="submit">保存账号信息</div>
+				  <div class="reset">清楚缓存</div>
+		</div>
+		
+		
+			<input type="checkbox" id="che" />6 66666
+		
+	</body>
+
+</html>
+<script>
+	$(function() {
+
+		//本地存储访客是否第一次访问
+		var strModel = "value"; //定义存储对象的属性名
+		var storeDisplay = function() {
+			var modelDisplay = 1; //定义存储对象的属性值
+			//存储，IE6~IE7 cookie 其他浏览器HTML5本地存储
+			if(window.localStorage) {
+				localStorage.setItem(strModel, modelDisplay); //进行本地存储
+			} else {
+				Cookie.write(strModel, modelDisplay); //进行Cookie存储
+			}
+		};
+	
+		//判断浏览是否支持H5缓存
+		if(window.localStorage){
+			 	// 获取缓存里面的数据
+			user = localStorage.getItem("userName");
+			pwd = localStorage.getItem("password");
+			$(".user").val(user);
+			$(".password").val(pwd);
+			$(".submit").click(function(){
+				// 存储数据到缓存里面
+				localStorage.setItem("userName", $(".user").val());
+				localStorage.setItem("password", $(".password").val());
+			})
+			// 清除缓存
+			$(".reset").click(function(){
+				localStorage.clear();
+			})
+		}else{
+			alert('对不起，您的浏览器不支持HTML5本地存储');
+		}
+		
+	})
+</script>

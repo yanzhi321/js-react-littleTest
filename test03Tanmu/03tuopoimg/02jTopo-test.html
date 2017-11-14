@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>jTopo-test</title>
+</head>
+<body>
+	
+	
+	<canvas id="canvas" width="600" height="600"
+		style="border:1px solid #000000;">
+	</canvas>
+
+	 <script src="js/jquery.min.js"></script>
+	 <script src="js/jquery.toolbar.min.js"></script>
+	 <script  src="js/jtopo-0.4.8-min.js"></script>
+
+	 <script>
+			$(function(){
+
+				console.log("ddd")
+
+				var canvas = document.getElementById('canvas'); 
+	            var stage = new JTopo.Stage(canvas); // 创建一个舞台对象
+	            var scene = new JTopo.Scene(stage); // 创建一个场景对象
+	            
+	            var node = new JTopo.Node("Hello");    // 创建一个节点
+	            node.setLocation(300,200);    // 设置节点坐标                    
+	            scene.add(node); // 放入到场景中
+
+	            
+	            //var stage = new JTopo.Stage(canvas);
+           		 //var scene = new JTopo.Scene(stage);
+            
+	            var nodeFrom = new JTopo.Node("from");
+	            nodeFrom.setLocation(200,200);
+	            scene.add(nodeFrom);
+	            
+	            var nodeTo = new JTopo.Node("To");
+	            nodeTo.setLocation(300,200);
+	            scene.add(nodeTo);
+	            
+	            var link = new JTopo.Link(nodeFrom, nodeTo); // 增加连线
+	            scene.add(link);
+
+
+			})	
+	 		
+	</script>
+</body>
+</html>

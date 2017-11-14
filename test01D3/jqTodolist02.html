@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="js/jquery.min.js"></script>
+		<style>
+			.box{
+				width:100px;
+				height:100px;
+				background:#666;
+				position:absolute;
+			}
+			.box2{
+				width:100px;
+				height:100px;
+				background:#FFC0CB;
+				box-shadow: 0 0 50px #ccc;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box"></div>
+		<div class="box2"></div>
+	</body>
+</html>
+<script>
+	
+	
+	$(function(){
+		
+		$('.box').mousedown(function(evt){
+       		
+       		var e = evt || event;
+       		var disX = e.offsetX;
+       		var disY = e.offsetY;
+       		$(document).mousemove(function(evt){
+       			
+       			var e = evt || event;
+       			var left = e.clientX - disX;
+       			var top = e.clientY - disY;
+       			
+       			var maxL = $(document).width() - $('.box').width();
+       			var maxT = $(document).height() - $('.box').height()
+       			
+       			
+       			if(left <= 0){
+       				left = 0;
+       			}
+       			if(left >= $(document).width() - $('.box').width()){
+       				left = $(document).width() - $('.box').width();
+       			}
+       			
+       			if(top < 0){
+       				top = 0;
+       			}
+       			if(top >= $(document).height() - $('.box').height()){
+       				top = $(document).height() - $('.box').height()
+       			}
+       			
+       			
+       			$('.box').css({
+       				'left':left,
+       				'top':top
+       			});
+       		})
+       		
+       		$('.box').mouseup(function(){
+	       		$(document).off('mousemove')
+       		})
+       })
+		
+	})
+	
+	
+</script>

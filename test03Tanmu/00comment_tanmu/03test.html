@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{
+				margin:0;
+				padding:0;
+			}
+			ul{
+				list-style: none;
+			}
+			.box{
+				margin:50px;
+				width:502px;
+				height:502px;
+				
+			}
+			.box-list{
+				width:100%;
+				height:100%;
+				border:1px solid red;
+				box-sizing: border-box;
+				position: relative;
+			}
+			.box-list li{
+				width:50px;
+				height:50px;
+				border-radius: 50%;
+				border:1px solid #AFEEEE;
+				box-sizing:border-box;
+				float: left;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="box">
+			<ul class="box-list">
+				
+			</ul>
+		</div>
+	</body>
+</html>
+<script src="js/jquery.min.js"></script>
+<script>
+	
+	$(function(){
+		
+		var str = '';
+		for(var i = 0; i < 100; i++){
+
+			str += '<li></li>'
+			
+		}
+		$('.box-list').append(str)
+		
+		//animate变化数值
+		var n = 1;
+		/*$('.box-list').on('click','li',function(){
+			
+			if(n == 1){
+				$(this).animate({
+					width:'+=10px',
+					height:'+=10px',
+					opacity:'+=1'
+				})
+				
+				$(this).parent('.box-list').animate({
+					width:'+=10px',
+					height:'+=10px'
+				})
+				n = 0;
+			}else if(n == 0){
+				$(this).animate({
+					width:'-=10px',
+					height:'-=10px',
+					opacity:'0.3'
+				})
+				$(this).parent('.box-list').animate({
+					width:'-=10px',
+					height:'-=10px'
+				})
+				n = 1;
+			}
+			
+		})*/
+		
+		$('.box-list li').map(function(key,value){
+			var self = this;
+			$(this).css({
+				border:"1px solid red"
+			})
+			
+			$(this).click(function(){
+				
+				if(n == 1){
+					$(this).animate({
+						width:'60px',
+						height:'60px',
+						opacity:1
+					})
+					
+					$(this).siblings('li').css({
+						width:'50px',
+						height:'50px'
+					})
+					
+					
+					$(this).parent('.box-list').animate({
+						width:'+=10px',
+						height:'+=10px'
+					})
+					
+					n = 0;
+					
+			}else if(n == 0){
+				$(this).animate({
+					width:'50px',
+					height:'50px',
+					opacity:'0.3'
+				})
+				$(this).siblings('li').animate({
+					width:'50px',
+					height:'50px'
+				})
+				
+				
+				$(this).parent('.box-list').animate({
+					width:'-=10px',
+					height:'-=10px'
+				})
+				n = 1;
+			}
+			
+			console.log(n);
+			
+			})
+			
+		})
+		
+		
+		//opacity
+		console.log(Math.random()*1 + 0.1);
+
+		//遍历随机色
+		$('.box-list li').each(function(key,value){
+			//randomColor 
+			
+			/*let r = Math.floor(Math.random()*225),
+				g = Math.floor(Math.random()*225),
+				b = Math.floor(Math.random()*225),
+				a = Math.random()*1 + 0.1;
+			let rgba = `rgba(${r},${g},${b},${a})`;*/
+			
+			$(this).css({
+				background:randomRgba()
+			})
+			//console.log(rgba);
+			//console.log(value);
+			
+		})
+		
+		//randomRgba
+		function randomRgba(){
+			let r = Math.floor(Math.random()*225),
+				g = Math.floor(Math.random()*225),
+				b = Math.floor(Math.random()*225),
+				a = Math.random()*1 + 0.1;
+			return rgba = `rgba(${r},${g},${b},${a})`;
+		}
+		
+		
+	})
+	
+	
+	
+	
+</script>

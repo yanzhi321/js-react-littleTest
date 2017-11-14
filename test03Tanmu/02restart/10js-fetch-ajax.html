@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ajax-fetch</title>
+</head>
+<body>
+	
+	<div class="wrap-data">
+		<ul class="list-data">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ul>
+		<p class='pText'></p>
+	</div>
+	<script>
+		
+		//ajax&& fetch
+		onload = function(){
+
+			const url = 'json/data.json'
+
+			//ajax
+			let xhr  = new XMLHttpRequest()
+			xhr.open('GET', url);
+			xhr.responseType = 'json'
+
+			xhr.onload = function(){
+				console.log(xhr.response)
+			}
+
+			xhr.onerror = function(){
+				console.log('error')
+			}
+			xhr.send()
+
+			//fetch
+			fetch(url)
+				.then( (response) => {
+					return response.json()
+				})
+				.then( (data) => {
+					console.log(data)
+					loadData(data)
+				})
+				.catch( (err) => {
+					console.log('err message', err)
+				})
+
+			//append node
+			let listData = document.querySelector('.listData')
+			let liArr = document.querySelectorAll('li')
+			let textNode = document.createTextNode("data")
+			//liArr.appendChild(textNode)
+			//listData.appendChild(liArr)
+
+			let pText = document.querySelector('.pText')
+			pText.appendChild(textNode)
+
+			function loadData(res){
+				
+				for(let i = 0; i<liArr.length; i++){
+					let res = document.createTextNode(res.listData[i].title)
+					liArr[i].appendChild(res)
+				}
+
+			}
+		}
+		
+	</script>
+
+</body>
+</html>

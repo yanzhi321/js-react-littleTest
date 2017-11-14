@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="yes" name="apple-touch-fullscreen">
+		<meta content="telephone=no,email=no" name="format-detection">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+		<script src="http://g.tbcdn.cn/mtb/lib-flexible/0.3.4/??flexible_css.js,flexible.js"></script>
+		<link rel="apple-touch-icon" href="favicon.png">
+		<link rel="Shortcut Icon" href="img/loading.png" type="image/x-icon">
+		<style>
+			html{
+				cursor: url('img/cursor.png') 39 39 , auto
+			}
+			.box{
+				width:200px;
+				height:200px;
+				background:red;
+			}
+			.top{
+				width:100px;
+				height:100px;
+				position:absolute;
+				background:pink;
+				z-index: 99;
+			}
+			.bot{
+				width:100px;
+				height:100px;
+				position:absolute;
+				background:purple;
+				left:50px;
+				border:2px solid #002A80
+			}
+		</style>
+	</head>
+	<body>
+		<div id="app"></div>
+		<div id="info">
+            <h3>我的博客：www.ido321.com</h3>
+           <p>程序爱好者:259280570,欢迎你的加入</p>
+       </div>
+       <div class="box">
+       		<div class="top">top</div>
+       		<div class="bot">bot</div>
+       </div>
+       
+		<script>
+			
+			//https://github.com/atlassian/react-beautiful-dnd
+			
+			//取节点
+			var info = document.getElementById('info');
+			//console.dirxml()用来显示网页的某个节点（node）所包含的html/xml代码。
+			//console.dirxml(info)
+			//console.log(info);
+			
+			//first method对象数组去重 第三
+			console.time("first timer")
+			
+			var arr = [1, 1, 2, 3, 4, 4, 5, 5];
+			var obj = {}
+			
+			for(var i  in arr){
+			   obj[arr[i]] = true;
+			}
+			//console.dir()可以显示一个对象所有的属性和方法
+			//console.dir(obj);
+			console.log(obj)
+			//console.dirxml(obj);
+			
+			console.timeEnd("first timer")
+			
+			
+			//second method -- es6--new Set  第二
+			
+			console.time("second method")
+			
+			const arr2 = [1, 1, 2, 3, 4, 4, 5, 5]
+			console.info([...new Set(arr2)])
+			//console.log(new Set(arr2))
+			
+			console.timeEnd("second method")
+			
+			
+			//third method -- es5 -- 去重效率最高
+			console.time("third method")
+			
+			const arr3 = [1, 1, 2, 3, 4, 4, 5, 5]
+			const res = []
+			for(let i = 0; i < arr3.length; res.indexOf(arr3[i++]) === -1 && res.push(arr3[i - 1]));
+			console.info(res)
+			console.timeEnd("third method")
+			
+			//forth method -- es5 
+			console.time("forth method")
+			
+			const arr4 = [1, 1, 2, 3, 4, 4, 5, 5]
+			const resArr = []
+			for(let i in arr4){
+				
+				if(resArr.indexOf(arr4[i]) == -1){
+					resArr.push(arr4[i])
+				}
+				
+			}
+			console.log(resArr)
+			console.timeEnd("forth method")
+			
+			//Array.from
+			 //方法用于将两类对象转为真正的数组：类似数组的对象（array-like object）和可遍历（iterable）的对象（包括ES6新增的数据结构Set和Map）
+			const fromObj = { 0: 'a', 1: 'b', 2: 'c', length:3 }
+			console.log(Array.from(fromObj))
+			//字符串转化为数组
+			console.info(Array.from('hello'))
+			//将Set对象转化为数组
+			console.dir(Array.from(new Set([1,2,3])))
+			console.log(new Set(['a','b']))//{'a', 'b'}
+			
+			
+		</script>
+	</body>
+</html>

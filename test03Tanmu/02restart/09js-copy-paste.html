@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>right menu</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		ul{
+			list-style:none;
+		}
+
+      .menu-wrap{
+      	width: 60px;
+      	height: 200px;
+      	position: absolute;
+      }
+
+      .menu-right{
+      	width: 100%;
+      	height: 100%;
+      	background: #ccc;
+      	position: absolute;
+      }
+
+      .menu-right li{
+		width:60px;
+		height: 33.3%;
+		border: 1px solid purple;
+		box-sizing: border-box;
+		text-align: center;
+		line-height: 64px
+      }
+		
+	  .box{
+	  	width: 200px;
+	  	height: 100px;
+	  	background: purple;
+
+	  }
+	  .bubb{
+	  	width: 100px;
+	  	height: 60px;
+	  	background: #eee;
+	  }
+	  .bubb li{
+	  	width: 100px;
+	  	height: 20px;
+	  	border: 1px dashed pink;
+	  	box-sizing: border-box;
+	  }
+	</style>
+</head>
+<body>
+	<div class="menu-wrap">
+		<ul class="menu-right">
+			<li>复制</li>
+			<li>粘贴</li>
+			<li>剪切</li>
+		</ul>
+	</div>
+	
+	<div class="box">
+		<ul class="bubb">
+			<li>冒泡</li>
+			<li>冒泡</li>
+			<li>主旨</li>
+		</ul>
+	</div>
+
+
+	<script>
+		
+		onload = function(){
+
+			let menuW = document.querySelector('.menu-wrap');
+			let menuR = document.querySelector('.menu-right');
+			let liArr = document.querySelectorAll('li')
+
+
+			document.oncontextmenu = function(){
+				return false;
+			}
+
+			document.onmousedown = function(evt){
+
+				let e = evt || window.event;
+
+				if(e.button == 2){
+					menuR.style.display = 'block'
+					menuR.style.left = e.clientX + 'px'
+					menuR.style.top = e.clientY + 'px'
+
+				}else if(e.button == 0){
+					menuR.removeEventListner('onmousedown', function(){
+						console.log("dd")
+					})
+					menuR.style.display = 'none'
+
+
+				}
+
+
+			}
+			menuW.onmousedown  = function(evt){
+
+				let e = evt || window.event;
+				e.cancelbubble = true || e.stopPropagation
+
+			}
+
+
+			//阻止冒泡
+			for(let i = 0; i < liArr.length; i++){
+
+				liArr[i].onmousedown = function(evt){
+					let e = evt || window.event;
+					e.cancelbubble = true || e.stopPropagation()
+				}
+			}
+
+			let bubb = document.querySelector('.bubb');
+			let box = document.querySelector('.box');
+			let liBubb = box.querySelector('li')
+
+			box.onmousedown = function(){
+				console.log("阻止冒泡")
+			}
+
+			bubb.onmousedown = function(evt){
+				let e = evt || window.event;
+				e.cancelbubble = true || e.stopPropagation()
+			}
+
+			liBubb.onmousedown = function(evt){
+				let e = evt || window.event;
+				e.cancelbubble = true || e.stopPropagation()
+			}
+			
+
+		}
+come oncome oncome oncome oncome oncome on
+
+
+	</script>
+</body>
+</html>

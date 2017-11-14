@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="react/browser.min.js"></script>
+		<script src="react/react.min.js"></script>
+		<script src="react/react-dom.min.js"></script>
+		<style>
+			
+			ul{
+				list-style: none;
+				margin:0;
+				padding:0;
+			}
+			.out-box{
+				width:500px;
+				height:400px;
+				margin:50px auto;
+				border:1px solid #ccc;
+			}
+			.input-text{
+				width:400px;
+				height:60px;
+				margin:10px auto;
+			}
+			
+			.input-text input{
+				width:240px;
+				height:20px;
+			}
+			
+			.input-text button{
+				width:60px;
+				height:30px;
+				margin:0 5px;
+			}
+			
+			.add-list{
+				width:400px;
+				height:300px;
+				border:1px solid #ccc;
+				box-shadow: 0 0 10px lightblue;
+				overflow-y: auto;
+				margin:0 auto;
+			}
+			.add-list li{
+				width:380px;
+				height:30px;
+				margin:10px auto;
+				border:1px solid purple;
+				line-height:30px;
+				text-align: center;
+				cursor:move;
+			}
+			
+			.add-list li button{
+				width:50px;
+				height:30px;
+				float:right;
+			}
+			
+			
+		</style>
+	</head>
+	<body>
+		
+		<div id="app"></div>
+		
+	</body>
+</html>
+<script type="text/babel">
+	
+	var Todolist = React.createClass({
+		getInitialState(){
+			
+			return {
+				value:'',
+				list:[],
+			}
+			
+		},
+		
+		startDrag(e){
+			var newState = {};
+			var event = e || window.event;
+			event.preventDefault();
+			newState.currentX = event.clientX;
+			newState.currentY = event.clientY;
+			newState.flag = true;
+			//this.props.callBackParent(newState);
+			
+		},
+		
+		inputChange(e){
+			console.log(e);
+			console.log(e.target.value);
+			this.setState({
+				value:e.target.value
+			})
+		},
+		
+		addData(){
+			
+			this.state.list.unshift(this.state.value);
+			this.setState({
+				list:this.state.list
+			})
+			
+		},
+		
+		removeData(){
+			this.state.list.splice(0,this.state.list.length);
+			this.setState({
+				list:this.state.list
+			})
+		},
+		
+		deleteData(index){
+			
+			console.log(index);
+			this.state.list.splice(index,1);
+			this.setState({
+				list:this.state.list
+			})
+			
+		},
+		
+		render(){
+			
+			var that = this;
+			return(
+				
+				<div>
+				
+					<div className="out-box">
+					
+						<div className="input-text">
+							<input type="text" defaultValue={this.state.value} onChange = {this.inputChange} />
+							<button onClick={this.addData}>Add</button>
+							<button onClick={this.removeData}>Remove</button>
+						</div>
+						
+						<ul className="add-list">
+							{
+								this.state.list.map(function(value,key){
+									return  <li key={key} onMouseDown = {that.startDrag}>
+												{value} +{key}<button onClick={that.deleteData.bind(that,key)}>Delete</button>
+											</li>
+								})
+							}
+						</ul>
+					
+					</div>
+					
+					<div className = "dragBox"></div>
+					
+
+				</div>
+				
+			)
+			
+		}
+			
+		
+	})
+	
+	ReactDOM.render(
+        <div>
+           <Todolist></Todolist>
+        </div> , 
+        document.getElementById('app') 
+
+    )
+	
+</script> 

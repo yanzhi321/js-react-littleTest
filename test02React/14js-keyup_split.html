@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script src="jq/jquery.min.js"></script>
+	</head>
+	<body>
+		<div id="time">
+			
+		</div>
+		
+		<input type="text" class = "begin"/>
+		<textarea name="" rows="10" cols="50" class = "last" >dddddddd</textarea>
+		
+		<input type="text" class = "left"/>
+		<textarea name="" rows="10" cols="50" class = "right" >dddddddd</textarea>
+	</body>
+</html>
+<script type="text/javascript">
+	
+	$(function(){
+		
+
+		var time = document.getElementById('time');
+		console.log(time.innerHTML);
+		
+		
+		//获取年月日时分秒
+		var timeFun;
+		function  timeFun(){
+			
+			var d = new Date();
+			var month,day,hour,minute,seconds;
+			if(d.getHours() < 10){
+				hour = '0' + d.getHours();
+			}else{
+				hour = d.getHours()
+			}
+			
+			if(d.getMinutes() < 10){
+				minute = '0' + d.getMinutes();
+			}else{
+				minute = d.getMinutes()
+			}
+			
+			if(d.getSeconds() < 10){
+				seconds  = '0' +d.getSeconds();
+			}else{
+				seconds = d.getSeconds()
+			}
+			
+			year = d.getFullYear() < 10 ? '0' + d.getFullYear() : d.getFullYear()
+			day = d.getDay() < 10 ? '0' + d.getDate() : d.getDate();
+			month = d.getMonth() < 10 ? '0' + (d.getMonth()+1) : (d.getMonth()+1);
+			console.log(month +1);
+					
+			time.innerHTML = "当前时间：" + year + "年" + month + "月" + day + "号--------" + hour + ":" + minute  +":"+ seconds
+			
+		}
+		setInterval(timeFun,1000)
+		
+		//三目运算符
+		/*var n = 3;
+		n < 10 ? '0' + n : n
+		alert(	n < 10 ? '0' + n : n)
+		
+		var tt = new Date();
+		console.log(tt.getMonth()+1)*/
+		
+		//过滤
+	
+		
+		 function filter1(){
+	        var filter1="蠢,蛤";
+	        var filter2=["笑|images/cursor.png","哭|k_1.jpg"];
+	        var txt=document.getElementById("text").value;
+	        var b;
+	        for(var i=0;i<filter1.split(",").length;i++)
+	        {
+	            txt=txt.replace(eval("/"+filter1.split(",")[i]+"/g"),"*");
+	        }
+	        for (var j=0;j<filter2.length;j++)
+	        {
+	            txt=txt.replace(eval("/"+filter2[j].split("|")[0]+"/g"),"<img src="+filter2[j].split("|")[1]+"/>");
+	        }
+	        return txt;
+	    }
+		
+		
+		
+		//split,字符串切割成数组
+		
+		function splitTest(){
+			
+			var str = "傻逼,渣,丫蛋";
+			for(var i = 0; i<str.split(',').length; i++){
+				str = str.replace(eval("/" + str.split(',')[i]+'/g'),"*");
+				console.log(str);
+			}
+			
+			var str3 = "我，是，一个，666";
+			str3.replace()
+			var str4 = str3.split('，',2)
+			console.log(str4);
+			
+			var scoreStr = "小明:87;小花:81;小红:97;小天:76;小张:74;小小:94;小西:90;小伍:76;小迪:64;小曼:76";
+			var sco2 = scoreStr.split(';');
+			var sum = 0;
+			console.log(sco2);
+			console.log(sco2.length);
+			for(var i = 0; i<sco2.length; i++){
+				console.log(sco2[i].split(":"))
+				sum += parseInt(sco2[i].split(":")[1])
+			}
+			console.log(sum);
+			console.log('hello'.split(''))
+			
+		}
+		
+		
+		//测试替换
+		var  begin = document.getElementsByClassName('begin')[0];
+		var last = document.getElementsByClassName('last')[0];
+		
+		/*$('.begin').blur(function(){
+			
+			$('.last').val($('.begin').val()) 
+			
+		})*/
+
+		$('.begin').keyup(function(){
+			
+		var str = "傻,痴,呆";
+			
+			for(var i=0; i<str.split(',').length; i++){
+					str = str.replace(eval("/" + str.split(',')[i]+'/g'),"*");
+				}
+			console.log(str);
+			$('.last').val($(this).val());
+		})
+		
+		$('.last').keyup(function(){
+			$('.begin').val($(this).val())
+		})
+		
+	})
+	
+	
+	
+	//split截取，敏感词替换
+	var keywords=["傻","笔","呀"];  
+	$(".left").on("keyup",function(){
+		
+		console.log($('.left').val());
+		
+		$('.right').val($('.left').val())
+		
+	    _filter_method($('.right')); 
+	    
+	});  
+	
+	//替换成*
+	/*$('.left').keyup(function(){
+		$('.right').val($(this).val())
+	    _filter_method($(this)); 
+	    
+	})*/
+	
+	//监听文本框输入内容事件
+	/*$('.left').bind('input propertychange',function(){
+		
+		$('.right').val($('.left').val().length + "characters")
+		
+	})*/
+	
+	$(".right").on("keyup",function(){  
+	    _filter_method($(this));  
+	});  
+	
+	//敏感词替换
+	function _filter_method(obj){  
+	    //获取文本输入框中的内容  
+	    var value = $(obj).val();  
+	    //遍历敏感词数组  
+	    for(var i=0;i<keywords.length;i++){  
+	        //全局替换  
+	        var reg = new RegExp(keywords[i],"g");  
+	        //判断内容中是否包括敏感词  
+	        if(value.indexOf(keywords[i])!=-1){  
+	            var result = value.replace(reg,"*");  
+	            value = result;  
+	            $(obj).val(result);  
+	        }  
+	    }  
+	}  
+	
+	
+	//replace正则匹配
+	var reg=new RegExp("(http://www.haorooms.com/BookReader/)(\\d+),(\\d+).aspx","gmi");
+	var url="http://www.haorooms.com/BookReader/1017141,20361055.aspx";
+	
+	//方式一,最简单常用的方式
+	var rep=url.replace(reg,"$1ShowBook.aspx?bookId=$2&chapterId=$3");
+	alert(rep);
+	
+	var a = "666哈奥";
+	var b = a.replace(/6/g,'*');//黄***哈奥
+	console.log(b);
+	
+</script>
