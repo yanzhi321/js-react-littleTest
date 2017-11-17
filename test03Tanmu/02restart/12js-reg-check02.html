@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<div id="wrap">
+	    <h1>注册</h1>
+	    <div>
+	        <input type="text" class='match' name='user' placeholder='请输入用户名' />
+	        <span>字母开头,长度5-10位字母数字下划线</span>
+	    </div>
+	    <div>
+	        <input type="password" class='match' name='pwd' placeholder='请输入密码' />
+	        <span>字母数字长度6-18位</span>
+	    </div>
+	    <div>
+	        <input type="password" name='pwd2' placeholder='请再次输入密码' />
+	        <span>两次密码不一致</span>
+	    </div>
+	    <div>
+	        <input type="text" class='match' name="tel" placeholder='请输入电话' />
+	        <span>电话号码格式不正确</span>
+	    </div>
+	    <div>
+	        <input type="text" class='match' name="mail" placeholder='请输入e-mail' />
+	        <span>邮箱格式不正确</span>
+	    </div>
+	    <div>
+	        <input type="text" class='match' name="IDCard" placeholder='请输入身份证' />
+	        <span>证件格式不正确</span>
+	    </div>
+	    <div class='submit'>
+	        <input type="submit" value='注册' />
+	    </div>
+	    <p id='tip'>请先输入密码</p>
+	</div>
+
+	<script>
+		
+        var reg = {
+        user:/^[a-zA-Z]\w{4,9}$/,
+        //用来判断用户名，第一位不能为数字，也就是小写字母或者大写字母，后面的内容\w表示字符（数字字母下划线）
+        //要求是5-10位字符，所以出去第一位，还需要4-9位的\w
+        pwd:/^[\da-zA-Z]{6,18}$/,
+        //用来判断密码，html结构中要求是数字字符6到18位，\d表示数字
+        tel:/^1[34578]\d{9}$/,
+        //用来判断电话号码，通常手机号第一位为1，第二位只可能出现3.4.5.7.8，后面剩下的9位数字随机
+        mail:/^[1-9a-zA-Z_]\w*@[a-zA-Z0-9]+(\.[a-zA-Z]{2,})+$/,
+        //用来判断邮箱，通常邮箱没有以0开头的，所以第一位为1-9数字或者小写字母或者大写字母，第二位开始任意字符
+        //也可以只有第一位没有第二位，*表示至少0个，@后面同理，小写字母或者大写字母或者数字，.需要转意符，所以写成\.
+        //点后面通常是com或者cn或者com.cn，所以是小写字母或者大写字母至少两位
+        IDCard:/^[1-9]\d{7}((0[1-9])|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}$|^[1-9]\d{5}[1-9]\d{3}((0[1-9])|(1[0-2]))(([0|1|2]\d)|3[0-1])\d{3}([0-9]|X)$/,
+        //用来判断身份证，身份证号有15位和18位之分，所以写两个，用或者
+    };
+    var arr = [
+        document.getElementsByName('user')[0],
+        document.getElementsByName('pwd')[0],
+        document.getElementsByName('tel')[0],
+        document.getElementsByName('mail')[0],
+        document.getElementsByName('IDCard')[0]
+    ];
+    for(var i=0;i<arr.length;i++){
+        arr[i].onblur = function(){
+            if(this.value){
+                if(reg[this.name].test(this.value)){
+                	console.log('333')
+                   this.parentNode.className = 'right';   //判断正确的时候加的class
+                }else{
+                   this.parentNode.className = 'wrong';   //判断错误的时候加的class
+                   this.focus();
+                };
+            };
+        };  
+    };
+
+    var oTip = document.getElementById('tip');
+    var opwd = document.getElementsByName('pwd2')[0];
+
+    opwd.onfous = function(){
+        if(!arr[1].value){
+            arr[1].focus();
+            oTip.className = 'show';
+            setTimeout(function () {
+                oTip.className = '';
+            },1000);
+        };
+    };
+
+    opwd.onblur = function(){
+        if(this.value){
+            if(this.value != arr[1].value){
+                this.focus();
+                this.parentNode.className ='wrong';
+            }else{
+             this.parentNode.className ='right';
+            };
+        };
+    };
+
+	</script>
+</body>
+</html>

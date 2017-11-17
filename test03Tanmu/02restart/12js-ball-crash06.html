@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>js-crash</title>
+	<style>
+		
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		ul{
+			list-style: none
+		}
+		a{
+			text-decoration: none
+		}
+		html{
+			font-size: 50px;
+			height: 100%;
+			overflow-x: hidden;
+		}
+		body{
+			font-size: .28em;
+			height: 100%;
+			line-height: 1;
+		}
+		.div1{
+			width: 2rem;
+			height: 2rem;
+			background: #ccc;
+			border-radius: 50%;
+			position: absolute;
+			left: 0;
+			bottom: 0;
+		}
+		.div2{
+			width: 2rem;
+			height: 2rem;
+			background: purple;
+			position: absolute;
+			border-radius: 50%;
+			right: 0rem;
+			bottom: 0rem;
+		}
+		
+    .div3{
+      width: 1rem;
+      height: 1rem;
+      background: lightblue;
+      position: absolute;
+      border-radius: 50%;
+      left: 50%;
+      bottom: 0;
+    }
+		.btn{
+			width: 3rem;
+			height: 1rem;
+			position: absolute;
+			transform: translateX(-1.5rem);
+			left: 50%;
+			bottom: 1rem;
+		}
+		.btn1, .btn2{
+			width: 1.4rem;
+			height: 0.5rem;
+		}
+		
+		.content{
+			width: 100%;
+			height: 4rem;
+		}
+		.list-con{
+			width: 100%;
+			height: 4rem;
+		}
+		.list-con li{
+			width: 25%;
+			height: 2rem;
+			float: left;
+			border: 0.02rem solid cyan;
+			box-sizing: border-box;
+      text-align: center;
+      line-height: 2rem;
+		}
+	</style>
+</head>
+<body>
+	
+	<div class="content">
+		<ul class="list-con">
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+			<li>6</li>
+			<li>7</li>
+			<li>8</li>
+      <!-- <li>9</li>
+      <li>10</li>
+      <li>11</li>
+      <li>12</li>
+      <li>13</li>
+      <li>14</li>
+      <li>15</li>
+      <li>16</li>
+      <li>17</li>
+      <li>18</li>
+      <li>18</li>
+      <li>20</li> -->
+		</ul>
+	</div>
+
+	<div class="div1"></div>
+	<div class="div2"></div>
+  <div class="div3">
+    
+  </div>
+	
+  <div class="box">
+    
+  </div>
+  
+  <div class="botc">
+    
+  </div>
+
+	<div class="btn">
+		<button type="button" class="btn1">start</button>
+		<button type="button" class="btn2">stop</button>
+	</div>
+	
+
+	<script>
+		
+        window.onload = function(){
+           
+           let oDiv1 = document.querySelector('.div1')
+           let oDiv2 = document.querySelector('.div2')
+           let oDiv3 = document.querySelector('.div3')
+
+           let oBtn1  = document.querySelector('.btn1')
+           let oBtn2  = document.querySelector('.btn2')
+
+           let listNode = document.getElementsByClassName('list-con')[0]
+           let listArr = listNode.getElementsByTagName('li')
+          
+
+          //动态创建div节点，文本节点
+          //http://blog.csdn.net/o9109003234/article/details/11925357
+          let arr2 = [1,2,3,4]
+           let boxNode = document.querySelector('.box')
+           
+            for(let i = 0; i<arr2.length; i++){
+              let oBox = document.createElement('div')
+              let textNode  = document.createTextNode(arr2[i])
+              oBox.appendChild(textNode)
+              boxNode.appendChild(oBox)
+
+            }
+
+
+          //listArr
+            let arr = []
+             for(let i = 0; i<listArr.length; i++){
+              arr.push(listArr[i])
+            }
+           //console.log(arr)
+           const liMap = arr.map( (con, i) =>{
+            //console.log(con.style.background = "red")
+              return i
+           })
+          
+
+           //listArr
+            let numA = Math.random()*12
+            let numB = Math.random()*7
+            //numA,numB
+            console.log(numA,numB)
+            let timer3 = 0
+            let flag = true
+            let count = 0
+            let cirArr = []
+           const liCheck = (fir,sec) => {
+
+              //resize
+              let leftMax = document.documentElement.clientWidth - fir.clientWidth;
+              let topMax = document.documentElement.clientHeight - fir.clientHeight
+
+              window.onresize = function(){
+                leftMax = document.documentElement.clientWidth - fir.clientWidth
+                topMax = document.documentElement.client - fir.clientWidth
+              }
+
+              let left = fir.offsetLeft + numA ;
+              let top = fir.offsetTop + numB;
+              
+              //console.log(numA,numB)
+              //fir--
+              let t1 = fir.offsetTop;
+              let l1 = fir.offsetLeft;
+              let r1 = fir.offsetLeft + fir.offsetWidth
+              let b1 = fir.offsetTop + fir.offsetHeight
+
+              //sec
+              let t2 = sec.offsetTop;
+              let l2 = sec.offsetLeft;
+              let r2 = sec.offsetLeft + sec.offsetWidth 
+              let b2 = sec.offsetTop + sec.offsetHeight 
+
+             // console.log(t1,l1,r1,b1)
+              //console.log(t2,l2,r2, b2)
+              //left
+              if(left >= leftMax){
+                  left = leftMax
+                  numA = -numA;
+              }else if(left <= 0){
+                left = 0;
+                numA = -numA;
+              }
+              //top
+              if(flag && top >= topMax){
+                top = topMax;
+                flag = !flag;
+                numB = -numB
+              }else if(top <= 0){
+                console.log("000")
+                  top = 0;
+                  numB = -numB
+                  //clearInterval(timer3)
+              }else if(!flag && top >= topMax){
+                
+                top = topMax
+                numB = 0;
+                clearInterval(timer3)
+              }
+
+              //cratical ---point
+              if(b1<t2 || l1>r2 || t1>b2 || r1<l2){
+                  //console.log('failed')
+
+                  //sec.style.background = ""
+              }else if(b1>t2 || l1<r2 || t1<b2 || r1>l2){
+
+                sec.style.background = "pink"
+                cirArr.push(sec.innerText)
+
+                //new Set(arr)
+                let setArr = new Set(cirArr)
+                //console.log(setArr)
+                let newArr = Array.from(setArr)
+                console.log(newArr)
+                //数组的值传入小球
+                /*let botC = document.querySelector('.botc')
+                for(let i = 0; i<newArr.length; i++){
+                  let oCir = document.createElement('div')
+                  let cirText = document.createTextNode(newArr[i])
+                  oCir.appendChild(cirText)
+                  botC.appendChild(oCir)
+
+                }*/
+
+
+              }
+
+              //px
+              fir.style.left = left + 'px'
+              fir.style.top = top +  'px'
+
+              
+           }
+
+           //oDiv3---interval
+           const interFun3 = () =>{
+              liCheck(oDiv3, listArr[0])
+              liCheck(oDiv3, listArr[1])
+              liCheck(oDiv3, listArr[2])
+              liCheck(oDiv3, listArr[3])
+              liCheck(oDiv3, listArr[4])
+              liCheck(oDiv3, listArr[5])
+              liCheck(oDiv3, listArr[6])
+              liCheck(oDiv3, listArr[7])
+             /* liCheck(oDiv3, listArr[8])
+              liCheck(oDiv3, listArr[9])
+              liCheck(oDiv3, listArr[10])
+              liCheck(oDiv3, listArr[11])
+              liCheck(oDiv3, listArr[12])
+              liCheck(oDiv3, listArr[13])
+              liCheck(oDiv3, listArr[14])
+              liCheck(oDiv3, listArr[15])
+              liCheck(oDiv3, listArr[16])
+              liCheck(oDiv3, listArr[17])
+              liCheck(oDiv3, listArr[18])
+              liCheck(oDiv3, listArr[19])*/
+           }
+           timer3 = setInterval(interFun3, 30)
+           console.log(timer3)
+
+           
+
+
+
+           //two crash function
+           //crashMovefir
+          	let numFir = 10;
+          	let numSec = 10;
+          	const crashMoveFir = (ele, ele2) =>{
+
+          		//resize
+          		let leftMax = document.documentElement.clientWidth - ele.clientWidth;
+            	let topMax  = document.documentElement.clientHeight - ele.clientHeight
+
+            	window.onresize = function(){
+
+	            	 leftMax = document.documentElement.clientWidth - ele.clientWidth;
+	            	 topMax  = document.documentElement.clientHeight - ele.clientHeight
+
+            	}
+
+          		//left&&top
+          		let left = ele.offsetLeft + numFir
+          		let top = ele.offsetTop + numSec
+
+          		//quzhi -- oDiv1
+        		let t1 = ele.offsetTop;
+        		let l1 = ele.offsetLeft;
+        		let r1 = ele.offsetLeft + ele.offsetWidth
+        		let b1 = ele.offsetTop + ele.offsetHeight
+
+        		//ele2
+          		let t2 = ele2.offsetTop
+          		let l2 = ele2.offsetLeft
+          		let r2 = ele2.offsetLeft + ele2.offsetWidth
+          		let b2 = ele2.offsetTop + ele2.offsetHeight
+
+        		//b1<t2 top临界点
+        		//l1>r2  right--critical point
+        		//t1>b2  bottom--critical point
+        		//r1<l2  left--critical point
+
+        		//or crash
+        		if(b1<t2 || l1>r2 || t1>b2 || r1<l2){// 表示没碰上  
+      						//console.log('no crash')
+      						ele2.style.background = 'purple'
+
+            }else{  
+                	//console.log('success')
+                    //ele2.style.background = 'blue';
+                    numFir = -30
+                    numSec = -30
+                    
+                } 
+
+          		//临界点critical point
+          		if(left >= leftMax){
+          			left = leftMax
+          			numFir = -numFir
+          		}else if(left <= 0){
+          			left = 0
+          			numFir = -numFir
+          		}
+
+          		if(top >= topMax){
+          			top = topMax
+          			numSec = -numSec
+          		}else if(top <= 0){
+          			top = 0
+          			numSec = -numSec
+          		}
+
+          		//left--top
+          		ele.style.left = left + 'px'
+          		ele.style.top = top + 'px'
+
+          }
+
+          	//function crashMoveSec
+    		let num1 = 30
+    		let num2 = 30
+    		const crashMoveSec = (ele,ele2) =>{
+
+    			//let leftNum2 = 10;
+          		//let topNum2 = 10;
+
+          		//resize
+          		let leftMax2 = document.documentElement.clientWidth - ele2.clientWidth;
+            	let topMax2  = document.documentElement.clientHeight - ele2.clientHeight
+
+            	window.onresize = function(){
+
+	            	 leftMax2 = document.documentElement.clientWidth - ele2.clientWidth;
+	            	 topMax2  = document.documentElement.clientHeight - ele2.clientHeight
+
+            	}
+
+          		let left = ele2.offsetLeft + num1
+          		let top = ele2.offsetTop + num2
+
+          		//ele 
+          		let t1 = ele.offsetTop
+          		let l1 = ele.offsetLeft
+          		let r1 = ele.offsetLeft + ele.offsetWidth
+          		let b1 = ele.offsetTop + ele.offsetHeight
+
+          		//ele2
+          		let t2 = ele2.offsetTop
+          		let l2 = ele2.offsetLeft
+          		let r2 = ele2.offsetLeft + ele2.offsetWidth
+          		let b2 = ele2.offsetTop + ele2.offsetHeight
+
+          		//crash---or
+          		if(b2<t1 || l2>r1 || t2>b1 || r2<l1){
+          			console.log('fail to crash')
+          		}else{
+          			//ele2.style.background = 'pink'
+          			num1 = 10
+          			num2 = 10
+          		}
+
+          		//cratical point ---临界点
+          		//临界点critical point
+          		if(left >= leftMax2){
+          			left = leftMax2
+          			num1 = -num1
+          		}else if(left <= 0){
+          			left = 0
+          			num1 = -num1
+          		}
+
+          		if(top >= topMax2){
+          			top = topMax2
+          			num2 = -num2
+          		}else if(top <= 0){
+          			top = 0
+          			num2 = -num2
+          		}
+          		ele2.style.left = left + 'px'
+          		ele2.style.top = top + 'px'
+
+    		}
+
+    		//timer
+    		let timer, timer2
+    		const interFun = () =>{
+    			crashMoveFir(oDiv1, oDiv2)
+    		}
+
+    		//timer2
+    		const interFun2 = () => {
+    			crashMoveSec(oDiv1, oDiv2)
+    		}
+
+    		oBtn1.onclick = function(){
+
+    			console.log(timer)
+    			if(timer >= 1 ){
+    				clearInterval(timer)
+    				timer = 0
+    			}
+
+    			if(timer2 >= 1){ 
+    				clearInterval(timer2)
+    				timer2 = 0
+    			}
+
+    		 	timer = setInterval(interFun, 30)
+    		 	timer2 = setInterval(interFun2, 30)
+    		}
+
+    		//stop
+    		oBtn2.onclick = function(){
+    			clearInterval(timer)
+    			clearInterval(timer2)
+    		}
+
+
+
+
+    }
+
+	</script>
+</body>
+</html>

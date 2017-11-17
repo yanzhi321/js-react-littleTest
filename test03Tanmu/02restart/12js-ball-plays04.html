@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewpoint" content="width=device-width, initial-scale=1, shrink-to-fit = no">
+	<title>Document</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		ul{
+			list-style: none;
+		}
+		a{
+			text-decoration: none;
+		}
+		
+		html{
+			font-size: 50px;
+			height: 100%;
+			overflow-x: hidden;
+		}
+		body{
+			font-size: .28em;
+			height: 100%;
+			line-height: 1;
+		}
+
+		#d1{
+			width: 2rem;
+			height: 2rem;
+			background: purple;
+			position: absolute
+		}
+		#d2{
+			width: 4rem;
+			height: 4rem;
+			background: pink;
+			position: absolute;
+			left: 4rem;
+			top: 1rem;
+		}
+	</style>
+</head>
+<body>
+	<div id="d1"></div>
+	<div id="d2"></div>
+	<script>
+		//http://blog.csdn.net/github_38095237/article/details/70157021?winzoom=1
+		
+         window.onload = function(){
+
+         	let div = document.querySelectorAll('div')
+
+         	const hit = (obj) => {
+
+         		obj.onmousedown = function(evt){
+
+         			var  e = evt || window.event;
+         			let disX = e.offsetX;
+         			let disY = e.offsetY;
+
+         			document.onmousemove = function(evt){
+         				var e = evt || window.event
+         				let left = e.clientX - disX + 'px';
+         				let top = e.clientY - disY + 'px';
+         				obj.style.left = left;
+         				obj.style.top = top
+
+
+         				 if(div[0].offsetTop+div[0].offsetHeight>=div[1].offsetTop && div[0].offsetTop<=div[1].offsetTop+div[1].offsetHeight && div[0].offsetLeft+div[0].offsetWidth>=div[1].offsetLeft && div[0].offsetLeft<=div[1].offsetLeft+div[1].offsetWidth){  
+			                console.log("你撞我了！再撞一个试试！")  
+			            };
+
+			           /* div[0].offsetTop + div[0].offsetHeight >= div[1].offsetTop
+			            div[0].offsetTop <= div[1].offsetTop + div[1].offsetHeight
+
+			            div[0].offsetLeft + div[0].offsetWidth >= div[1].offsetLeft
+			            div[0].offsetLeft <= div[1].offsetLeft + div[1].offsetWidth*/
+
+			            let a  =div[0].offsetTop,
+			            	b = div[0].offsetHeight;
+			            console.log(a,b)
+         			}
+
+         			document.onmouseup = function(e){
+         				document.onmousemove = null
+         			}
+
+         		}
+         	}
+
+         	hit(div[0])
+         	hit(div[1])
+
+         }
+
+	</script>
+</body>
+</html>

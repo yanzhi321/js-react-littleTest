@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewpoint" content="width=device-width, initial-scale = 1, shrink-to-fit=no">
+	<title>Document</title>
+	<script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+	<script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+	<script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+	<script src="https://cdn.bootcss.com/jquery/2.1.4/jquery.min.js"></script>
+	<style>
+		
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		ul{
+			list-style: none
+		}
+
+		a{
+			text-decoration: none
+		}
+		html{
+			font-size: 50px;
+			height: 100%;
+			overflow-x:hidden;
+		}
+		body{
+			font-size: .28em;
+			height: 100%;
+			line-height: 1;
+		}
+
+	</style>
+</head>
+<body>
+	<!-- https://www.cnblogs.com/qiufenghua/archive/2017/05/25/6904022.html -->
+	<div id="content"></div>
+	<script type="text/babel">
+		
+        let userGist = React.createClass({
+
+            getInitialState: function(){
+            	username: '',
+            	lastGistUrl: ''
+            },
+
+            componentDidMount: function(){
+
+            	this.serverRequest = $.get(this.props.source, function(result) {
+            		let lastGist = result[0]
+	            	this.setState({
+	            		username: lastGist.owner.login,
+	            		lastGistUrl: lastGist.html_url
+	            	})
+            	}.bind(this))
+            },
+
+            componentWillUnmount: function(){
+            	//移除dom
+            	//abort()终止请求操作
+            	this.serverRequest.abort();
+            }
+
+            render: function(){
+
+            	return(
+
+	            	<div>
+	            		<h2>{this.state.username}</h2>
+	            		<a href={this.state.gistUrl}>{this.state.gistUrl}</a>
+	            	</div>
+
+            	)
+            },
+        })
+
+
+        ReactDOM.render(
+			
+			<userGist <source src="https://api.github.com/users/octocat/gists"  />,
+			document.getElementById('content')
+
+        )
+
+	</script>	
+
+</body>
+</html>

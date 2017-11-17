@@ -22,7 +22,8 @@
 					name: "阿水",
 					site: "https://github.com",
 					sex: "man",
-					sexUrl: 'https://www.baidu.com'
+					sexUrl: 'https://www.baidu.com',
+					doTry: 'Try component'
 				}
 			},
 			
@@ -31,8 +32,9 @@
 				return(
 					<div>
 						<Name name={this.state.name} />
-						<Site site={this.state.site} />
+						<Site sites={this.state.site} />
 						<Sex sex={this.state.sex} sexUrl={this.state.sexUrl} />
+						<Try  age={this.state.doTry}  />
 					</div>
 				)
 			
@@ -64,7 +66,16 @@
 			}
 		
 		})
-
+		
+		let Try = React.createClass({
+			render: function(){
+				return(
+					<div>
+						<h3>this is {this.props.age}</h3>
+					</div>
+				)
+			}
+		})
 
 		let Sex = React.createClass({
 

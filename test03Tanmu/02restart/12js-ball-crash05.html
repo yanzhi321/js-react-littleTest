@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>js-crash</title>
+	<style>
+		
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		ul{
+			list-style: none
+		}
+		a{
+			text-decoration: none
+		}
+		html{
+			font-size: 50px;
+			height: 100%;
+			overflow-x: hidden;
+		}
+		body{
+			font-size: .28em;
+			height: 100%;
+			line-height: 1;
+		}
+		.div1{
+			width: 2rem;
+			height: 2rem;
+			background: #ccc;
+			position: absolute
+		}
+		.div2{
+			width: 2rem;
+			height: 2rem;
+			background: purple;
+			position: absolute;
+			right: 0rem;
+			bottom: 0rem;
+		}
+
+		.btn1, .btn2{
+			display: block;
+			width: 1rem;
+			height: 0.4rem;
+			margin: 0 auto;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="div1"></div>
+	<div class="div2"></div>
+
+	<button type="button" class="btn1">start</button>
+	<button type="button" class="btn2">stop</button>
+
+	<script>
+		
+        window.onload = function(){
+           
+           let oDiv1 = document.querySelector('.div1')
+           let oDiv2 = document.querySelector('.div2')
+
+           let oBtn1  = document.querySelector('.btn1')
+           let oBtn2  = document.querySelector('.btn2')
+
+           //two crash function
+           //crashMovefir
+          	let numFir = 10;
+          	let numSec = 10;
+          	const crashMoveFir = (ele, ele2) =>{
+
+          		//resize
+          		let leftMax = document.documentElement.clientWidth - ele.clientWidth;
+            	let topMax  = document.documentElement.clientHeight - ele.clientHeight
+
+            	window.onresize = function(){
+
+	            	 leftMax = document.documentElement.clientWidth - ele.clientWidth;
+	            	 topMax  = document.documentElement.clientHeight - ele.clientHeight
+
+            	}
+
+          		//left&&top
+          		let left = ele.offsetLeft + numFir
+          		let top = ele.offsetTop + numSec
+
+          		//quzhi -- oDiv1
+        		let t1 = ele.offsetTop;
+        		let l1 = ele.offsetLeft;
+        		let r1 = ele.offsetLeft + ele.offsetWidth
+        		let b1 = ele.offsetTop + ele.offsetHeight
+
+        		//ele2
+          		let t2 = ele2.offsetTop
+          		let l2 = ele2.offsetLeft
+          		let r2 = ele2.offsetLeft + ele2.offsetWidth
+          		let b2 = ele2.offsetTop + ele2.offsetHeight
+
+        		//b1<t2 top临界点
+        		//l1>r2  right--critical point
+        		//t1>b2  bottom--critical point
+        		//r1<l2  left--critical point
+
+        		//or crash
+        		if(b1<t2 || l1>r2 || t1>b2 || r1<l2){// 表示没碰上  
+						//console.log('no crash')
+						ele2.style.background = 'purple'
+                }else{  
+                	//console.log('success')
+                    //ele2.style.background = 'blue';
+                    numFir = -30
+                    numSec = -30
+                    
+                } 
+
+          		//临界点critical point
+          		if(left >= leftMax){
+          			left = leftMax
+          			numFir = -numFir
+          		}else if(left <= 0){
+          			left = 0
+          			numFir = -numFir
+          		}
+
+          		if(top >= topMax){
+          			top = topMax
+          			numSec = -numSec
+          		}else if(top <= 0){
+          			top = 0
+          			numSec = -numSec
+          		}
+
+          		//left--top
+          		ele.style.left = left + 'px'
+          		ele.style.top = top + 'px'
+
+          	}
+
+          	//function crashMoveSec
+    		let num1 = 30
+    		let num2 = 30
+    		const crashMoveSec = (ele,ele2) =>{
+
+    			//let leftNum2 = 10;
+          		//let topNum2 = 10;
+
+          		//resize
+          		let leftMax2 = document.documentElement.clientWidth - ele2.clientWidth;
+            	let topMax2  = document.documentElement.clientHeight - ele2.clientHeight
+
+            	window.onresize = function(){
+
+	            	 leftMax2 = document.documentElement.clientWidth - ele2.clientWidth;
+	            	 topMax2  = document.documentElement.clientHeight - ele2.clientHeight
+
+            	}
+
+          		let left = ele2.offsetLeft + num1
+          		let top = ele2.offsetTop + num2
+
+          		//ele 
+          		let t1 = ele.offsetTop
+          		let l1 = ele.offsetLeft
+          		let r1 = ele.offsetLeft + ele.offsetWidth
+          		let b1 = ele.offsetTop + ele.offsetHeight
+
+          		//ele2
+          		let t2 = ele2.offsetTop
+          		let l2 = ele2.offsetLeft
+          		let r2 = ele2.offsetLeft + ele2.offsetWidth
+          		let b2 = ele2.offsetTop + ele2.offsetHeight
+
+          		//crash---or
+          		if(b2<t1 || l2>r1 || t2>b1 || r2<l1){
+          			console.log('fail to crash')
+          		}else{
+          			//ele2.style.background = 'pink'
+          			num1 = 10
+          			num2 = 10
+          		}
+
+          		//cratical point ---临界点
+          		//临界点critical point
+          		if(left >= leftMax2){
+          			left = leftMax2
+          			num1 = -num1
+          		}else if(left <= 0){
+          			left = 0
+          			num1 = -num1
+          		}
+
+          		if(top >= topMax2){
+          			top = topMax2
+          			num2 = -num2
+          		}else if(top <= 0){
+          			top = 0
+          			num2 = -num2
+          		}
+          		ele2.style.left = left + 'px'
+          		ele2.style.top = top + 'px'
+
+    		}
+
+    		//timer
+    		let timer, timer2
+    		const interFun = () =>{
+    			crashMoveFir(oDiv1, oDiv2)
+    		}
+
+    		//timer2
+    		const interFun2 = () => {
+    			crashMoveSec(oDiv1, oDiv2)
+    		}
+
+    		oBtn1.onclick = function(){
+
+    			console.log(timer)
+    			if(timer >= 1 ){
+    				clearInterval(timer)
+    				timer = 0
+    			}
+
+    			if(timer2 >= 1){ 
+    				clearInterval(timer2)
+    				timer2 = 0
+    			}
+
+    		 	timer = setInterval(interFun, 30)
+    		 	timer2 = setInterval(interFun2, 30)
+    		}
+
+    		//stop
+    		oBtn2.onclick = function(){
+    			clearInterval(timer)
+    			clearInterval(timer2)
+    		}
+
+
+
+        }
+
+	</script>
+</body>
+</html>

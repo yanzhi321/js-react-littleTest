@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewpoint" content = "width = device-width, initial-scale = 1, shrink-to-fit = no" >
+	<title>Document</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		ul{
+			list-style: none;
+		}
+		a{
+			text-decoration: none
+		}
+
+		html{
+			font-size: 50px;
+			height: 100%;
+			overflow-x: hidden;
+		}
+
+		body{
+			font-size: .28em;
+			height: 100%;
+			line-height: 1;
+		}
+
+		.ball{
+			width: 2rem;
+			height: 2rem;
+			background: #ccc;
+			position: absolute;
+			border-radius: 50%;
+			left: 0;
+			top: 0;
+		}
+	</style>
+</head>
+<body>
+	
+	<div id="ball"></div>
+
+	<script>
+		
+         onload = function(){
+         	//document && body --node
+         	//let oBall = document.querySelector('#ball'),
+         	let oBall = document.body
+         		leftNum = 0,
+         		topNum = 0,
+         		aBall = null,
+         		length = 0,
+         		leftMax = 0,
+         		topMax = 0;
+
+         	//reSize
+
+	        const reSize = () =>{
+	             leftMax = document.documentElement.clientWidth - 100;
+	             topMax = document.documentElement.clientHeight - 100;
+	        }
+	        reSize();    
+	        window.onresize = reSize;
+
+			//createBall
+			
+			const createBall = (obj, num) =>{
+				for(let i = 0; i<num; i++){
+					let cBall = document.createElement('div')
+					cBall.className = 'ball'
+					//这里去i+1而不取i的原因是，一个小球的i为0，如果不取i+1，那么第一个小球会永远在左上角不动并且不停地变颜色
+					cBall.leftNum = cBall.topNum = (i+1)*1
+					obj.appendChild(cBall)
+				}
+			}
+			createBall(oBall, 10)
+			aBall = oBall.children
+			length = aBall.length;
+			//console.log(aBall)
+
+			/*creatBall(oBall,10);         //传参，往oBall里面追加10个小球
+	        aBall = oBall.children;      //获取oBall里面的所有小球
+	        length = aBall.length;
+	        function creatBall(obj,num){     //创建小球的function
+	            for(var i=0;i<num;i++){
+	                var cBall = document.createElement('div');
+	                cBall.className = 'ball';
+	                cBall.leftNum=cBall.topNum=(i+1)*1;    //这里去i+1而不取i的原因是，一个小球的i为0，如果不取i+1，那么第一个小球会永远在左上角不动并且不停地变颜色
+	                obj.appendChild(cBall);
+	            };
+	        };*/
+
+
+			//interFun
+			const interFun = () =>{
+				//console.log(aBall)
+				for(let i = 0; i<length; i++){
+
+					//bainjie
+					let left = aBall[i].offsetLeft + aBall[i].leftNum,
+						top = aBall[i].offsetTop + aBall[i].topNum;
+
+					//rgba
+					//randomRgba(aBall[i])
+					randomColor(aBall[i])
+
+					//left
+					if(left >= leftMax){
+						left = leftMax;
+						aBall[i].leftNum = -aBall[i].leftNum;
+					}else if(left <= 0){
+						left = 0;
+						aBall[i].leftNum = -aBall[i].leftNum
+					}
+
+					//top
+					if(top >= topMax){
+						top = topMax
+						aBall[i].topNum = -aBall[i].topNum
+					}else if(top <= 0){
+						top = 0;
+						aBall[i].topNum = -aBall[i].topNum
+					}
+
+					//'px'
+					aBall[i].style.left = left + 'px'
+					aBall[i].style.top = top + 'px'
+					console.log(aBall[i].style.top)
+					
+
+				}
+			}
+			//timer
+			let timer = setInterval(interFun, 30)
+			
+			//randomRgba
+			const randomRgba = (ele) =>{
+				let r = Math.ceil(Math.random()*225),
+					g = Math.ceil(Math.random()*225),
+					b = Math.ceil(Math.random()*225),
+					a = Math.random();
+				ele.style.background = `rgba(${r}, ${g}, ${b}, ${a}`
+			}
+
+			//randomColor
+			const randomColor = (ele) =>{
+				let arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f']
+				let str = ''
+				for(let i = 0; i<6; i++){
+					let n = Math.ceil(Math.random()*15)
+					str += arr[n]
+				}
+				str = '#' + str
+				ele.style.background = str
+			}
+
+            
+         }
+
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Document</title>
+	<script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+	<script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+	<script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+	<style>
+		
+		*{
+			margin:  0;
+			padding: 0;
+		}
+		ul{
+			list-style: none
+		}
+		a{
+			text-decoration: none
+		}
+
+		html{
+			font-size: 50px;
+			height: 100%;
+			overflow-x: hidden
+		}
+		body{
+			font-size: 0.28em;
+			min-width: 320px;
+			height: 100%;
+			line-height: 1;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="content"></div>
+
+	<script type="text/babel">
+		
+        let Counter = React.createClass({
+
+        	getInitialState: function(){
+        		return {
+        			clickCount: 0,
+        			count: 0
+        		}
+        	},
+
+        	_handleClick: function(){
+        		this.setState(function(state){
+        			return{
+        				clickCount: state.clickCount + 1
+        			}
+        		})
+        	}, 
+
+        	_add: function(){
+				this.setState({
+					count: ++this.state.count
+				})
+        	},
+
+        	render: function(){
+				let text = this.state.count
+        		return(
+        			<div>
+        				<h2>{this.state.clickCount}</h2>----<button onClick={this._handleClick}>{this.state.clickCount}</button>
+        				<p>{text}</p>----<button type="button" onClick={this._add}>click me</button>
+        			</div>
+        		)
+
+        	}
+
+        })
+		
+		ReactDOM.render(
+			<Counter />,
+			document.getElementById('content')
+		)
+
+	</script>
+
+</body>
+</html>

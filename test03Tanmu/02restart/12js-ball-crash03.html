@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>js-crash</title>
+	<style>
+		
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		ul{
+			list-style: none
+		}
+		a{
+			text-decoration: none
+		}
+		html{
+			font-size: 50px;
+			height: 100%;
+			overflow-x: hidden;
+		}
+		body{
+			font-size: .28em;
+			height: 100%;
+			line-height: 1;
+		}
+		.div1{
+			width: 2rem;
+			height: 2rem;
+			background: #ccc;
+			position: absolute
+		}
+		.div2{
+			width: 3rem;
+			height: 3rem;
+			background: purple;
+			position: absolute;
+			right: 0rem;
+			bottom: 0rem;
+		}
+		.box{
+			width: 1rem;
+			height: 1rem;
+			background: #ccc;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="div1"></div>
+	<div class="div2"></div>
+	<div class="box"></div>
+
+	<script>
+		
+       onload = function(){
+
+           let oDiv1 = document.querySelector('.div1')
+           let oDiv2 = document.querySelector('.div2')	
+           let oBox  = document.querySelector('.box')
+
+          
+          	//let leftMax = document.documentElement.clientWidth - oDiv1.clientWidth; ////浏览器窗口宽度减去小球的宽度等于小球能运动到的最大左边位置，下一行代码同理。
+            //console.log(leftMax)
+            //let topMax = document.documentElement.clientHeight - oDiv1.clientHeight;
+            //console.log(topMax)
+            //let leftMax2 = document.documentElement.clientWidth - oDiv2.clientWidth;
+            //let topMax2  = document.documentElement.clientHeight - oDiv2.clientHeight
+
+            //window.onresize
+            /*window.onresize = function(){
+            	//当浏览器窗口发生变化时，实时获取浏览器窗口的宽高
+            	leftMax = document.documentElement.clientWidth - oDiv1.clientWidth;
+            	topMax = document.documentElement.clientHeight - oDiv1.clientHeight;
+
+            	//leftMax2 = document.documentElement.clientWidth - oDiv2.clientWidth;
+            	//topMax2 = document.documentElement.clientHeight - oDiv2.clientHeight
+
+            }*/
+
+
+          	//two speed
+          	let leftNum = 5;
+          	let topNum = 5
+
+          	let leftNum2 = 10;
+          	let topNum2 = 10;
+
+          	//inter
+          	const interFun = () =>{
+
+          		let left = oDiv1.offsetLeft + leftNum
+          		let top = oDiv1.offsetTop + topNum
+
+          		//quzhi -- oDiv1
+        		let t1 = oDiv1.offsetTop;
+        		let l1 = oDiv1.offsetLeft;
+        		let r1 = oDiv1.offsetLeft + oDiv1.offsetWidth
+        		let b1 = oDiv1.offsetTop + oDiv1.offsetHeight
+
+        		//--oDiv2
+        		let t2 = oDiv2.offsetTop;
+        		let l2  =oDiv2.offsetLeft;
+        		let r2 = oDiv2.offsetLeft + oDiv2.offsetWidth
+        		let b2 = oDiv2.offsetTop + oDiv2.offsetHeight
+
+        		//b1<t2 top临界点
+        		//l1>r2  right--critical point
+        		//t1>b2  bottom--critical point
+        		//r1<l2  left--critical point
+
+        		//or crash
+        		if(b1<t2 || l1>r2 || t1>b2 || r1<l2){// 表示没碰上  
+						console.log('no crash')
+						oDiv2.style.background = 'purple'
+                }else{  
+                	console.log('success')
+                    oDiv2.style.background = 'blue';
+                    leftNum = -30
+                    topNum = -30
+                    console.log('leftNum',leftNum)
+                    console.log('topNum',topNum)
+                } 
+
+          		//临界点critical point
+          		if(left >= leftMax){
+          			left = leftMax
+          			leftNum = -leftNum
+          		}else if(left <= 0){
+          			left = 0
+          			leftNum = -leftNum
+          		}
+
+          		if(top >= topMax){
+          			top = topMax
+          			topNum = -topNum
+          		}else if(top <= 0){
+          			top = 0
+          			topNum = -topNum
+          		}
+          		oDiv1.style.left = left + 'px'
+          		oDiv1.style.top = top + 'px'
+          	}
+
+          	//oDiv2---interFun2
+          	const interFun2 = () =>{
+
+          		let left = oDiv2.offsetLeft + leftNum2
+          		let top = oDiv2.offsetTop + topNum2
+
+          		//quzhi -- oDiv1
+        		//quzhi -- oDiv1
+        		let t1 = oDiv1.offsetTop;
+        		let l1 = oDiv1.offsetLeft;
+        		let r1 = oDiv1.offsetLeft + oDiv1.offsetWidth
+        		let b1 = oDiv1.offsetTop + oDiv1.offsetHeight
+
+        		//--oDiv2
+        		let t2 = oDiv2.offsetTop;
+        		let l2  =oDiv2.offsetLeft;
+        		let r2 = oDiv2.offsetLeft + oDiv2.offsetWidth
+        		let b2 = oDiv2.offsetTop + oDiv2.offsetHeight
+
+
+        		//b1<t2 top临界点
+        		//l1>r2  right--critical point
+        		//t1>b2  bottom--critical point
+        		//r1<l2  left--critical point
+
+        		//or crash
+        		if(b2<t1 || l2>r1 || t2>b1 || r2<l1){// 表示没碰上  
+						console.log('no crash')
+						oDiv2.style.background = 'purple'
+                }else{  
+                	console.log('success')
+                    oDiv2.style.background = 'blue';
+                    leftNum2 = 30
+                    topNum2 = 30
+                    console.log('leftNum',leftNum)
+                    console.log('topNum',topNum)
+                } 
+
+          		//临界点critical point
+          		if(left >= leftMax2){
+          			left = leftMax2
+          			leftNum2 = -leftNum2
+          		}else if(left <= 0){
+          			left = 0
+          			leftNum2 = -leftNum2
+          		}
+
+          		if(top >= topMax2){
+          			top = topMax2
+          			topNum2 = -topNum2
+          		}else if(top <= 0){
+          			top = 0
+          			topNum2 = -topNum2
+          		}
+          		oDiv2.style.left = left + 'px'
+          		oDiv2.style.top = top + 'px'
+          	}
+    		
+
+
+          	//crashMovefir
+          	let numFir = 10;
+          	let numSec = 10;
+
+          	const crashMoveFir = (ele, ele2) =>{
+
+          		//resize
+          		let leftMax = document.documentElement.clientWidth - ele.clientWidth;
+            	let topMax  = document.documentElement.clientHeight - ele.clientHeight
+
+            	window.onresize = function(){
+
+	            	 leftMax = document.documentElement.clientWidth - ele.clientWidth;
+	            	 topMax  = document.documentElement.clientHeight - ele.clientHeight
+
+            	}
+
+          		//left&&top
+          		let left = ele.offsetLeft + numFir
+          		let top = ele.offsetTop + numSec
+
+          		//quzhi -- oDiv1
+        		let t1 = ele.offsetTop;
+        		let l1 = ele.offsetLeft;
+        		let r1 = ele.offsetLeft + ele.offsetWidth
+        		let b1 = ele.offsetTop + ele.offsetHeight
+
+        		//ele2
+          		let t2 = ele2.offsetTop
+          		let l2 = ele2.offsetLeft
+          		let r2 = ele2.offsetLeft + ele2.offsetWidth
+          		let b2 = ele2.offsetTop + ele2.offsetHeight
+
+        		//b1<t2 top临界点
+        		//l1>r2  right--critical point
+        		//t1>b2  bottom--critical point
+        		//r1<l2  left--critical point
+
+        		//or crash
+        		if(b1<t2 || l1>r2 || t1>b2 || r1<l2){// 表示没碰上  
+						//console.log('no crash')
+						ele2.style.background = 'purple'
+                }else{  
+                	//console.log('success')
+                    ele2.style.background = 'blue';
+                    numFir = -30
+                    numSec = -30
+                    
+                } 
+
+          		//临界点critical point
+          		if(left >= leftMax){
+          			left = leftMax
+          			numFir = -numFir
+          		}else if(left <= 0){
+          			left = 0
+          			numFir = -numFir
+          		}
+
+          		if(top >= topMax){
+          			top = topMax
+          			numSec = -numSec
+          		}else if(top <= 0){
+          			top = 0
+          			numSec = -numSec
+          		}
+
+          		//left--top
+          		ele.style.left = left + 'px'
+          		ele.style.top = top + 'px'
+
+          	}
+
+
+          	//function pack
+    		let num1 = 30
+    		let num2 = 30
+    		
+    		const crashMove = (ele,ele2) =>{
+
+    			//let leftNum2 = 10;
+          		//let topNum2 = 10;
+
+          		//resize
+          		let leftMax2 = document.documentElement.clientWidth - ele2.clientWidth;
+            	let topMax2  = document.documentElement.clientHeight - ele2.clientHeight
+
+            	window.onresize = function(){
+
+	            	 leftMax2 = document.documentElement.clientWidth - ele2.clientWidth;
+	            	 topMax2  = document.documentElement.clientHeight - ele2.clientHeight
+
+            	}
+
+          		let left = ele2.offsetLeft + num1
+          		let top = ele2.offsetTop + num2
+
+          		//ele 
+          		let t1 = ele.offsetTop
+          		let l1 = ele.offsetLeft
+          		let r1 = ele.offsetLeft + ele.offsetWidth
+          		let b1 = ele.offsetTop + ele.offsetHeight
+
+          		//ele2
+          		let t2 = ele2.offsetTop
+          		let l2 = ele2.offsetLeft
+          		let r2 = ele2.offsetLeft + ele2.offsetWidth
+          		let b2 = ele2.offsetTop + ele2.offsetHeight
+
+          		//crash---or
+          		if(b2<t1 || l2>r1 || t2>b1 || r2<l1){
+          			console.log('fail to crash')
+          		}else{
+          			ele2.style.background = 'pink'
+          			num1 = Math.random()*50
+          			num2 = Math.random()*50
+          		}
+
+          		//cratical point ---临界点
+          		//临界点critical point
+          		if(left >= leftMax2){
+          			left = leftMax2
+          			num1 = -num1
+          		}else if(left <= 0){
+          			left = 0
+          			num1 = -num1
+          		}
+
+          		if(top >= topMax2){
+          			top = topMax2
+          			num2 = -num2
+          		}else if(top <= 0){
+          			top = 0
+          			num2 = -num2
+          		}
+          		ele2.style.left = left + 'px'
+          		ele2.style.top = top + 'px'
+
+    		}
+
+    		
+			const tryFun = () =>{
+    			crashMove(oDiv1,oDiv2)
+    		}
+
+    		const tryFun2 = () =>{
+    			crashMoveFir(oDiv1,oDiv2)
+    		}
+
+          	let timer = setInterval(tryFun,30)
+          	let timer2 = setInterval(tryFun2,30)
+
+       }
+
+
+	</script>
+</body>
+</html>

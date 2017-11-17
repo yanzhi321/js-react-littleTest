@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	 <script src="https://cdn.bootcss.com/react/15.4.2/react.min.js"></script>
+	<script src="https://cdn.bootcss.com/react/15.4.2/react-dom.min.js"></script>
+	<script src="https://cdn.bootcss.com/babel-standalone/6.22.1/babel.min.js"></script>
+</head>
+<body>
+	<div id="container"></div>
+
+	<script type="text/babel">
+		
+		let LikeBtn = React.createClass({
+			
+			getInitialState: function(){
+				return {
+					like: false
+				}
+			},
+
+			handleClick: function(event){
+				this.setState({
+					like: !this.state.like
+				})
+			},
+
+			render: function(){
+				let text = this.state.like ? '喜欢' : '不喜欢'
+
+				return(
+					<div>
+						<p>
+							<b>{text}</b>----<button onClick = {this.handleClick}>{text}</button>
+						</p>
+					</div>
+				)
+			}
+
+		})
+
+
+		let Num = React.createClass({
+			getInitialState: function(){
+				return {
+					num: 10
+				}
+			},
+
+			_downClick: function(){
+				this.setState({
+					num: this.state.num + 1
+				})
+			},
+
+			render: function(){
+				let nums = ++this.state.num
+				return(
+					<div>
+						<p>{nums}</p>---<button onClick={this._downClick}>{this.state.num}</button>
+					</div>
+				)
+			}
+		})
+		
+		ReactDOM.render(
+			<Num />,
+			document.getElementById('container')
+		)
+
+	</script>
+
+	<!-- <script>
+		
+		onload = function(){
+	
+			let node = document.documentElement
+			console.log(node)
+	
+			let body = document.body
+			console.log(body)
+	
+			function ranodmColor(){
+				let  arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f']
+				let str = ''
+				for(let i = 0; i<6; i++){
+					let n = Math.ceil(Math.random()*15)
+	
+				}
+			}
+	
+		}
+	
+	</script> -->
+</body>
+</html>
