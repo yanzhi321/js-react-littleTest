@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Restart</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<meta name="keywords" content="node.js, web chat application,  前端开发">
+	<meta name="description" content="online web chat application">
+	<meta name="author" content="yanzhi321">
+	<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit = no">
+	<link rel="shortcut icon" href="images/google.gif">
+
+	<style>
+		
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		ul{
+			list-style: none
+		}
+		a{
+			text-decoration: none
+		}
+
+		html{
+			font-size: 50px;
+            height: 100%;
+            overflow-x: hidden
+		}
+		body{
+			font-size: 0.28em;
+			min-width: 320px;
+			height: 100%;
+			line-height: 1
+		}
+		
+		.container{
+			width: 100%;
+			height: 100%;
+		}
+		.list{
+			width: 100%;
+			height: 4rem;
+			position: relative;
+		}
+
+		.list li{
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			opacity: 0.4;
+			filter: alpha(opacity=40);
+		}
+		.btn{
+			width: 2rem;
+			height: 1rem;
+		}
+		.left-btn, .right-btn{
+			width: 0.6rem;
+			height: 0.6rem;
+			text-align: center;
+			line-height: 0.6rem;
+			font-size: 0.4rem;
+			color: purple;
+		}
+
+		.follow{
+			width: 3rem;
+			height: 1rem;
+			border: 0.02rem solid #ccc;
+		}
+		.follow span{
+			display: inline-block;
+			width: 0.4rem;
+			height: 0.4rem; 
+			border-radius: 50%;
+			background: gray;
+			border: 0.06rem solid gray;
+		}
+		.follow span:hover{
+			cursor: pointer
+		}
+		
+	</style>
+</head>
+<body>
+	
+	<div class="container">
+		<ul class="list">
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+		</ul>
+
+		<div class="btn">
+			<button type="button" class="left-btn">&lt;</button>
+			<button type="button" class="right-btn">&gt;</button>
+		</div>
+
+		<div class="follow">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+
+	<script>
+		
+        window.onload = function(){
+
+        	//document && body
+        	let doc = document.documentElement
+        	let body = document.body
+
+        	//container
+        	let list = document.getElementsByClassName('list')[0]
+        	let liArr = document.querySelectorAll('.list li')
+        	let leftBtn = document.querySelector('.btn .left-btn')
+        	let rightBtn = document.querySelector('.btn .right-btn')
+        	let spans  = document.querySelectorAll('.follow span')
+
+        	let colorArr = ['red', 'orange', 'yellow', 'green', 'blue']
+        	colorArr.map( (con, i) => {
+        		console.log(con, i)
+        	})
+        	/*liArr.forEach( (con, i) =>{
+        		con.style.background = colorArr[i]
+        	})*/
+
+        	//liArr[i]--for--style
+        	for(let i = 0; i<liArr.length; i++){
+        		
+        		liArr[i].style.background  = colorArr[i]
+        		liArr[i].style.left = i * liArr[i].clientWidth + 'px'
+        	}
+        	console.log(body.style.left)
+
+        	//eleMove
+        	let count = 0
+        	const eleMove = () => {
+
+        		liArr.forEach( (con, i) =>{
+        			con.style.left = -i * con.clientWidth + 'px'
+        		})
+
+        	}
+
+        	setInterval(eleMove, 30)
+        	
+
+        }
+
+	</script>
+
+</body>
+</html>

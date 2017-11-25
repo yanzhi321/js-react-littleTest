@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="keywords" content="node.js, web chat application,  前端开发">
+    <meta name="description" content="online web chat application">
+    <meta name="author" content="yanzhi321">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit = no">
+    <link rel="shortcut icon" href="images/google.gif">
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    ul {
+        list-style: none
+    }
+
+    a {
+        text-decoration: none
+    }
+
+    html {
+        font-size: 50px;
+        height: 100%;
+        overflow-x: hidden
+    }
+
+    body {
+        font-size: 0.28em;
+        min-width: 320px;
+        height: 100%;
+        line-height: 1
+    }
+    .top{
+        width:100px;
+        height:100px;
+        background:#000;
+        margin:20px 0;
+    }
+    .bottom{
+        width:100px;
+        height:100px;
+        background:#000;
+        margin:20px 0;
+    }
+    </style>
+</head>
+
+<body>
+    
+    <div  class="top"></div>
+    <div  class="bottom"></div>
+	<div class="wrap">
+		<div class="container">
+			<input type="text" name="" class="num" value="just">
+			<input type="text" name="" class="res">
+			<input type="button" name="" class="btn" value = "result">
+		</div>
+	</div>
+
+    <script>
+    window.onload = function() {
+
+    	//闭包坑
+    	for(var i = 0; i<5; i++){
+    		setTimeout(function(){
+    			//console.log(i)
+    		}, 30);
+    	}
+    	
+    	//解坑 把i 赋值成一个局部的变量，从而摆脱外层迭代的影响。
+    	for (var i = 0; i < 5; i++) {
+		  (function (idx) {
+		    setTimeout(function () {
+		      //console.log(idx);
+		    }, 1000);
+		  })(i);
+		}
+
+
+		//在函数执行时，this 总是指向调用该函数的对象。要判断 this 的指向，
+		//其实就是判断 this 所在的函数属于谁。
+		//函数有所属对象时：指向所属对象
+
+		//函数有所属对象时，通常通过 . 表达式调用，这时 this 自然指向所属对象。比如下面的例子：
+		//https://github.com/alsotang/node-lessons/tree/master/lesson11
+		/*var myObject = {value: 100}
+		myObject.getValue = function(){
+			console.log(this.value)
+			console.log(this)
+
+			return this.value
+		}
+
+		//myObject
+		var myObject = {value: 100}
+
+
+		console.log(myObject.getValue());*/
+
+		//apply({}, arguments),  call({}, arg1, arg2)
+
+
+    	function test(num){
+    		if(num == 1 || num == 0){
+    			return 1;
+    		}else if(typeof num == 'number'){
+    			return num * test(num-1)
+    		}
+    	}
+    	console.log(test(3))
+
+    	var myObject = {value: 100};
+
+		var foo = function(){
+		  console.log(this);
+		};
+
+		foo(); // 全局变量 global
+		foo.apply(myObject); // { value: 100 }
+		foo.call(myObject); // { value: 100 }
+
+		var newFoo = foo.bind(myObject);
+		newFoo(); // { value: 100 }
+
+		var myObject = {value: 100}
+		var foo = function(){
+			console.log(this)
+		}
+		foo();
+		foo.apply(myObject)
+		foo.call(myObject)
+    	
+
+        //Uncaught RangeError: Maximum call stack size exceeded
+        //“栈溢出”，出现这个错误的原因是因为我进行了递归运算，但是忘记添加判断条件，导致递归无线循环下去。。
+        let fun = () => {
+
+            //自己调用自己，称为递归调用
+            //fun()
+            console.log("recursion")
+
+        }
+        //fun()
+
+        //递归求阶乘---函数+变量
+        //递归求5的阶乘--n! = n*(n-1)
+        let fun2 = (n) => {
+
+            if (n == 1 || n == 0) {
+                return 1
+            }
+            return n * fun2(n - 1)
+        }
+        console.log(fun2(0))
+
+        //函数+函数
+        //斐波拉契题(兔子生兔子题目)--从出生后第3个月起每个月都生一对兔子，小兔子长到第三个月后每个月又生一对兔子，假如兔子都不死，问每个月的兔子对数为多少
+        // 产量分析：1， 1， 2， 3， 5， 8， 13， 21 。。。
+        // 第n个月的兔子总数  =  第n-1个月的兔子总数 + 第n-2个月的兔子总数
+        // 问题： 求任意月兔子的总数
+        //1.定义三个变量，然后两个初始化值。第三个作为存储使用
+        let fun3 = () => {
+
+            var temp;
+            var num1 = 1;
+            var num2 = 1;
+            //2.先把第二个变量存储进入第三个变量汇总，第二个变量重新赋值成为第一个和第二个之和
+            for (var i = 1; i <= 10; i++) {
+                temp = num2;
+                num2 = num1 + num2;
+                //3.把存储好的第三个变量赋值给第一个变量。
+                num1 = temp;
+                //4.执行10次。（因为前两项不需要计算，所以只需要执行10次）
+            }
+            alert(num2);
+        }
+        fun3()
+        //递归兔子
+        function fun4(n) {
+            if (n == 1 || n == 0) {
+                return 1
+            } else {
+                return fun4(n - 1) + fun4(n - 2)
+            }
+
+        }
+        console.log(fun4(11))
+
+        //js数组递归遍历
+        function getArray(arr) {
+            var arrs = [];
+            for (let i = 0; i < arr.length; i++) {
+                if (typeof arr[i] == "number") {
+                    arrs.push(arr[i])
+                } else {
+                    var temp = getArray(arr[i]);
+                    arrs = arrs.concat(temp);
+                }
+            }
+            return arrs;
+        }
+        let arr2 = [2,3,[4,6,[1,8]],12,10]
+        console.log(getArray(arr2))
+
+
+    }
+
+    </script>
+</body>
+
+</html>

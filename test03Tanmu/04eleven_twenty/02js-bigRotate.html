@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>rotate</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<meta name="keywords" content="node.js, web chat application,  前端开发">
+	<meta name="description" content="online web chat application">
+	<meta name="author" content="yanzhi321">
+	<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit = no">
+	<link rel="shortcut icon" href="images/google.gif">
+	<style type="text/css" media="screen">
+
+		*{
+			margin: 0;
+			padding: 0;
+		}
+		ul{
+			list-style: none;
+		}
+		a{
+			text-decoration: none;
+		}
+		html{
+			font-size: 50px;
+			height: 100%;
+			overflow-x: hidden;
+		}
+		body{
+			font-size: .28em;
+			height: 100%;
+			min-width: 320px
+		}
+		
+		.container{
+			width: 6rem;
+			height: 6rem;
+			border: 0.02rem solid #ccc;
+			position: absolute;
+			top: 1rem;
+			left: 1rem;
+		}
+		.circle{
+			width: 1rem;
+			height: 1rem;
+			background: purple;
+			position: absolute;
+			
+		}
+		.box{
+			width: 7rem;
+			height: 7rem;
+			
+			margin: 1rem;
+			position: relative
+		}
+		.box-list{
+			width: 7rem;
+			height: 7rem;
+		}
+		
+		.box-list li{
+			width: 2rem;
+			height: 2rem;
+			border: 0.02rem solid pink;
+			text-align: center;
+			line-height: 2rem;
+			float: left;
+			margin-left: -0.02rem;
+			margin-top: -0.02rem;
+	
+		}
+
+		.move{
+			width: 2rem;
+			height: 2rem;
+			border: 0.02rem solid pink;
+			position: absolute;
+			background: #fff;
+			text-align: center;
+			line-height: 2rem;
+			opacity: 0.3
+			left:0;
+			top: 0;
+		}
+
+		.btn{
+			width: 2rem;
+			height: 2rem;
+			border: 0.02rem dashed #ccc;
+		}
+		.start, .stop{
+			width: 1rem;
+			height: 0.6rem;
+			margin: 0.2rem;
+		}
+
+	</style>
+</head>
+<body>
+	
+	<div class="btn">
+		<button type="button" class="start">start</button>
+		<button type="button" class="stop">stop</button>
+	</div>
+	<div class="box">
+		<div class="move">
+			hello
+		</div>
+		<ul class="box-list">
+			<li>0</li>
+			<li>1</li>
+			<li>2</li>
+			<li>3</li>
+			<li>4</li>
+			<li>5</li>
+			<li>6</li>
+			<li>7</li>
+			<li>8</li>
+		</ul>
+	</div>
+	<script>
+		
+        window.onload = function(){
+
+           	let boxNode = document.querySelector('.box')
+           	let listNode = document.querySelector('.box-list')
+           	let listArr = listNode.querySelectorAll('li')
+           	let moveNode = document.querySelector('.move')
+
+           	let start = document.querySelector('.start')
+           	let stop = document.querySelector('.stop')
+
+           	//background-color
+           	//for --- i
+           	let colorArr = ["red","orange","yellow", "green", "blue", "cyan","purple", "#ccc", "pink"]
+          	for(let i = 0; i<colorArr.length; i++){
+          		listArr[i].style.background = colorArr[i]
+          	}
+          	//forEach
+          	/*listArr.forEach( (con, i) => {
+          		con.style.background = colorArr[i]
+          	})*/
+
+          	//start
+          	const moveStart = (ele, ele2) => {
+
+          		let leftMax = boxNode.clientWidth - ele.clientWidth
+          		let topMax = boxNode.clientHeight - ele.clientHeight
+
+          		window.onresize = function(){
+          			leftMax = boxNode.clientWidth - ele.clientWidth 
+          			topMax = boxNode.clientHeight - ele.clientHeight
+          		}
+
+          		//ele
+          		//l1&t1&r1&b1
+	    		let t1 = ele.offsetTop;
+	    		let l1 = ele.offsetLeft;
+	    		let r1 = ele.offsetLeft + ele.offsetWidth
+	    		let b1 = ele.offsetTop + ele.offsetHeight
+
+	    		//ele2
+	      		let t2 = ele2.offsetTop
+	      		let l2 = ele2.offsetLeft
+	      		let r2 = ele2.offsetLeft + ele2.offsetWidth
+	      		let b2 = ele2.offsetTop + ele2.offsetHeight
+
+	      		//b1<t2 top临界点
+	    		//l1>r2  right--critical point
+	    		//t1>b2  bottom--critical point
+	    		//r1<l2  left--critical point
+
+          	}
+          	let num = 0
+          	let num2 = 0
+          	let num3 = 300
+          	let num4 = 300
+          	let flag = true
+
+          	const moveup = () => {
+          		if(flag){
+          			num += 100
+          			moveNode.style.left = num + 'px'
+          			moveNode.style.top =  0 + 'px'
+          			//console.log(num)
+          		}
+
+          		if(num >= 300){
+          			num = 300
+          			num2 += 100
+          			moveNode.style.left = 200 + 'px'
+          			moveNode.style.top = num2 + 'px'
+          			//console.log(num, num2)
+          		}
+          		if(num2 >= 200){
+          			num2 = 200
+          			num3 -= 100
+          			moveNode.style.top = 200 + 'px'
+          			moveNode.style.left = num3 + 'px'
+          		}
+
+          		if(num3 <= 0){
+          			num4 -= 100
+          			moveNode.style.top = num4+ 'px'
+          			moveNode.style.left = 0 + 'px'
+          			console.log(num4)
+          		}
+          		if(num4 <= 0){
+          			moveNode.style.left = num4 + 'px'
+          			moveNode.style.top = 0 + 'px'
+          			num4 += 100
+          		}
+          	}
+
+          	let timer = 0
+          	start.onmousedown = function(){
+          		timer = setInterval(moveup, 100)
+          	}
+          	
+            
+        }
+
+	</script>
+</body>
+</html>

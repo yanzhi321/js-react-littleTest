@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Fiora</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<meta name="keywords" content="node.js, web chat application,  前端开发">
+	<meta name="description" content="online web chat application">
+	<meta name="author" content="yanzhi321">
+	<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit = no">
+	<link rel="shortcut icon" href="images/google.gif">
+	<style>
+		
+
+		
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		ul{
+			list-style: none
+		}
+		a{
+			text-decoration: none
+		}
+
+		html{
+			font-size: 50px;
+            height: 100%;
+            overflow-x: hidden
+		}
+		body{
+			font-size: 0.28em;
+			min-width: 320px;
+			height: 100%;
+			line-height: 1
+		}
+	
+		
+		.container{
+			width: 6rem;
+			height: 10rem;
+			border: 1px solid #ccc;
+			position: absolute;
+			top: 1rem;
+			left: 1rem;
+		}
+		.circle{
+			width: 0.5rem;
+			height: 0.5rem;
+			background: purple;
+			border-radius: 50%;
+			position: absolute;
+		}
+		.line{
+			width: 2rem;
+			height: 0.5rem;
+			background: #ccc;
+			position: absolute;
+			bottom: 1rem;
+			left: 1rem;
+		}
+
+		.start, .stop,
+		 .reset, .refresh{
+			width: 1rem;
+			height: 0.5rem;
+			position: absolute;
+			right: 0.5rem;
+			top: 0.3rem;
+		}
+		
+		.stop{
+			top: 1rem;
+		}
+		.reset{
+			top: 1.7rem;
+		}
+		.refresh{
+			top: 2.5rem;
+		}
+	</style>
+
+</head>
+<body>
+	
+	<div class="container">
+		<button type="button" class="start">start</button>
+		<button type="button" class="stop">stop</button>
+		<button type="button" class="reset">reset</button>
+		<button type="refresh" class="refresh">refresh</button>
+		<div class="circle">
+			
+		</div>
+		<div class="line">
+			
+		</div>
+	</div>
+	
+	<script>
+		
+        window.onload = function(){
+
+        	//http://blog.sina.com.cn/s/blog_4bfac6ef01010wjb.html 拉登
+
+        	let con  = document.getElementsByClassName('container')[0]
+        	let cir = document.getElementsByClassName('circle')[0]
+        	let line = document.getElementsByClassName('line')[0]
+        	let start  = document.getElementsByClassName('start')[0]
+        	let stop = document.querySelector('.stop')
+        	let reset = document.querySelector('.reset')
+        	let refresh = document.querySelector('.refresh')
+
+        	//cir
+        	let speedX = 5;
+        	let speedY = 5;
+
+        	const cirMotion = (ele, ele2) =>{
+
+        		let left = cir.offsetLeft + speedX
+        		let top = cir.offsetTop + speedY
+
+        		//leftMax
+        		let leftMax = con.clientWidth - cir.clientWidth
+        		let topMax = con.clientHeight - cir.clientHeight
+
+        		//left >= leftMax
+        		if(left >= leftMax){
+        			left = leftMax
+        		}else if(left <= 0){
+        			left = 0
+        		}
+
+        		if(top >= topMax){
+        			top = topMax
+        		}else if(left <= 0){
+        			top = 0
+        		}
+
+        		cir.style.left = left + 'px'
+        		cir.style.top = top + 'px'
+
+        	}
+
+
+        let count = 0	
+       	const crashMove = (ele, ele2) => {
+
+       		let leftMax = con.clientWidth - ele.clientWidth;
+       		let topMax = con.clientHeight - ele.clientHeight
+
+       		//resize
+       		window.onresize = function(){
+
+       			leftMax = con.clientWidth - ele.clientWidth
+       			topMax = con.clientHeight - ele.clientHeight
+
+       		}
+
+       		//left&top
+       		let left = ele.offsetLeft + speedX
+       		let top = ele.offsetTop + speedY
+
+       		//l1&t1&r1&b1
+    		let t1 = ele.offsetTop;
+    		let l1 = ele.offsetLeft;
+    		let r1 = ele.offsetLeft + ele.offsetWidth
+    		let b1 = ele.offsetTop + ele.offsetHeight
+
+    		//ele2
+      		let t2 = ele2.offsetTop
+      		let l2 = ele2.offsetLeft
+      		let r2 = ele2.offsetLeft + ele2.offsetWidth
+      		let b2 = ele2.offsetTop + ele2.offsetHeight
+
+       		//if
+       		//b1<t2 top临界点
+    		//l1>r2  right--critical point
+    		//t1>b2  bottom--critical point
+    		//r1<l2  left--critical point
+       		if(b1<t2 || l1>r2 || t1>b2 || r1<l2){
+       			console.log("no crash")
+       		}else{
+       			cir.style.background = "#ccc"
+
+       			speedX = -Math.random()*20
+       			speedY = -Math.random()*20;
+       			//count += count +1
+       			console.log(speedX, speedY)
+       		}
+
+       		//临界点critical point
+       		if(left >= leftMax){
+       			left = leftMax
+       			speedX = -speedX
+       		}else if(left <= 0){
+       			left = 0
+       			speedX = -speedX
+       		}
+
+       		if(top >= topMax){
+       			//topMax --- bottom=0
+       			top = topMax
+       			speedY = 0
+       			ele.style.left = left + 'px'
+       			ele.style.top = top + 'px'
+       			//Timeout
+       			/*setTimeout(function(){
+       				ele.style.opacity = '0'
+       			}, 1000);*/
+       			return;
+
+       		}else if(top <= 0){
+       			top = 0
+       			speedY = -speedY
+       		}
+   			ele.style.left = left + 'px'
+   			ele.style.top = top + 'px'
+
+       	}
+
+        	//timer
+        	let cirFun = () => {
+        		cirMotion()
+        	}
+        	let cirFun2 = () => {
+        		crashMove(cir, line)
+        	}
+        	let timer = 0
+
+        	//start
+        	start.onmousedown = function(){
+        		console.log(timer)
+        		if(timer >= 1){
+        			clearInterval(timer)
+        			timer = 0;
+        		}
+        		timer = setInterval(cirFun2, 30)
+        	}
+
+        	//stop
+        	stop.onmousedown = function(){
+        		clearInterval(timer)
+        	}
+
+        	//reset
+        	reset.onmousedown = function(){
+
+        		let res = confirm("reset")
+        		if(res){
+	        		cir.style.left = 0 + 'px'
+	        		cir.style.top = 0 + 'px'
+	        		cir.style.background = 'purple'
+        			clearInterval(timer)
+
+        		}else{
+        			prompt("please input",'default null')
+        		}
+        	}
+
+        	//refresh
+        	refresh.onmousedown = function(){
+        		window.location.reload()
+        	}
+
+        	//line
+        	document.onmousemove = function(evt){
+
+        		let e = evt || window.event;
+        		e.preventDefault()
+        		let left = e.clientX - line.offsetLeft -50
+        		let top = e.clientY - line.offsetTop - 50
+
+        		//leftMax 
+        		let leftMax = con.clientWidth - line.clientWidth
+        		 let topMax = con.clientHeight - line.clientHeight
+
+        		 if(left >= leftMax){
+        		 	left = leftMax
+        		 }else if(left <= 0){
+        		 	left = 0
+        		 }
+
+        		line.style.left = left + 'px'
+        		line.style.bottom = 50 + 'px'
+        	}
+
+        }
+
+	</script>
+</body>
+</html>

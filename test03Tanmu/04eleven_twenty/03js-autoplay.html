@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Restart</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<meta name="keywords" content="node.js, web chat application,  前端开发">
+	<meta name="description" content="online web chat application">
+	<meta name="author" content="yanzhi321">
+	<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit = no">
+	<link rel="shortcut icon" href="images/google.gif">
+	<style>
+		
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		ul{
+			list-style: none
+		}
+		a{
+			text-decoration: none
+		}
+
+		html{
+			font-size: 50px;
+            height: 100%;
+            overflow-x: hidden
+		}
+		body{
+			font-size: 0.28em;
+			min-width: 320px;
+			height: 100%;
+			line-height: 1
+		}
+		
+		.container{
+			width: 100%;
+			height: 100%;
+		}
+		.list{
+			width: 100%;
+			height: 4rem;
+			border: 0.02rem solid #ccc;
+			box-sizing: border-box;
+			position: relative;
+		}
+		.list li{
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			opacity:  1;
+			filter: alpha(opacity=100);
+			transition: 2s 
+		}
+		.list li img{
+			width: 100%;
+			height: 100%;
+
+		}
+		
+		.btn{
+			width: 2rem;
+			height: 1rem;
+		}
+		.left-btn, .right-btn{
+			width: 0.6rem;
+			height: 0.6rem;
+			text-align: center;
+			line-height: 0.6rem;
+			font-size: 0.4rem;
+			color: purple;
+		}
+
+		.follow{
+			width: 3rem;
+			height: 1rem;
+			border: 0.02rem solid #ccc;
+		}
+		.follow span{
+			display: inline-block;
+			width: 0.4rem;
+			height: 0.4rem; 
+			border-radius: 50%;
+			background: gray;
+			border: 0.06rem solid gray;
+		}
+		.follow span:hover{
+			cursor: pointer
+		}
+
+	</style>
+</head>
+<body>
+	
+	<div class="container">
+		<ul class="list">
+			<li><img src="images/google.gif" alt=""></li>
+			<li><img src="images/google.png" alt=""></li>
+			<li><img src="images/loading.png" alt=""></li>
+			<li><img src="images/mm.jpg" alt=""></li>
+			<li><img src="images/www.jpg" alt=""></li>
+		</ul>
+
+		<div class="btn">
+			<input type="button" class="left-btn" name="" value="&lt;">
+			<input type="button" class="right-btn" name="" value="&gt;">
+		</div>
+
+		<div class="follow">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<div class="box"></div>
+
+	<script>
+		
+		//lessons-- https://segmentfault.com/q/1010000002741170
+		//特殊符号 http://blog.csdn.net/HTML5_styy/article/details/53670563
+		//特殊符号Unicode编码 http://blog.csdn.net/Tectool/article/details/51577914
+
+		window.onload = function(){
+
+            let listNode = document.querySelector('.list')
+            let liArr = document.querySelectorAll('li')
+            let box = document.querySelector('.box')
+
+            let btn = document.querySelector('.btn')
+            let leftBtn = document.querySelector('.left-btn')
+            let rightBtn = document.querySelector('.right-btn')
+
+            let spans = document.querySelectorAll('.follow span')
+
+            let colorArr = ['red', 'orange', 'yellow', 'blue', 'purple']
+            liArr.forEach( (con, i) =>{
+            	con.style.background = colorArr[i]
+            })
+            
+
+            console.log(window.location)
+            //showImage
+            let showImage = (index) =>{
+
+            	for(let i = 0; i<liArr.length; i++){
+            		liArr[i].index = i;//自定义属性，得到对应的下标
+            		liArr[i].style.zIndex = 100 - i;
+            		liArr[i].style.opacity = '0'
+            		spans[i].index = i; //spans[i].index自定义属性，得到对应的下标
+            		spans[i].style.background = 'gray'
+            		//console.log( index, liArr[i].index, liArr[i].style.zIndex)
+            	}
+
+		 		//将传入参数下标值的图片透明度赋值为 1
+            	liArr[index].style.opacity = '1'
+            	//将传入参数下标值的图片的背景色赋值为white
+            	spans[index].style.background = '#fff'
+            }
+            //showImage(0)
+            //showImage(0)
+
+            //count 
+            let count = 0;
+            showImage(count)
+            //autoplay
+            let imgMove = () => {
+
+            	count++;
+            	if(count % 5 == 0){
+            		count = 0
+            	}
+            	showImage(count)
+            	
+            }
+            //timer--autoplay
+           	let timer = 0;
+           	timer = setInterval(imgMove, 2000)
+
+           	//leftBtn----
+           	leftBtn.onclick = function(){
+           		//console.log(count)
+           		//clearInterval(timer)
+           		clearInterval(timer)
+
+           		if(count == 0){
+           			count = 5
+           		}
+           		count--;
+           		showImage(count)////调用函数count先自－
+
+           		timer = setInterval(imgMove, 2000)//restart the timer
+           		console.log(count)
+
+           	}
+
+           	//rightBtn
+           	rightBtn.onclick = function(){
+           		//clearInterval
+           		clearInterval(timer)
+           		//imgMove -- func
+           		imgMove()
+
+           		timer = setInterval(imgMove, 2000)
+           		console.log(count)
+
+           	}
+
+           	//spans
+           	for(let i = 0; i<spans.length; i++){
+           		spans[i].onclick = function(evt){
+
+           			let e = evt || window.event
+           			clearInterval(timer)
+           			// 将当前点击的圆点的下标值赋值给count
+           			count = e.target.index
+
+           			console.log(e.target.index, e)
+           			//调用function showImage
+           			showImage(count)
+           			timer = setInterval(imgMove, 2000)
+
+           		}
+           	}
+
+           	let fun = (n) =>{
+           		if(n === 0){
+           			return 0;
+           		}
+           		if(n === 1){
+           			return 1
+           		}
+           		return fun(n-1) + fun(n-2)
+           	}
+
+		}
+
+	</script>
+</body>
+</html>
