@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Fiora</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <meta name="keywords" content="node.js, web chat application,  前端开发">
+    <meta name="description" content="online web chat application">
+    <meta name="author" content="yanzhi321">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit = no">
+    <link rel="shortcut icon" href="images/google.gif">
+    <style>
+	    * {
+	        margin: 0;
+	        padding: 0;
+	    }
+
+	    ul {
+	        list-style: none;
+	    }
+
+	    a {
+	        text-decoration: none
+	    }
+
+	    html {
+	        font-size: 50px;
+	        height: 100%;
+	        overflow-x: hidden
+	    }
+
+	    body {
+	        font-size: .28em;
+	        min-width: 320px;
+	        height: 100%;
+	    }
+	    .myChart{
+	    	width: 4rem;
+	    	height: 3rem;
+	    	border: 1px solid #ccc;
+	    }
+    </style>
+</head>
+
+<body>
+    <div id="myChart" class="myChart"></div>
+
+    <script>
+    window.onload = function() {
+
+        // 路径配置  
+        require.config({
+            paths: {
+                echarts: 'echarts@3.8.5'
+            }
+        });
+        // 使用EChart.js画图  
+        function drawChart() {
+            require(['echarts', 'echarts/chart/force' // 使用柱状图就加载bar模块，按需加载  
+            ], function(ec) {
+                // 基于准备好的dom，初始化echarts图表  
+                var myChart = ec.init(document.getElementById('myChart'));
+                // 添加点击事件  
+                var ecConfig = require('echarts/config');
+                myChart.on(ecConfig.EVENT.CLICK, eConsole);
+                var option = {
+                    tooltip: {
+                        show: false,
+                        trigger: 'item',
+                        formatter: '{a} : {b}'
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            restore: {
+                                show: true
+                            },
+                        }
+                    },
+                    series: [{
+                        type: 'force',
+                        name: "关系",
+                        ribbonType: false,
+                        clickable: true,
+                        draggable: false,
+                        categories: [{
+                            name: '属性'
+                        }, {
+                            name: '实例'
+                        }],
+                        itemStyle: {
+                            normal: {
+                                label: {
+                                    show: true,
+                                    textStyle: {
+                                        color: '#333'
+                                    }
+                                },
+                                nodeStyle: {
+                                    brushType: 'both',
+                                    borderColor: 'rgba(255,215,0,0.4)',
+                                    borderWidth: 1
+                                },
+                                linkStyle: {
+                                    type: 'curve'
+                                }
+                            },
+                            emphasis: {
+                                label: {
+                                    show: false
+                                    // textStyle: null // 默认使用全局文本样式，详见TEXTSTYLE  
+                                },
+                                nodeStyle: {
+                                    // r: 30  
+                                },
+                                linkStyle: {}
+                            }
+                        },
+                        useWorker: false,
+                        minRadius: 15,
+                        maxRadius: 25,
+                        gravity: 1.1,
+                        scaling: 1.1,
+                        roam: false,
+                        nodes: [{
+                            category: 1,
+                            name: '实例',
+                            value: 10,
+                            label: '宝马',
+                        }, {
+                            category: 0,
+                            name: '属性1',
+                            value: 6,
+                            label: '宝马X1'
+                        }, {
+                            category: 0,
+                            name: '属性2',
+                            value: 6,
+                            label: '宝马X5'
+                        }, {
+                            category: 0,
+                            name: '属性3',
+                            value: 6,
+                            label: '宝马3系'
+                        }, {
+                            category: 0,
+                            name: '属性4',
+                            value: 6,
+                            label: '宝马7系'
+                        }, {
+                            category: 0,
+                            name: '属性5',
+                            value: 6,
+                            label: '宝马X6'
+                        }, {
+                            category: 0,
+                            name: '属性6',
+                            value: 6,
+                            label: '宝马1系'
+                        }, {
+                            category: 0,
+                            name: '属性7',
+                            value: 6,
+                            label: '宝马i8'
+                        }],
+                        links: [{
+                            source: '属性1',
+                            target: '实例',
+                            weight: 1,
+                            name: '属性1'
+                        }, {
+                            source: '属性2',
+                            target: '实例',
+                            weight: 1,
+                            name: '属性2'
+                        }, {
+                            source: '属性3',
+                            target: '实例',
+                            weight: 1,
+                            name: '属性3'
+                        }, {
+                            source: '属性4',
+                            target: '实例',
+                            weight: 1,
+                            name: '属性4'
+                        }, {
+                            source: '属性5',
+                            target: '实例',
+                            weight: 1,
+                            name: '属性5'
+                        }, {
+                            source: '属性6',
+                            target: '实例',
+                            weight: 1,
+                            name: '属性6'
+                        }, {
+                            source: '属性7',
+                            target: '实例',
+                            weight: 1,
+                            name: '属性7'
+                        }, ]
+                    }]
+                };
+
+                // 为echarts对象加载数据  
+                myChart.setOption(option);
+
+            });
+        }
+
+        function eConsole(param) {
+            if (typeof param.seriesIndex == 'undefined') {
+                return;
+            }
+            if (param.type == 'click') {
+                alert(param.name);
+            }
+        }
+
+    }
+    </script>
+</body>
+
+</html>

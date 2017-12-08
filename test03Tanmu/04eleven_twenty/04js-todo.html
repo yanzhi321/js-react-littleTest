@@ -40,12 +40,21 @@
 			height: 5rem;
 			border: 1px solid #ccc;
 		}
+		.box{
+			width: 100px;
+			height: 100px;
+		}
 
 	</style>
 </head>
 <body>
 	<div class="container">
 		
+		<div class="box">
+			<p>	hahah</p>
+		</div>
+		
+
 		<div class="act">
 			<input type="text" class="myInput" name="">
 			<input type="button" class="add" name="">
@@ -64,13 +73,58 @@
 
 
 	<script>
+
+		//https://segmentfault.com/a/1190000010752361--一行能装逼的代码
 		
         window.onload  = function(){
 
-            
+        	let num1, num2
+			
+			document.onclick = function(evt){
+				let e = evt || window.event;
+				console.log(e.clientX, e.clientY)
+				num1 = e.clientX;
+				num2 = e.clientY;
+			}
+			console.log(num1, num2)
 
-        }
 
+
+        	//box
+        	let boxNode = document.querySelector('.box')
+        	//let boxNode = document.getElementsByClassName('box')[0]
+        	console.log(boxNode.childNodes[1])
+        	console.log(boxNode);
+        	boxNode.style.background = 'red'
+
+
+            let data = {
+			    "listData": [
+				        {"title": "传统 Ajax 已死，Fetch 永生", "url": "https://segmentfault.com/a/1190000003810652"},
+				        {"title": "React官网", "url": "http://facebook.github.io/react/index.html"},
+				        {"title": "react-components", "url": "http://react-components.com/"}
+
+			        ]}
+
+			  	//console.log(data.listData.length)
+			   //console.log(data.listData)
+			   const arr = []
+			   for(let i = 0; i<data.listData.length; i++){
+			   		 arr.push(data.listData[i])
+			   }
+			   console.log(arr)
+
+			   //slice(startIndex, endIndex)  -- [startIndex, endIndex)
+			   var rate  = 1;
+			   var str = '★★★★★☆☆☆☆☆'
+			   let str2 = str.slice(5-rate, 10-rate)
+			   console.log(str2)
+
+			   //date
+			   let date = new Date()
+			   console.log(date)
+
+		}	
 	</script>
 </body>
 </html>

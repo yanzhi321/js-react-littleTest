@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>js-react</title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<meta name="keywords" content="node.js, web chat application,  前端开发">
+	<meta name="description" content="online web chat application">
+	<meta name="author" content="yanzhi321">
+	<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit = no">
+	<link rel="shortcut icon" href="images/google.gif">
+	<style>
+		
+		*{
+			margin: 0;
+			padding: 0;
+		}
+
+		ul{
+			list-style: none
+		}
+		a{
+			text-decoration: none
+		}
+
+		html{
+			font-size: 50px;
+            height: 100%;
+            overflow-x: hidden
+		}
+		body{
+			font-size: 0.28em;
+			min-width: 320px;
+			height: 100%;
+			line-height: 1
+		}
+		
+		.container{
+			width: 6rem;
+			height: 6rem;
+			margin: 1rem;
+			border: 1px solid #ccc;
+		}
+		.box{
+			width: 0;
+			height: 0;
+			background: #5a72f8;
+			position: absolute;
+			border: 1px dashed blue;
+			filter: alpha(opacity:10);
+      opacity: 0.1;
+		}
+	</style>
+</head>
+<body>
+	
+	<div class="container">	
+		
+
+	</div>	
+
+	<script>	
+		
+        window.onload  = function(){
+
+            let con = document.querySelector('.container')
+            let cont = document.getElementsByClassName('container')
+            console.log(cont)
+            cont.onmousedown = null
+
+            con.onmousedown = function(evt){
+                let e = evt || window.event
+                let posx = e.clientX
+                let posy = e.clientY
+
+                //create
+                let div = document.createElement('div')
+                	div.className = 'box'
+                	div.style.left = e.clientX + 'px'
+                	div.style.top = e.clientY + 'px'
+                	con.appendChild(div)
+
+               con.onmousemove = function(evt){
+
+                  let e = evt || window.event
+                  let left  = Math.min(e.clientX, posx) 
+                  let top = Math.min(e.clientY, posy) 
+                  let width = Math.abs(posx - e.clientX) 
+                  let height = Math.abs(posy - e.clientY) 
+
+                  let leftMax = document.body.clientWidth - con.offsetLeft - width;
+                  let topMax = document.body.clientHeight - con.offsetTop - height;
+
+                  console.log(con.offsetLeft)
+                  if(left >= leftMax){
+                     div.style.width = width + 'px'                 	
+                  	 left = leftMax
+                  }else if(left < 0){
+                  	left = 0
+                  }
+
+                  if(top >= topMax){
+                  	top = topMax
+                  }else if(top < 0){
+                  	top = 0
+                  }
+
+                	div.style.left = left + "px";
+                	div.style.top = top + "px";
+                	div.style.width = width + "px";
+                	div.style.height = height + "px";
+
+                	console.log(left)
+                	 document.onmouseup = function() {
+                    //div.parentNode.removeChild(div);
+                   	con.onmousemove = null;
+                    document.onmouseup = null;
+                	}
+                }
+
+            }
+
+            console.log(cont[0].onmousedown)
+
+        }
+
+	</script>
+
+</body>
+</html>

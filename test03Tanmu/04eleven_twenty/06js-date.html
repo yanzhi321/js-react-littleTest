@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	
+	<script>
+		
+        let myDates = new Date()
+        console.log(myDates)
+        console.log(myDates.toLocaleDateString())
+        console.log(myDates.toLocaleString())
+        console.log(myDates.toLocaleTimeString())
+        console.log(myDates.getHours())
+
+
+        var myDate=new Date();
+        var date = myDate.getFullYear() + "-" + sup(myDate.getMonth()) + "-" + sup(myDate.getDate());
+        var time = sup(myDate.getHours()) + ":" + sup(myDate.getMinutes()) + ":" + sup(myDate.getSeconds());
+        alert(date + " " + time);
+        function sup ( n ) { return (n<10) ? '0'+n : n; }
+
+	</script>
+</body>
+</html>
