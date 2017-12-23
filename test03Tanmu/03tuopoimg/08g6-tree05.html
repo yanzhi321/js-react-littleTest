@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>网图编辑器（变型）</title>
+    <style>
+	    ::-webkit-scrollbar {
+	        display: none;
+	    }
+
+	    html,
+	    body {
+	        overflow: hidden;
+	    }
+	    ul{
+	        list-style: none;
+	      }
+
+	    .toolbar{
+          position: absolute;
+          z-index: 10;
+	     }
+
+	    .toolbar li{
+          float: left;
+          margin: 10px;
+	    }
+		
+		.dataBox{
+			width: 500px;
+			height: 500px;
+			overflow-y: auto;
+			position: absolute;
+			top: 50px;
+			left: 750px;
+			border: 1px solid #ccc;
+			padding: 30px;
+		}
+
+    </style>
+</head>
+
+<body>
+    <div id="mountNode">
+		<ul class="toolbar">
+    		<li><button class="addCustom1">addRect</button></li>
+    		<li><button class="addCircle">addCircle</button></li>
+    		<li><button class="addCustom2">addEllipse</button></li>
+    		<li><button class="addRhombus">addRhombus</button></li>
+    		<li><button class="drag">拖拽模式</button></li>
+    		<li><button class="edit">编辑模式</button></li>
+    		<li><button class="save">保存</button></li>
+    		<li><button class="getEdge">getEdge</button></li>
+    		<li><button class="downS">下载当前视口</button></li>
+    		<li><button class="downA">下载所有</button></li>
+
+    	</ul>    	
+    </div>
+	<div class="dataBox">
+		
+	</div>
+
+    <script>
+	    /*Fixing iframe window.innerHeight 0 issue in Safari*/
+	    document.body.clientHeight;
+    </script>
+    <script src="G6-antv/g6.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script type="text/javascript">
+
+    	//set data
+	    const data = {
+	    	"nodes": [],
+	    	"edges": []
+	    }
+
+	    //anchors
+	    const anchors = [
+	    	[0, 0.25],
+			[0, 0.5],
+			[0, 0.75],
+			[1, 0.25],
+			[1, 0.5],
+			[1, 0.75],
+			[0.25, 0],
+			[0.5, 0],
+			[0.75, 0],
+			[0.25, 1],
+			[0.5, 1],
+			[0.75, 1]
+	    ]
+	    const anchorPoints = [
+	    	[0.5, 0],
+	    	[1, 0.5],
+	    	[0.5, 1],
+	    	[0, 0.5]
+	    ]
+
+	    console.log(G6)
+
+		const modelN = {
+		  // 默认模式
+		  default: [
+		    'dragNode', 'dragEdge', 'dragBlank', 'clickBlankClearActive', 'resizeEdge', 'clickActive',
+		    'resizeNode', 'wheelZoom'
+		  ],
+		  // 编辑模式
+		  edit: [
+		    'dragNode', 'dragEdge', 'clickBlankClearActive', 'resizeEdge', 'clickActive',
+		    'multiSelect', 'resizeNode', 'shortcut', 'wheelZoom'
+		  ],
+		  // 拖动模式（查看模式）
+		  drag: ['shortcut', 'dragCanvas', 'wheelZoom'],
+		  // 添加模式
+		  add: ['clickAddNode', 'dragAddEdge']
+		}
+
+	    let i = 1;
+	    const Util = G6.Util
+	    //G6.registerNode()
+	    G6.registerNode('addRect', {
+	    	draw(cfg, group) {
+	    		const shape = group.addShape('rect', {
+	    			attrs: {
+	    				x: cfg.x - 40,
+	    				y: cfg.y - 40,
+	    				width: 80,
+	    				height: 80,
+	    				fill: 'transparent',
+	    				stroke: 'purple',
+	    				label: 'input'
+	    			}
+	    		});
+	    		return shape;
+	    	}, // 获取锚点
+	    	getAnchorPoints(){
+	    		return anchors;
+	    	}
+	    }, 'rect')
+
+	    //addCircle
+	    G6.registerNode('addCircle', {
+	    	draw(cfg, group) {
+	    		const shape = group.addShape('circle', {
+	    			attrs: {
+	    				x: cfg.x,
+	    				y: cfg.y,
+	    				stroke: 'purple',
+	    				fill: 'transparent',
+	    				r: 30
+	    			}
+	    		})
+	    		return shape;
+	    	}
+	    })
+
+	    //customNode2
+	    G6.registerNode('addEllipse', {
+	    	draw(cfg, group) {
+	    		const shape = group.addShape('ellipse', {
+	    			
+	    			attrs: { //ellipse
+				        x: cfg.x - 50,
+				        y: cfg.y - 20,
+				        rx: 60,
+				        ry: 40,
+				        fill: 'transparent',
+				        stroke: 'purple',
+				       	label: 'hello'
+
+				    }
+				    
+	    		});
+	    		return shape;
+	    	},
+	    	getAnchorPoints(){
+	    		return anchorPoints;
+	    	}
+	    });
+
+	    G6.registerNode('addr', {
+	    	draw(cfg, group) {
+	    		const shape = group.addShape('rhombus', {
+	    			attrs: {
+	    				x: 150,
+	    				y: 150,
+	    				width: 40,
+	    				height: 40
+	    			}
+	    		})
+	    		return shape;
+	    	}
+	    })
+
+
+
+	    //btn-dom
+	    const addCustom1 = document.querySelector('.addCustom1')
+	    const addCircle = document.querySelector('.addCircle')
+	    const addCustom2 = document.querySelector('.addCustom2')
+	    const addRhombus = document.querySelector('.addRhombus')
+	    const drag = document.querySelector('.drag')
+	    const edit = document.querySelector('.edit')
+	    const save = document.querySelector('.save')
+	    const dataBox = document.querySelector('.dataBox')
+
+	    //set G6 canvas
+	    const net = new G6.Net({
+	        id: 'mountNode', // 容器ID
+	        modes: {
+			      // 默认模式
+				  default: [
+				    'dragNode', 'dragEdge', 'dragBlank', 'clickBlankClearActive', 'resizeEdge', 'clickActive',
+				    'resizeNode', 'wheelZoom'
+				  ],
+				  // 编辑模式
+				  edit: [
+				    'dragNode', 'dragEdge', 'clickBlankClearActive', 'resizeEdge', 'clickActive',
+				    'multiSelect', 'resizeNode', 'shortcut', 'wheelZoom'
+				  ],
+				  // 拖动模式（查看模式）
+				  drag: ['shortcut', 'dragCanvas', 'wheelZoom'],
+				  // 添加模式
+				  add: ['clickAddNode', 'dragAddEdge']
+	        },
+	        mode: 'default', // 编辑模式
+	        fitView: 'cc', // 自适应视口为左上
+	        width: 700,
+	        height: 700, // 画布高
+	        grid: {
+	        	forceAlign: true,
+	        	cell: 30,
+	        	line: {
+	        		stroke: '#ccc'
+	        	}
+	        }
+	    });
+
+
+	    console.log('net', net)
+	    //console.log(G6)
+
+	    const Handler = G6.Handler
+	    console.log('Handler', Handler.clickAddNode)
+	    console.log('Util', Util)
+
+	  
+	    //load data
+	    net.source(data.nodes, data.edges);
+	    net.removeBehaviour(['hoverNodeShowAnchor', 'dragEdgeEndHideAnchor', 'dragNodeEndHideAnchor']);
+	    //net.edge--添加箭头
+	    net.edge().style({
+	    	arrow: true,
+	    	value: 'edge'
+	    })
+
+
+	    // 第四步：配置绑定事件
+	    addCustom1.onclick = function(){
+	    	net.beginAdd('node', {
+	    		shape: 'addRect',
+	    		label: 'input',
+	    		id: 'id' + i++
+	    	})
+	    }
+
+	    addCircle.onclick = function(){
+	    	//console.log(net.showAnchor)
+	    	net.beginAdd('node', {
+	    		shape: 'addCircle',
+	    		label: 'Circle',
+	    		size: 50,
+	    	})
+	    }
+
+	    addCustom2.onclick = function(){
+	    	net.beginAdd('node', {
+	    		shape: 'addEllipse',
+
+	    		label: 'Ellipse'
+	    	})
+	    }
+
+	    addRhombus.onclick = function(){
+	    	net.beginAdd('node', {
+	    		shape: 'rhombus',
+	    		width: 80,
+	    		height: 80,
+	    		label: 'rs'
+	    	})
+	    }
+           
+
+	    drag.onclick = function(){
+	    	net.changeMode('drag')
+	    }
+
+	    edit.onclick = function(){
+	    	net.changeMode('edit')
+	    }
+
+	    save.onclick = function(){
+	    	const saveData = net.save();
+	    	const json = JSON.stringify(saveData, null, 2)
+	    	console.log(saveData, json)
+	    	dataBox.innerText = json
+
+	    }
+
+	    // 第五步： 编辑交互变形
+	    let dragging = false;
+	    net.on('dragstart', function(ev){
+	    	dragging = true;
+	    });
+	    net.on('dragend', function(ev){
+	    	dragging = false;
+	    })
+
+	    //进入锚点切换到曲线添加模式
+        //addLine: 直线-line/曲线-smooth/二阶bezier曲线-quadratic/三阶bezier曲线-cubic/圆弧线-arc/多段线-polyline
+	    net.on('mouseenter', function(ev){
+	    	console.log(ev)
+	    	let shape = ev.shape;
+	    	if(shape && shape.hasClass('anchor-point') && !dragging){
+	    		net.beginAdd('edge', {
+	    			shape: 'line',
+	    		})
+	    	}
+	    })
+
+	    // 离开锚点切换回编辑模式
+	    net.on('mouseleave', function(ev){
+	    	let shape = ev.shape;
+	    	if(shape && shape.hasClass('anchor-point') && !dragging){
+	    		net.changeMode('edit')
+	    	}
+	    })
+
+	    // 绘制后显示锚点
+	    net.on('afteritemrender', function(ev){
+	    	let item = ev.item;
+	    	if(item.get('type') === 'node'){
+	    		net.showAnchor(item)
+	    	}
+	    })
+	    // 第六步：渲染关系图
+	    net.render();
+
+	    //getEdge
+	    const getEdge = document.querySelector('.getEdge')
+	    getEdge.onclick = function(){
+	    	const keyNode = net.find('id1')
+	    	const edges = keyNode.getEdges();
+	    	Util.each(edges, edge => {
+	    		net.update(edge, {
+	    			color: 'blue'
+	    		})
+	    	});
+	    	net.refresh()
+	    }
+
+	    //net.edge
+	    net.edge().style({
+	      arrow: true,
+		  stroke: '#000',
+		  strokeOpacity: 1,
+		  value: 'hello'
+		});
+
+	    /**
+ 		 * 下载当前图片
+ 		 */	
+ 		 const graphContainer = net.get('graphContainer');
+
+		function downloadImage(bool) {
+		  const matrixStash = net.getMatrix(); // 缓存当前矩阵
+		  if (bool) {
+		    net.autoZoom(); // 图自动缩放以适应画布尺寸
+		  }
+		  html2canvas(graphContainer, {
+		    onrendered(canvas) {
+		      const dataURL = canvas.toDataURL('image/png');
+		      const link = document.createElement('a');
+		      const saveName = 'graph.png';
+		      link.download = saveName;
+		      link.href = dataURL.replace('image/png', 'image/octet-stream');
+		      link.click();
+		      net.updateMatrix(matrixStash); // 还原矩阵
+		      net.refresh();
+		    }
+		  });
+		}
+
+		const downS = document.querySelector('.downS')
+		const downA = document.querySelector('.downA')
+		downS.onclick = function(){
+			downloadImage(true)
+		}
+		downA.onclick = function(){
+			downloadImage()
+		}
+
+		//input
+		//input
+	    const input = Util.createDOM('<input class="g6-label-input" />', {
+	        position: 'absolute',
+	        zIndex: 10,
+	    });
+
+		//net.on
+		net.on('dblclick', ev => {
+	    	const item = ev.item;
+	    	//net.remove(item)
+	    	console.log(item)
+	    	
+	    })
+
+
+    </script>
+</body>
+
+</html>

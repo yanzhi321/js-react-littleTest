@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>g6/antv---tooltip</title>
+</head>
+<body>
+	
+	<!-- 第二步：创建DOM容器 -->
+    <div id="c1"></div>
+
+	<script src="G6-antv/g6.min.js"></script>
+	<script>
+		
+      // https://antv.alipay.com/zh-cn/g6/1.x/tutorial/index.html
+      // 第三步：设置数据
+      const data = {
+        "nodes": [
+          {
+            "x": 140,
+            "y": 210,
+            "id": "node1"
+          },
+          {
+            "x": 270,
+            "y": 210,
+            "id": "node2"
+          }
+        ],
+        "edges": [
+          {
+            "id": "node1-node2",
+            "target": "node1",
+            "source": "node2"
+          }
+        ]
+      };
+
+      const datas = {
+"source": {
+"nodes": [
+{
+"shape": "circle",
+"label": "Start",
+"x": 180,
+"y": 90,
+"id": "f53cb24b"
+},
+{
+"shape": "addRect",
+"label": "操作人",
+"x": 180,
+"y": 180,
+"id": "d16d601b"
+},
+{
+"shape": "addRect",
+"label": "请假",
+"x": 180,
+"y": 270,
+"id": "ae104791"
+},
+{
+"shape": "addRect",
+"label": "上级",
+"x": 180,
+"y": 360,
+"id": "31c9dc6a"
+},
+{
+"shape": "rhombus",
+"label": "if",
+"x": 180,
+"y": 480,
+"id": "8e89a006"
+},
+{
+"shape": "addRect",
+"label": "yes",
+"x": 180,
+"y": 630,
+"id": "23a8295d"
+},
+{
+"shape": "addRect",
+"label": "end",
+"x": 180,
+"y": 720,
+"id": "80ed9c9a"
+},
+{
+"shape": "addRect",
+"label": "no",
+"x": 300,
+"y": 480,
+"id": "92ba8d25"
+},
+{
+"shape": "addRect",
+"label": "end",
+"x": 420,
+"y": 480,
+"id": "87cbb423"
+},
+{
+"shape": "addRect",
+"label": "and",
+"x": 0,
+"y": 480,
+"id": "27185ff3"
+},
+{
+"shape": "rhombus",
+"label": "date> initDate",
+"x": -90,
+"y": 570,
+"id": "6656d833"
+},
+{
+"shape": "addRect",
+"label": "end",
+"x": -90,
+"y": 690,
+"id": "c71470b9"
+}
+],
+"edges": [
+{
+"shape": "line",
+"source": "f53cb24b",
+"target": "d16d601b",
+"id": "ac0e41b1",
+"targetAnchor": 0
+},
+{
+"shape": "line",
+"source": "d16d601b",
+"target": "ae104791",
+"id": "f6a43198",
+"controlPoints": [
+{
+"x": 190,
+"y": 186
+},
+{
+"x": 190,
+"y": 244
+}
+],
+"sourceAnchor": 2,
+"targetAnchor": 0
+},
+{
+"shape": "line",
+"source": "ae104791",
+"target": "31c9dc6a",
+"id": "ac54aa60",
+"controlPoints": [
+{
+"x": 190,
+"y": 276
+},
+{
+"x": 190,
+"y": 334
+}
+],
+"sourceAnchor": 2,
+"targetAnchor": 0
+},
+{
+"shape": "line",
+"source": "31c9dc6a",
+"target": "8e89a006",
+"id": "d384f4eb",
+"controlPoints": [
+{
+"x": 180,
+"y": 376
+},
+{
+"x": 180,
+"y": 455.0245050678337
+}
+],
+"sourceAnchor": 2,
+"targetAnchor": 0
+},
+{
+"shape": "line",
+"source": "8e89a006",
+"target": "23a8295d",
+"id": "df294a4d",
+"controlPoints": [
+{
+"x": 180,
+"y": 504.9754949321663
+},
+{
+"x": 120,
+"y": 540
+},
+{
+"x": 180,
+"y": 614
+}
+],
+"sourceAnchor": 2
+},
+{
+"shape": "line",
+"source": "23a8295d",
+"target": "80ed9c9a",
+"id": "2816ca4d",
+"controlPoints": [
+{
+"x": 180,
+"y": 646
+},
+{
+"x": 180,
+"y": 704
+}
+],
+"sourceAnchor": 2,
+"targetAnchor": 0
+},
+{
+"shape": "line",
+"source": "8e89a006",
+"target": "92ba8d25",
+"id": "0b4d47d3",
+"targetAnchor": 3,
+"sourceAnchor": 1
+},
+{
+"shape": "line",
+"source": "92ba8d25",
+"target": "87cbb423",
+"id": "0225761e",
+"controlPoints": [
+{
+"x": 325.763671875,
+"y": 480
+},
+{
+"x": 390.2373046875,
+"y": 480
+}
+],
+"sourceAnchor": 1,
+"targetAnchor": 3
+},
+{
+"shape": "line",
+"source": "8e89a006",
+"target": "27185ff3",
+"id": "c2ebd539",
+"controlPoints": [
+{
+"x": 149.73495428658364,
+"y": 480
+},
+{
+"x": 29.66015625,
+"y": 480
+}
+],
+"sourceAnchor": 3
+},
+{
+"shape": "line",
+"source": "27185ff3",
+"target": "6656d833",
+"id": "3bf11708",
+"controlPoints": [
+{
+"x": -29.66015625,
+"y": 480
+},
+{
+"x": -90,
+"y": 538.1151297908198
+}
+],
+"sourceAnchor": 3,
+"targetAnchor": 0
+},
+{
+"shape": "line",
+"source": "6656d833",
+"target": "c71470b9",
+"id": "c5ede47f",
+"controlPoints": [
+{
+"x": -90,
+"y": 601.8848702091802
+},
+{
+"x": -90,
+"y": 674
+}
+],
+"sourceAnchor": 2,
+"targetAnchor": 0
+}
+]
+},
+"guides": []
+}
+      // 第四步：配置G6画布
+      const net = new G6.Net({
+          id: 'c1',      // 容器ID
+          width: 500,    // 画布宽
+          height: 500    // 画布高
+        });
+
+      //net.toolTip
+      net.tooltip({
+        title: '标题',
+        split: '=>',
+        dx: 10,
+        dy: 10
+      })
+      // 第五步：载入数据
+      net.source(datas.source.nodes, datas.source.edges);
+      net.node().tooltip('id')
+      // 第六步：渲染关系图
+      net.render();
+
+      //第七步：时间绑定on-bind
+      net.on('itemclick', ev => {
+        console.log(ev)
+        console.log(ev.item.get('model').id + '!')
+      })
+
+      
+      net.on('itemmouseenter', ev => {
+        const item = ev.item
+        if(net.isNode(item)){
+          net.update(item, {
+            color: 'pink',
+          })
+          net.showAnchor(item)
+          net.refresh()
+        }
+      })
+
+      net.on('mouseleave', ev => {
+        const item = ev.item;
+        if(net.isNode(item)){
+          net.update(item, {
+            color: null,
+          })
+          net.hideAnchor(item)
+          net.refresh()
+        }
+      })
+
+       // 绘制后显示锚点
+        /*net.on('afteritemrender', function(ev){
+          let item = ev.item;
+          if(item.get('type') === 'node'){
+             net.showAnchor(item)
+          }
+        })*/
+      
+      
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>g6@antv</title>
+	<style>
+		
+      ::-webkit-scrollbar {
+          display: none;
+      }
+
+      html,
+      body {
+          overflow: hidden;
+      }
+      
+      ul{
+        list-style: none;
+      }
+
+      .toolbar{
+          position: absolute;
+          z-index: 10;
+      }
+
+      .toolbar li{
+          float: left;
+          margin: 10px;
+      }
+
+	</style>
+</head>
+<body>
+	
+	<div id="mountNode">
+		<ul class="toolbar">
+			<li><button class="addCircle">addCircle</button></li>
+			<li><button class="addRect">addRect</button></li>
+                  <li><button class="addRhombus">addRhombus</button></li>
+			<li><button class="addLine">addLine</button></li>
+			<li><button class="delOne">delete</button></li>
+			<li><button type="button" class="remove">remove</button></li>
+			<li><button class="findUpdate">findUpdate</button></li>
+			<li><button class="drag">drag</button></li>
+			<li><button class="edit">edit</button></li>
+	
+			<li><button type="button" class="netSave">netSave</button></li>
+		</ul>
+	</div>
+	
+	<script src="G6-antv/g6.min.js"></script>
+	<script>
+		
+        window.onload = function(){
+
+            let i = 1;
+            let count = 0;
+            //btn-dom
+            const addCircle = document.querySelector('.addCircle')
+            const addRect  = document.querySelector('.addRect')
+            const addRhombus = document.querySelector('.addRhombus')
+            const addLine = document.querySelector('.addLine')
+            const delOne = document.querySelector('.delOne')
+            const remove = document.querySelector('.remove')
+            const findUpdate = document.querySelector('.findUpdate')
+            const drag = document.querySelector('.drag')
+            const edit = document.querySelector('.edit')
+
+            const netSave = document.querySelector('.netSave')
+
+
+            //set data
+            const data = {
+            	nodes: [],
+            	edges: []
+            };
+
+            //set G6 canvas
+            const net = new G6.Net({
+            	id: 'mountNode',
+            	mode: 'edit',
+            	fitView: 'cc',
+            	height: window.innerHeight,
+            })
+
+            //load data
+            net.source(data.nodes, data.edges)
+            //render data
+            net.render()
+
+            //addCircle
+            addCircle.onclick = function(){
+            	console.log(i)
+            	net.add('node', {
+            		shape: 'circle',
+            		id: "id" + i++,
+            		label: "id" + count++,
+            		x: 50 + i * 10, 
+            		y: 100 + i * 10,
+            	})
+            	net.refresh()
+            }
+
+            //addRect --rect, circle, ellipse, rhombus, 
+            addRect.onclick = function(){
+            	net.add('node', {
+            		shape: 'react',
+            		id: 'id' + i++,
+            		x: 50 + i * 10,
+            		y: 50 + i * 10
+            	})
+            	net.refresh()
+            }
+
+            addRhombus.onclick = function(){
+                  net.add('node', {
+                        shape: 'rhombus',
+                        id: 'id' + i++,
+                        x: 150 + i*10,
+                        y: 150 + i*10
+                  })
+            }
+           
+            //addLine: 直线-line/曲线-smooth/二阶bezier曲线-quadratic/三阶bezier曲线-cubic/圆弧线-arc/多段线-polyline
+            addLine.onclick = function(){
+            	console.log('line')
+            	net.beginAdd('edge', {
+            		shape: 'smooth',
+            	})
+            	net.refresh()
+            }
+
+            //delOne
+            delOne.onclick = function(){
+            	if(i > 1){
+            		 i = i - 1;
+            		const item = net.find('id' + i)
+            		net.remove(item)
+            		net.refresh()
+            	}
+            }
+
+            //findUpdate
+            findUpdate.onclick = function(){
+            	if(i > 1){
+            		i = i - 1;
+            		const item = net.find('id' + i)
+            		console.log(item)
+            		net.update(item, {
+            			color: 'red',
+            			label: "id" + i
+            		})
+            		net.refresh()
+            	}
+            }
+
+            //remove
+            remove.onclick = function(){
+            	console.log(i)
+            	if(i > 1){
+            		console.log(i)
+            	}
+            }
+
+            //drag
+            drag.onclick = function(){
+            	net.changeMode('drag')
+            }
+
+            //eidt
+            edit.onclick = function(){
+            	net.changeMode('edit')
+            }
+
+            //net.save()
+            netSave.onclick = function(){
+
+            	const saveData = net.save()
+            	console.log(typeof saveData)
+            	console.log(saveData instanceof Object)
+            	console.log(saveData)
+            	const jsonSave = JSON.stringify(saveData, null, 2)
+            	console.log(jsonSave)
+
+            }
+
+
+        }
+
+	</script>
+
+</body>
+</html>

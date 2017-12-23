@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>图编辑器</title>
+    <style>
+       ::-webkit-scrollbar {
+          display: none;
+      }
+
+      html,
+      body {
+          overflow: hidden;
+      }
+      
+      ul{
+        list-style: none;
+      }
+
+      .toolbar{
+          position: absolute;
+          z-index: 10;
+      }
+
+      .toolbar li{
+          float: left;
+          margin: 10px;
+      }
+
+    </style>
+</head>
+
+<body>
+    <div id="mountNode">
+      <ul class="toolbar" style="position: absolute;z-index: 10">
+        <li><button id="addCustom1">自定义形1</button></li>
+        <li><button id="addCustom2">自定义形2</button></li>
+        <li><button id="addLine">添加直线</button></li>
+        <li><button id="addSmooth">添加曲线</button></li>
+        <li><button id="drag">拖拽模式</button></li>
+        <li><button id="edit">编辑模式</button></li>
+        <li><button id="save">保存</button></li>
+      </ul>
+    </div>
+    
+
+    <script>
+    /*Fixing iframe window.innerHeight 0 issue in Safari*/
+    document.body.clientHeight;
+    </script>
+    <script src="G6-antv/g6.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script type="text/javascript">
+        
+        //G6.registerNode--customNode1
+        //cfg 则是绘制一个子项的配置信息。其三个视觉通道位置、大小、颜色和一个原始数据字段origin
+        //绘制节点(Node)的位置信息是：cfg.x、cfg.y、而边(Edge)的是 points。
+
+        G6.registerNode('customNode1', {
+          draw(cfg, group){
+              const shape = group.addShape('rect', {
+                  attrs: {
+                    x: cfg.x - 40,
+                    y: cfg.y - 40,
+                    width: 80,
+                    height: 80,
+                    fill: '#fff',
+                    stroke: 'green'
+                  }
+              })
+            return shape;
+          },
+          getAnchorPoints() {
+              return [
+                  [0, 0.25],
+                  [0, 0.5],
+                  [0, 0.75],
+                  [1, 0.25],
+                  [1, 0.5],
+                  [1, 0.75], 
+                  [0.25, 0],
+                  [0.5, 0],
+                  [0.75, 0],
+                  [0.25, 1],
+                  [0.5, 1],
+                  [0.75, 1]
+              ]
+            }
+          }, 'rect')
+
+        //G6.registerNode ---customNode2
+        G6.registerNode('customNode2', {
+            draw(cfg, group){
+                const shape = group.addShape('rect', {
+                    attrs: {
+                      x: cfg.x - 40,
+                      y: cfg.y - 40,
+                      width: 80,
+                      height: 80,
+                      fill: '#fff',
+                      stroke: 'red'
+                    }
+                })
+                return shape;
+            }
+        }, 'customNode1')
+
+        //circle
+        G6.registerNode('customNode3', {
+            draw(cfg, group){
+                const shape = group.addShape('circle', {
+                    attrs: {
+                      x: cfg.x - 35,
+                      y: cfg.y - 35,
+                      r: 70,
+                      stroke: 'black'
+                    }
+                })
+              return shape;
+            },
+            getAnchorPoints() {
+                return [
+                    [0.5, 0],
+                    [1, 0.5],
+                    [0.5, 1],
+                    [0, 0.5]
+                ]
+            }
+        }, 'circle')
+
+        //ellipse
+        G6.registerNode('customNode4', {
+            draw(cfg, group){
+                const shape = group.addShape('ellipse', {
+                    attrs: {
+                        x: cfg.x - 40,
+                        y: cfg.y - 40,
+                        rx: 80, 
+                        ry: 40,
+                        stroke: 'purple'
+                    }
+                })
+              return shape;
+            }
+        }, 'customNode2')
+
+        //rect, circle, ellipse, rhombus,  
+
+        const addCustom1 = document.querySelector('#addCustom1');
+        const addCustom2 = document.querySelector('#addCustom2');
+        const drag = document.querySelector('#drag');
+        const edit = document.querySelector('#edit');
+        const addLine = document.querySelector('#addLine');
+        const addSmooth = document.querySelector('#addSmooth');
+        const save = document.querySelector('#save');
+
+        //配置G6画布
+        const net = new G6.Net({
+            id: 'mountNode', //容器ID
+            mode: 'edit', //当前选择的模式-编辑模式，默认 default
+            fitView: 'cc', //自适应视口为左上
+            height: window.innerHeight //画布高度
+        })
+        
+        //addCustom1
+        addCustom1.onclick = function(){
+            net.beginAdd('node', {
+                shape: 'customNode1'
+            })
+        }
+        //addCustom2
+        addCustom2.onclick = function(){
+          net.beginAdd('node', {
+              shape: 'customNode4'
+          })
+        }
+
+        //addLine
+        addLine.onclick = function(){
+            net.beginAdd('edge', {
+              shape: 'line'
+            })
+        }
+        //addSmooth
+        addSmooth.onclick = function(){
+            net.beginAdd('edge', {
+              shape: 'smooth'
+            })
+        }
+        //drag
+        drag.onclick = function(){
+            net.changeMode('drag')
+        }
+        //edit
+        edit.onclick = function(){
+            net.changeMode('edit')
+        }
+        //save
+        save.onclick = function(){
+            const saveData = net.save();
+            const json = JSON.stringify(saveData, null, 2)
+            console.log(saveData, json)
+        }
+
+        //渲染关系图
+        net.render();
+
+    </script>
+</body>
+
+</html>

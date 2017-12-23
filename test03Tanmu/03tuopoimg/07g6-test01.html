@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>g6/antv---tooltip</title>
+</head>
+<body>
+	
+	<!-- 第二步：创建DOM容器 -->
+    <div id="c1"></div>
+
+	<script src="G6-antv/g6.min.js"></script>
+	<script>
+		
+      // https://antv.alipay.com/zh-cn/g6/1.x/tutorial/index.html
+      // 第三步：设置数据
+      const data = {
+        "nodes": [
+          {
+            "x": 140,
+            "y": 210,
+            "id": "node1"
+          },
+          {
+            "x": 270,
+            "y": 210,
+            "id": "node2"
+          }
+        ],
+        "edges": [
+          {
+            "id": "node1-node2",
+            "target": "node1",
+            "source": "node2"
+          }
+        ]
+      };
+      // 第四步：配置G6画布
+      const net = new G6.Net({
+          id: 'c1',      // 容器ID
+          width: 500,    // 画布宽
+          height: 500    // 画布高
+        });
+
+      //net.toolTip
+      net.tooltip({
+        title: '标题',
+        split: '=>',
+        dx: 10,
+        dy: 10
+      })
+      // 第五步：载入数据
+      net.source(data.nodes, data.edges);
+      net.node().tooltip('id')
+      // 第六步：渲染关系图
+      net.render();
+
+      //第七步：时间绑定on-bind
+      net.on('itemclick', ev => {
+        console.log(ev)
+        console.log(ev.item.get('model').id + '!')
+      })
+
+      
+      net.on('itemmousedown', ev => {
+        const item = ev.item
+        if(net.isNode(item)){
+          net.update(item, {
+            shape: 'circle',
+          })
+
+          net.refresh()
+        }
+      })
+
+      net.on('itemmouseup', ev => {
+        const item = ev.item;
+        if(net.isNode(item)){
+          net.update(item, {
+            shape: 'rect',
+          })
+
+          net.refresh()
+        }
+      })
+
+      net.on('itemmouseenter', ev => {
+        const item = ev.item;
+        if(net.isNode(item)){
+          net.update(item, {
+            color: 'red'
+          })
+          net.refresh()
+        }
+      })
+
+      net.on('mouseleave', ev => {
+        const item = ev.item;
+        if(net.isNode(item)){
+          net.update(item, {
+            color: null
+          })
+          net.refresh()
+        }
+      })
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>锚点类型</title>
+    <style>
+	    ::-webkit-scrollbar {
+	        display: none;
+	    }
+
+	    html,
+	    body {
+	        overflow: hidden;
+	    }
+    </style>
+</head>
+
+<body>
+    <div id="mountNode"></div>
+    <script>
+	    /*Fixing iframe window.innerHeight 0 issue in Safari*/
+	    document.body.clientHeight;
+    </script>
+    <script src="G6-antv/g6.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+    <script type="text/javascript">
+	    G6.registerNode('custom1', {
+	        // 常规锚点
+	        getAnchorPoints() {
+	            return [
+	                [0, 0.5], // 左边中点 索引为 0
+	                [1, 0.5] // 右边中点 索引为 1
+	            ];
+	        }
+	    });
+
+
+	    G6.registerNode('custom2', {
+	        // 自动锚点
+	        getAnchorPoints() {
+	            return 'auto';
+	        }
+	    });
+
+	    G6.registerNode('custom3', {
+	        // 不使用锚点（ 自动连接中心 ）
+	        getAnchorPoints() {
+	            return null;
+	        }
+	    });
+
+	    G6.registerNode('custom4', {
+	    	//常规锚点
+	    	getAnchorPoints(){
+	    		return [
+	    			[0.5, 0], //上边中点 索引为0.5
+	    			[0.5, 1]  //下边中点 索引为0.5
+	    		]
+	    	}
+	    });
+
+	    G6.registerNode('custom5', {
+	    	//自动锚点
+	    	getAnchorPoints(){
+	    		return 'auto'
+	    	}
+	    });
+
+	    G6.registerNode('custom6', {
+	    	//不使用锚点(自动连接中心)
+	    	getAnchorPoints(){
+	    		return null;
+	    	}
+	    })
+
+	    // 第三步：设置数据
+	    const data = {
+	        nodes: [{
+	                x: 240,
+	                y: 210,
+	                id: 'node1',
+	                shape: 'custom1'
+	            },
+	            {
+	                x: 370,
+	                y: 170,
+	                id: 'node2',
+	                shape: 'custom2'
+	            },
+	            {
+	                x: 370,
+	                y: 270,
+	                id: 'node3',
+	                shape: 'custom3'
+	            },
+	            {
+	            	x: 370,
+	            	y: 390,
+	            	id: 'node4',
+	            	shape: 'custom4'
+	            },
+	            {
+	            	x: 370,
+	            	y: 440,
+	            	id: 'node5',
+	            	shape: 'custom5'
+	            },
+	            {
+	            	x: 370,
+	            	y: 490,
+	            	id: 'node6',
+	            	shape: 'custom6'
+	            }
+	        ],
+	        edges: [{
+	                source: 'node1',
+	                id: 'edge1',
+	                target: 'node2',
+	            },
+	            {
+	                source: 'node1',
+	                id: 'edge2',
+	                target: 'node3',
+	            },
+	            {
+	            	source: 'node1',
+	            	id: 'edge3',
+	            	target: 'node4'
+	            },
+	            {
+	            	source: 'node1',
+	            	id: 'edge4',
+	            	target: 'node5'
+	            },
+	            {
+	            	source: 'node1',
+	            	id: 'edge5',
+	            	target: 'node6'
+	            }
+	        ],
+	    };
+
+	    //第四步：配置G6画布
+	    const net = new G6.Net({
+	        id: 'mountNode', // 容器ID
+	        fitView: 'cc', //初次绘制适应视口 渲染完毕后，画布不变，将图形放置在中间 https://antv.alipay.com/zh-cn/g6/1.x/api/graph.html
+	        height: window.innerHeight, // 画布高
+	        mode: 'edit' //当前选择的模式
+	    });
+	    //第五步： 载入数据
+	    net.source(data.nodes, data.edges);
+	    //渲染关系图
+	    net.render();
+
+	    console.log(net)
+
+
+    </script>
+</body>
+
+</html>

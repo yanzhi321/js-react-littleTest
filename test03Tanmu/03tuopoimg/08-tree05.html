@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>事件</title>
+    <style>
+     ::-webkit-scrollbar {
+        display: none;
+    }
+
+    html,
+    body {
+        overflow: hidden;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="mountNode"></div>
+    <script>
+    /*Fixing iframe window.innerHeight 0 issue in Safari*/
+    document.body.clientHeight;
+    </script>
+    <script src="https://gw.alipayobjects.com/os/antv/assets/g6/1.2.1/g6.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/antv/assets/lib/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+      const data = {
+          nodes: [{
+                  "id": "node1",
+                  "x": 100,
+                  "y": 160
+              },
+              {
+                  "id": "node2",
+                  "x": 290,
+                  "y": 160
+              }
+          ],
+          edges: [{
+              "id": "node1-node2",
+              "target": "node1",
+              "source": "node2"
+          }]
+      };
+      const net = new G6.Net({
+          id: 'mountNode', // 容器ID
+          height: window.innerHeight // 画布高
+      });
+      net.source(data.nodes, data.edges);
+      net.render();
+      net.on('itemclick', ev => {
+          alert("击中" + ev.item.get('model').id + "!");
+      });
+      net.on('itemmousedown', ev => {
+          const item = ev.item;
+          if (net.isNode(item)) {
+              net.update(item, {
+                  shape: 'circle'
+              });
+              net.refresh();
+          }
+      });
+      net.on('itemmouseup', ev => {
+          const item = ev.item;
+          if (net.isNode(item)) {
+              net.update(item, {
+                  shape: 'rect'
+              });
+              net.refresh();
+          }
+      });
+      net.on('itemmouseenter', ev => {
+          const item = ev.item;
+          net.update(item, {
+              color: 'red'
+          });
+          net.refresh();
+      });
+      net.on('itemmouseleave', ev => {
+          const item = ev.item;
+          net.update(item, {
+              color: null
+          });
+          net.refresh();
+      });
+    </script>
+</body>
+
+</html>

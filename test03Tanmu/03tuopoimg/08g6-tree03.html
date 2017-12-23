@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>脑图编辑器</title>
+    <style>
+     ::-webkit-scrollbar {
+        display: none;
+    }
+
+    html,
+    body {
+        overflow: hidden;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="mountNode">
+    	<button type="button" class="addRect">addRect</button>
+    </div>
+    <script>
+    /*Fixing iframe window.innerHeight 0 issue in Safari*/
+    document.body.clientHeight;
+    </script>
+    <script src="https://gw.alipayobjects.com/os/antv/assets/g6/1.2.1/g6.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/antv/assets/lib/jquery-3.2.1.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/antv/assets/g6-plugins/1.0.1/g6-plugins.min.js"></script>
+    <script type="text/javascript">
+
+	    const Util = G6.Util;
+
+	    const data = {
+	       
+	    };
+	    
+	    const net = new G6.Net({
+	        id: 'mountNode',
+	        height: 450, // 此处替换高度
+	        fitView: { // 自动对齐到中心点
+	            x: 0,
+	            y: 0
+	        },
+	    });
+	    const graphContainer = net.get('graphContainer');
+	    const input = Util.createDOM('<input class="g6-label-input" />', {
+	        position: 'absolute',
+	        zIndex: 10,
+	        display: 'none'
+	    });
+	    const mouseEnterNodeStyle = {
+	        lineWidth: 2
+	    };
+	    const nodeStyle = {
+	        lineWidth: 1
+	    };
+
+	    function hasClass(shape, className) {
+	        if (shape) {
+	            const clasees = shape.get('class');
+	            if (clasees && clasees.indexOf(className) !== -1) {
+	                return true;
+	            }
+	        }
+	        return false;
+	    }
+
+	    function showInputLabel(node) {
+	        if (!node) {
+	            return;
+	        }
+	        const group = node.get('group');
+	        const label = group.findBy(function(child) {
+	            if (hasClass(child, 'label')) {
+	                return true;
+	            }
+	            return false;
+	        });
+	        const rootGroup = net.get('rootGroup');
+	        const bbox = Util.getBBox(label, rootGroup);
+	        const borderWidth = 1;
+	        const text = label.attr('text');
+	        clearAllActived();
+
+	        input.value = text;
+	        input.show();
+	        input.css({
+	            top: bbox.minY - borderWidth + 'px',
+	            left: bbox.minX - borderWidth + 'px',
+	            width: bbox.width + 'px',
+	            height: bbox.height + 'px',
+	            padding: '0px',
+	            margin: '0px',
+	            border: borderWidth + 'px solid #999'
+	        });
+	        input.focus();
+	        input.node = node;
+	    }
+
+	    function updateLabel() {
+	        if (input.visibility) {
+	            const node = input.node;
+	            clearAllActived();
+	            if (input.value !== node.get('model').name) {
+	                if (input.value) {
+	                    net.update(node, {
+	                        label: input.value
+	                    });
+	                }
+	            }
+	            input.hide();
+	        }
+	    }
+
+	    function clearAllActived() {
+	        net.clearAllActived();
+	        net.refresh(false);
+	    }
+	    input.hide = function() {
+	        input.css({
+	            display: 'none'
+	        });
+	        input.visibility = false;
+	    };
+	    input.show = function() {
+	        input.css({
+	            display: 'block'
+	        });
+	        input.visibility = true;
+	    };
+	    graphContainer.appendChild(input);
+	    
+	  
+	    net.source(data);
+
+	    const addRect = document.querySelector('.addRect')
+	    addRect.onclick = function(){
+	    	net.beginAdd('node', {
+				shape: 'circle',
+				label: 'Circle',
+				size: 50
+			})
+	    }
+
+	    net.render();
+
+	    net.on('dragmove', () => {
+	        input.hide();
+	    });
+
+	    net.on('dblclick', ev => {
+	        const item = ev.item;
+	        const shape = ev.shape;
+
+	        if (hasClass(shape, 'label') && item && item.get('type') === 'node') {
+	            showInputLabel(item);
+	        }
+	    });
+
+	    input.on('keydown', ev => {
+	        if (ev.keyCode === 13) {
+	            updateLabel();
+	        }
+	    });
+
+	    input.on('blur', () => {
+	        updateLabel();
+	    });
+
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>HTML 节点</title>
+    <style>
+	    ::-webkit-scrollbar {
+	        display: none;
+	    }
+
+	    html,
+	    body {
+	        overflow: hidden;
+	    }
+	    ul{
+	    	list-style: none;
+	    }
+	    .customNode1 {
+	        background-color: red !important;
+	        padding: 0;
+	        margin: 0;
+	        list-style: none;
+	    }
+
+	    .customNode2 {
+	        background-color: red !important;
+	        padding: 0;
+	        margin: 0;
+	        list-style: none;
+	        width: 80px;
+	        height: 80px;
+	    }
+
+    </style>
+</head>
+
+<body>
+    <div id="mountNode">
+		<ul class="toolbar">
+			<li><button class="addRect">addRect</button></li>
+		</ul>    		
+    </div>
+    <script>
+    /*Fixing iframe window.innerHeight 0 issue in Safari*/
+    document.body.clientHeight;
+    </script>
+    <script src="G6-antv/g6.min.js"></script>
+    <script src="G6-antv/g6-plugins.min.js"></script>
+    <script src="js/jquery.min.js"></script>
+   
+    <script type="text/javascript">
+
+		const data = {
+	        "nodes": [{
+	                "id": "node1",
+	                "x": 50,
+	                "y": 170,
+	                "shape": "customHtml1"
+	            },
+	            {
+	                "id": "node2",
+	                "x": 180,
+	                "y": 170,
+	                "shape": "customHtml2"
+	            },
+	            {
+	                "id": "node3",
+	                "x": 180,
+	                "y": 270,
+	                "shape": "customHtml3"
+	            }
+	        ],
+	        "edges": [{
+	            "source": "node1",
+	            "id": "edge1",
+	            "target": "node2"
+	        }]
+	    };
+
+    	const addRect = document.querySelector('.addRect')
+
+    	//Util
+    	const Util = G6.Util;
+    	console.log(Util)
+
+
+    	//registerNode
+    	G6.registerNode('customHtml1', {
+    		cssSize: true, //node size
+    		getHtml(cfg){
+    			const model = cfg.model;
+    			const dom = Util.createDOM(`<ul class="customNode1"><li>html节点</li>${model.id}</li><li>x:${model.x}</li><li>y:${model.y}</li></ul>`);
+    			return dom;
+    		}
+    	}, 'html')
+
+	    //
+	    G6.registerNode('customHtml2', {
+	        cssSize: true, // 该配置项设置为 true 时，则节点不受 node size 控制
+	        getHtml(cfg) {
+	            const model = cfg.model;
+	            const dom = Util.createDOM('<ul class="customNode2"><li>html节点</li><li>' + model.id + '</li><li>x:' + model.x + '</li><li>y:' + model.y + '</li></ul>');
+	            return dom;
+	        }
+	    }, 'html');
+	    G6.registerNode('customHtml3', {
+	        cssSize: true,
+	        getHtml(cfg) {
+	            const model = cfg.model;
+	            // 除了返回 dom 元素还能返回html字符串
+	            return '<ul class="customNode2"><li>html节点</li><li>' + model.id + '</li><li>x:' + model.x + '</li><li>y:' + model.y + '</li></ul>';
+	        }
+	    }, 'html');
+
+	    G6.registerNode('addRect', {
+	    	cssSize: true,
+	    	getHtml(cfg) {
+	    		const model = cfg.model;
+	    		//html
+	    		return `<input type="text" value="${model.id}" />`
+	    	}
+	    	
+	    }, 'html')
+
+	    //Util
+	    const input = Util.createDOM('<input class="g6-label-input" />', {
+	        position: 'absolute',
+	        zIndex: 10,
+	        display: 'none'
+	    });
+
+	     addRect.onclick = function(){
+	    	net.beginAdd('node', {
+	    		shape: 'addRect'
+	    	})
+	    }
+
+		//G6.Net	    
+	    const net = new G6.Net({
+	        id: 'mountNode', // 容器ID
+	        fitView: 'cc', // 画布宽
+	        width: 600,
+	        height: 600, // 画布高
+	        grid: {
+	        	forceAlign: false, // 是否支持网格对齐
+			    cell: 30,         // 网格大小
+			    line: {           // 网格线样式
+			      stroke: '#ccc'
+			    }
+	        }
+	    });                                
+	    net.source(data.nodes, data.edges);
+	    net.edge().style({
+	        arrow: true
+	    });
+	    net.on('click', ev => {
+	        const shape = ev.shape;
+	        if (shape) {
+	            const dom = shape.get('dom');
+	            console.log(dom); // eslint-disable-line no-console
+	        }
+	    });
+
+	   
+
+	    net.render();
+    </script>
+</body>
+
+</html>

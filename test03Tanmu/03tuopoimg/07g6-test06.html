@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>g6@antv</title>
+	<style>
+		
+		::-webkit-scrollbar {
+        	display: none;
+	    }
+
+	    html,
+	    body {
+	        overflow: hidden;
+	    }
+	</style>
+</head>
+<body>
+	
+	<div id="mountNode"></div>
+	<script src="G6-antv/g6.min.js"></script>
+    <script src="G6-antv/g6-plugins.min.js"></script>
+
+    <script>
+    	
+        const data = {
+        	"nodes": [
+        		{
+        			"x": 100,
+        			"y": 100,
+        			"id": "node1"
+        		},
+        		{
+        			"x": 100, 
+        			"y": 100,
+        			"id": 'node2'
+        		}
+        	],
+        	"edges": [
+        		{
+        			"source": "node1",
+        			"id": "edge1",
+        			"target": "node2"
+        		}
+        	]
+        };
+
+        const graph = new G6.Net({
+        	id: 'mountNode', //容器ID
+        	width: 500, //画布宽
+        	height: 500, //画布高
+        	fitView: "br", // 初次绘制适应视口
+        	grid: {
+        		forceAlign: true, //是否支持网格对齐
+        		cell: 10, //网格大小
+        		line: {  //网格线样式
+        			stroke: "#EEE"
+        		}
+        	}
+        })
+
+        graph.source(data.nodes, data.edges)
+        graph.render()
+
+    </script>
+</body>
+</html>

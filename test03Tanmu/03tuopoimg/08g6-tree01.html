@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>网图编辑器（变型）</title>
+    <style>
+	    ::-webkit-scrollbar {
+	        display: none;
+	    }
+
+	    html,
+	    body {
+	        overflow: hidden;
+	    }
+	    ul{
+	        list-style: none;
+	      }
+
+	    .toolbar{
+          position: absolute;
+          z-index: 10;
+	     }
+
+	    .toolbar li{
+          float: left;
+          margin: 10px;
+	    }
+
+    </style>
+</head>
+
+<body>
+    <div id="mountNode">
+		<ul class="toolbar">
+    		<li><button class="addCustom1">addRect</button></li>
+    		<li><button class="addCustom2">addEllipse</button></li>
+    		<li><button class="addRhombus">addRhombus</button></li>
+    		<li><button class="drag">拖拽模式</button></li>
+    		<li><button class="edit">编辑模式</button></li>
+    		<li><button class="save">保存</button></li>
+    	</ul>    	
+    </div>
+    <script>
+    /*Fixing iframe window.innerHeight 0 issue in Safari*/
+    document.body.clientHeight;
+    </script>
+    <script src="G6-antv/g6.min.js"></script>
+    <script type="text/javascript">
+
+    	//set data
+
+	    const datas = {
+	        "nodes": [{
+	            "shape": "customNode1",
+	            "x": 280,
+	            "y": 100,
+	            "id": "27c5046d"
+	        }, {
+	            "shape": "customNode1",
+	            "x": 300,
+	            "y": 330,
+	            "id": "99d69b85"
+	        }, {
+	            "shape": "customNode2",
+	            "x": 400,
+	            "y": 220,
+	            "id": "f8cfdbd2"
+	        }, {
+	            "shape": "customNode1",
+	            "x": 80,
+	            "y": 210,
+	            "id": "3fabea06"
+	        }],
+	        "edges": [{
+	            "shape": "polyLineFlow",
+	            "source": "27c5046d",
+	            "target": "99d69b85",
+	            "id": "73b7ef7f",
+	            "sourceAnchor": 10,
+	            "targetAnchor": 7
+	        }, {
+	            "shape": "polyLineFlow",
+	            "source": "27c5046d",
+	            "target": "f8cfdbd2",
+	            "id": "cc306f85",
+	            "sourceAnchor": 4,
+	            "targetAnchor": 7
+	        }, {
+	            "shape": "polyLineFlow",
+	            "source": "27c5046d",
+	            "target": "f8cfdbd2",
+	            "id": "519d49a4",
+	            "sourceAnchor": 7,
+	            "targetAnchor": 3
+	        }, {
+	            "shape": "polyLineFlow",
+	            "source": "27c5046d",
+	            "target": "3fabea06",
+	            "id": "286f8ca2",
+	            "sourceAnchor": 2,
+	            "targetAnchor": 3
+	        }, {
+	            "shape": "polyLineFlow",
+	            "source": "27c5046d",
+	            "target": "3fabea06",
+	            "id": "f559fec8",
+	            "sourceAnchor": 6,
+	            "targetAnchor": 0
+	        }, {
+	            "shape": "polyLineFlow",
+	            "source": "27c5046d",
+	            "target": "3fabea06",
+	            "id": "4b0a2dcf",
+	            "sourceAnchor": 9,
+	            "targetAnchor": 5
+	        }, {
+	            "shape": "polyLineFlow",
+	            "source": "99d69b85",
+	            "target": "f8cfdbd2",
+	            "id": "c2514050",
+	            "sourceAnchor": 11,
+	            "targetAnchor": 9
+	        }]
+	    };
+
+	    const data = {
+	    	"nodes": [],
+	    	"edges": []
+	    }
+	    let i = 1;
+	    const Util = G6.Util
+	    //G6.registerNode()
+	    G6.registerNode('customNode1', {
+	    	draw(cfg, group) {
+	    		const shape = group.addShape('rect', {
+	    			attrs: {
+	    				x: cfg.x - 40,
+	    				y: cfg.y - 40,
+	    				width: 80,
+	    				height: 80,
+	    				fill: '#fff',
+	    				stroke: 'purple',
+	    				label: 'input'
+	    			}
+	    		});
+	    		return shape;
+	    	}, // 获取锚点
+	    	getAnchorPoints(){
+	    		return [
+	    			[0, 0.25],
+	    			[0, 0.5],
+	    			[0, 0.75],
+	    			[1, 0.25],
+	    			[1, 0.5],
+	    			[1, 0.75],
+	    			[0.25, 0],
+	    			[0.5, 0],
+	    			[0.75, 0],
+	    			[0.25, 1],
+	    			[0.5, 1],
+	    			[0.75, 1]
+	    		]
+	    	}
+	    }, 'rect')
+
+
+	    //customNode2
+	    G6.registerNode('customNode2', {
+	    	draw(cfg, group) {
+	    		const shape = group.addShape('ellipse', {
+	    			/*attrs: {// image
+	    				x: 150,
+					    y: 150,
+					    img: 'https://zos.alipayobjects.com/rmsportal/GHGrgIDTVMCaYZT.png'
+	    			}*/
+	    			/*attrs: {// rect
+	    				x: cfg.x - 40,
+	    				y: cfg.y - 40,
+	    				width: 80,
+	    				height: 80,
+	    				fill: '#fff',
+	    				stroke: 'red'
+	    			}*/
+	    			/*attrs:{ //circle
+	    				x: cfg.x,
+					    y: cfg.y,
+					    r: 40,
+					    fill: 'rgba(129,9,39,0.5)',
+					    stroke: 'blue'
+	    			}*/
+	    			attrs: { //ellipse
+				        x: cfg.x - 50,
+				        y: cfg.y - 20,
+				        rx: 100,
+				        ry: 40,
+				        fill: 'rgba(129,9,39,0.5)',
+				        stroke: 'blue'
+				    }
+				    
+	    		});
+	    		return shape;
+	    	}
+	    });
+
+	    G6.registerNode('addRhombus', {
+	    	draw(cfg, group) {
+	    		const shape = group.addShape('rhombus', {
+	    			attrs: {
+	    				x: 150,
+	    				y: 150,
+	    				width: 40,
+	    				height: 40
+	    			}
+	    		})
+	    		return shape;
+	    	}
+	    })
+
+	    //btn-dom
+	    const addCustom1 = document.querySelector('.addCustom1')
+	    const addCustom2 = document.querySelector('.addCustom2')
+	    const addRhombus = document.querySelector('.addRhombus')
+	    const drag = document.querySelector('.drag')
+	    const edit = document.querySelector('.edit')
+	    const save = document.querySelector('.save')
+
+	    //set G6 canvas
+	    const net = new G6.Net({
+	        id: 'mountNode', // 容器ID
+	        mode: 'edit', // 编辑模式
+	        fitView: 'cc', // 自适应视口为左上
+	        height: window.innerHeight, // 画布高
+	        grid: {
+	        	forceAlign: true,
+	        	cell: 30,
+	        	line: {
+	        		stroke: '#ccc'
+	        	}
+	        }
+
+	    });
+
+	    //load data
+	    net.source(data.nodes, data.edges);
+	    net.removeBehaviour(['hoverNodeShowAnchor', 'dragEdgeEndHideAnchor', 'dragNodeEndHideAnchor']);
+	    //net.edge--添加箭头
+	    net.edge().style({
+	    	arrow: true
+	    })
+
+	    //input
+	    const input = Util.createDOM('<input class="g6-label-input" />', {
+	        position: 'absolute',
+	        zIndex: 10,
+	        display: 'none'
+	    });
+
+	    
+
+	    // 第四步：配置绑定事件
+	    addCustom1.onclick = function(){
+	    	net.beginAdd('node', {
+	    		shape: 'customNode1',
+	    		label: 'input'
+	    	})
+	    }
+
+	    addCustom2.onclick = function(){
+	    	net.beginAdd('node', {
+	    		shape: 'customNode2'
+	    	})
+	    }
+
+	    addRhombus.onclick = function(){
+	    	net.beginAdd('node', {
+	    		shape: 'rhombus',
+	    		width: 80,
+	    		height: 80
+	    	})
+	    }
+           
+
+	    drag.onclick = function(){
+	    	net.changeMode('drag')
+	    }
+
+	    edit.onclick = function(){
+	    	net.changeMode('edit')
+	    }
+
+	    save.onclick = function(){
+	    	const saveData = net.save();
+	    	const json = JSON.stringify(saveData, null, 2)
+	    	console.log(saveData, json)
+	    }
+
+	    // 第五步： 编辑交互变形
+	    let dragging = false;
+	    net.on('dragstart', function(ev){
+	    	dragging = true;
+	    });
+	    net.on('dragend', function(ev){
+	    	dragging = false;
+	    })
+
+	    //进入锚点切换到曲线添加模式
+        //addLine: 直线-line/曲线-smooth/二阶bezier曲线-quadratic/三阶bezier曲线-cubic/圆弧线-arc/多段线-polyline
+	    net.on('mouseenter', function(ev){
+	    	console.log(ev)
+	    	let shape = ev.shape;
+	    	if(shape && shape.hasClass('anchor-point') && !dragging){
+	    		net.beginAdd('edge', {
+	    			shape: 'line',
+	    		})
+	    	}
+	    })
+
+	    // 离开锚点切换回编辑模式
+	    net.on('mouseleave', function(ev){
+	    	let shape = ev.shape;
+	    	if(shape && shape.hasClass('anchor-point') && !dragging){
+	    		net.changeMode('edit')
+	    	}
+	    })
+
+	    // 绘制后显示锚点
+	    net.on('afteritemrender', function(ev){
+	    	let item = ev.item;
+	    	if(item.get('type') === 'node'){
+	    		net.showAnchor(item)
+	    	}
+	    })
+	    // 第六步：渲染关系图
+	    net.render();
+
+    </script>
+</body>
+
+</html>

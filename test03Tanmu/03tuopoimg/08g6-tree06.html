@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>读数据与保存数据</title>
+    <style>
+     ::-webkit-scrollbar {
+        display: none;
+    }
+
+    html,
+    body {
+        overflow: hidden;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="mountNode">
+      <button class = "saveAndread">saveAndread</button>
+    </div>
+    <script>
+    /*Fixing iframe window.innerHeight 0 issue in Safari*/
+    document.body.clientHeight;
+    </script>
+    <script src="G6-antv/g6.min.js"></script>
+    <script type="text/javascript">
+        const data = {
+            source: {
+                "nodes": [{
+                        "x": 140,
+                        "y": 210,
+                        "id": "node1"
+                    },
+                    {
+                        "x": 270,
+                        "y": 210,
+                        "id": "node2"
+                    }
+                ],
+                "edges": [{
+                    "source": "node1",
+                    "id": "edge1",
+                    "target": "node2"
+                }]
+            }
+        };
+        const net1 = new G6.Net({
+            id: 'mountNode', // 容器ID
+            fitView: 'autoSize'
+        });
+        net1.read(data);
+        net1.render();
+
+        //mountNode
+        const mountNode = document.querySelector('#mountNode')
+        const div = document.createElement('div')
+        const textNode = document.createTextNode('this is first graph')
+        div.appendChild(textNode)
+        mountNode.appendChild(div)
+
+        //net2
+        const net2 = new G6.Net({
+          id: 'mountNode',
+          height: 100, 
+          fitView: 'autoSize'
+        })
+
+        //
+        const divN = document.createElement('div')
+        const textNodeN = document.createTextNode('second graph')
+        divN.appendChild(textNodeN)
+        mountNode.appendChild(divN)
+
+        const saveAndread = document.querySelector('.saveAndread')
+        saveAndread.onclick = function(){
+            const saveData = net1.save();
+            net2.read(saveData)
+            net2.render()
+        }
+
+        //G6
+        console.log(G6)
+        const Handler = G6.Handler
+        const Util = G6.Util
+        console.log(Handler)
+
+        console.log(Util)
+
+        /*const title = Util.createDOM(`<div class="node-conatiner-title node-conatiner-${model.status}">
+                  ${model.name}
+            </div>`);*/
+        const input = Util.createDOM(`<div class="node-container">sdfdf</div>`)
+        console.log(input)
+        
+      /*G6.registerNode('customNode', {
+            cssSize: true, // 不使用内部 size 作为节点尺寸
+            getHtml: function(cfg) {
+                const model = cfg.model;
+                const container = Util.createDOM('<div class="node-conatiner"></div>');
+                const title = Util.createDOM(`<div class="node-conatiner-title node-conatiner-${model.status}">
+                  ${model.name}
+            </div>`);
+                const list = Util.createDOM(`<div class="node-conatiner-list">
+                <span>数量：</span>
+                <span>${model.count}</span>
+            </div>`);
+
+                const botton = Util.createDOM(`<button class="node-delete">X</button>`);
+                const input = Util.createDOM(`<input type="text" value="input" />`)
+
+                botton.addEventListener('click', function() {
+                    net.remove(net.find(model.id));
+                });
+                container.appendChild(input);
+                container.appendChild(botton);
+                container.appendChild(title);
+                container.appendChild(list);
+                return container;
+            }
+      }, 'html');*/
+
+    </script>
+</body>
+
+</html>

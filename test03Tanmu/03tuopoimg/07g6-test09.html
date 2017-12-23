@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>G6-antv节点方法</title>
+    <style>
+     ::-webkit-scrollbar {
+        display: none;
+    }
+
+    html,
+    body {
+        overflow: hidden;
+    }
+
+    ul{
+      list-style: none;
+    }
+
+    .list-btn li{
+      float: left;
+      margin: 10px;
+    }
+    </style>
+</head>
+
+<body>
+    <div id="mountNode"></div>
+    <ul class="list-btn">
+      <li><button id="getEdges">getEdges</button></li>
+      <li><button type="button" id="getLinkNodes">getLinkNodes</button></li>
+      <li><button type="button" id="getUnLinkNodes">getUnLinkNodes</button></li>
+      <li><button type="button" id="getRelativeItems">getRelativeItems</button></li>
+      <li><button type="button" id="getUnRelativeItems">getUnRelativeItems</button></li>
+      <li></li>
+    </ul>
+
+    <script>
+    /*Fixing iframe window.innerHeight 0 issue in Safari*/
+    document.body.clientHeight;
+    </script>
+    <script src="https://gw.alipayobjects.com/os/antv/assets/g6/1.2.1/g6.min.js"></script>
+    <script src="https://gw.alipayobjects.com/os/antv/assets/lib/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript">
+        
+        //G6.Util 是一个工具类，里面提供了大量工具方法给开发者使用。
+        const Util = G6.Util;
+        // 第三步：设置数据
+        const data = {
+            "source": {
+                "nodes": [{
+                        "shape": "rect",
+                        "label": "节点",
+                        "id": "keyNode",
+                        "x": 710,
+                        "y": 260,
+                        "color": "#FF9D2D"
+                    },
+                    {
+                        "shape": "rect",
+                        "label": "节点1",
+                        "x": 780,
+                        "y": 150,
+                        "id": "f7171de1"
+                    },
+                    {
+                        "shape": "rect",
+                        "label": "节点2",
+                        "x": 550,
+                        "y": 210,
+                        "id": "f2201be8"
+                    },
+                    {
+                        "shape": "rect",
+                        "label": "节点3",
+                        "x": 590,
+                        "y": 340,
+                        "id": "b5b421cf"
+                    },
+                    {
+                        "shape": "rect",
+                        "label": "节点4",
+                        "x": 780,
+                        "y": 360,
+                        "id": "a285b5dc"
+                    }
+                ],
+                "edges": [{
+                        "shape": "arrow",
+                        "source": "keyNode",
+                        "target": "f2201be8",
+                        "id": "672f31fc"
+                    },
+                    {
+                        "shape": "arrow",
+                        "source": "keyNode",
+                        "target": "b5b421cf",
+                        "id": "62ed8cb2"
+                    },
+                    {
+                        "shape": "arrow",
+                        "source": "b5b421cf",
+                        "target": "keyNode",
+                        "id": "4542e914",
+                        "controlPoints": [{
+                                "x": 590,
+                                "y": 324
+                            },
+                            {
+                                "x": 590,
+                                "y": 260
+                            },
+                            {
+                                "x": 679,
+                                "y": 260
+                            }
+                        ]
+                    },
+                    {
+                        "shape": "smoothArrow",
+                        "source": "f7171de1",
+                        "target": "keyNode",
+                        "id": "58624bdb",
+                        "controlPoints": [{
+                                "x": 749,
+                                "y": 150
+                            },
+                            {
+                                "x": 700,
+                                "y": 150
+                            },
+                            {
+                                "x": 710,
+                                "y": 244
+                            }
+                        ]
+                    },
+                    {
+                        "shape": "arrow",
+                        "source": "f7171de1",
+                        "target": "a285b5dc",
+                        "id": "f119308c"
+                    }
+                ]
+            }
+        };
+        // 第四步：配置G6画布
+        const net = new G6.Net({
+            id: 'mountNode', // 容器ID
+            fitView: 'autoSize',
+            mode: 'none',
+            height: window.innerHeight // 画布高
+        });
+        // 第五步：载入数据
+        net.read(Util.clone(data));
+        // 第六步：渲染关系图
+        net.render();
+
+        //getEdges --G6.Util 是一个工具类，里面提供了大量工具方法给开发者使用。
+        let getEdges = document.querySelector('#getEdges')
+        console.log('net', net)
+        console.log('util', Util)
+        getEdges.onclick = function(){
+          reRender();//restart to render
+          const keyNode = net.find('keyNode')
+          console.log(keyNode)
+          const edges = keyNode.getEdges();
+          Util.each(edges, edge => {
+            net.update(edge, {
+              color: 'purple'
+            })
+          })
+          net.refresh()
+        }
+
+        
+        //getLinkNodes-有关联的节点 -- G6.Util是个工具类， 里面提供了大量工具方法给开发者使用
+        let getLinkNodes = document.querySelector('#getLinkNodes')
+        getLinkNodes.onmousedown = function(){
+          reRender(); //restart render
+          const keyNode = net.find('keyNode')
+          const nodes = keyNode.getLinkNodes()
+          Util.each(nodes, node => {
+              net.update(node, {
+                color: 'red'
+              })
+          });
+          net.refresh()
+        }
+
+        //getUnLinkNodes--无关联的节点 ---G6.Util是个工具类， provide lots of toolmethod to developers
+        let getUnLinkNodes = document.querySelector('#getUnLinkNodes')
+        getUnLinkNodes.onclick = function(){
+          reRender(); //restart render
+          const keyNode = net.find('keyNode')
+          const nodes = keyNode.getUnLinkNodes()
+          Util.each(nodes, node => {
+              net.update(node, {
+                color: 'purple'
+              })
+          })
+          net.refresh()
+        }
+
+        //getRelativeItems --有关联的edges && nodes ----G6.Util
+        let getRelativeItems = document.querySelector('#getRelativeItems')
+        getRelativeItems.onclick = function(){
+          reRender(); //restart render
+          const keyNode = net.find('keyNode')
+          const items = keyNode.getRelativeItems()
+          Util.each(items, item => {
+            net.update(item, {
+              color: 'purple'
+            })
+          })
+          net.refresh()
+        }
+
+        //getUnRelativeItems --无关联的nodes && edges, --G6.Util
+        let getUnRelativeItems = document.querySelector('#getUnRelativeItems')
+        getUnRelativeItems.onclick = function(){
+            reRender(); //restart render()
+            const keyNode = net.find('keyNode');
+            const items = keyNode.getUnRelativeItems();
+            Util.each(items, item => {
+              net.update(item, {
+                color: 'red'
+              })
+            })
+            net.refresh()
+        }
+
+        //reRender(), restart render
+        function reRender() {
+          net.clear();
+          net.read(Util.clone(data))
+          net.render() 
+        }
+
+    </script>
+</body>
+
+</html>
