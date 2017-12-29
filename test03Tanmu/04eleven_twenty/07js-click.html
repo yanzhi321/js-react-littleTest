@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>click</title>
+</head>
+<body>
+	
+	<div id="container">
+		<button id="btn">click</button>
+		<button class="btnS">btnS</button>
+		<button class="btnT">btnT</button>
+		<button class="btnF">btnF</button>
+		<button class="btnX">btnX</button>
+	</div>
+
+	<script>
+
+		window.onload = function(){
+			
+
+			//createDiv
+			/*
+			 *我点击按钮时能创建多个div，现在我要的是只创建一次，第一次创建成功后以后就不创建，
+			 *或者每次都创建然后把上一次创建的删除，
+			 *有没有什么方法能做到啊 或者有没有什么设计模式可以用在这里的？想了很久都没有思路。
+			 */
+			var CreateDiv = function() {
+
+			};
+			CreateDiv.prototype.create = function() {
+			    var Div = document.createElement("div");
+			    Div.innerHTML="测试";
+			    document.body.appendChild(Div);
+			};
+			document.getElementById('btn').onclick = function() {
+			    (new CreateDiv()).create();
+			};
+
+			//createDom
+			let createDom = function(){
+
+			}
+			createDom.prototype.create = function() {
+				let pNode = document.createElement('p');
+				pNode.innerHTML = "this is p"
+				document.body.appendChild(pNode);
+			}
+			document.querySelector('.btnS').onclick = function() {
+				(new createDom()).create()
+			}
+
+			//使用惰性函数，一次只添加一个
+			function createDivS(){
+
+				let oDiv = document.createElement('div')
+				oDiv.innerHTML = '惰性函数'
+				document.body.appendChild(oDiv)
+				createDivS = function(){
+					return oDiv
+				}
+				return oDiv
+			}
+
+			document.querySelector('.btnT').onclick = function(){
+				createDivS()
+			}
+
+			//使用单例模式
+			//创建DIV
+			function createBox() {
+				let count = 0
+				if(count <= 0){
+					let oBox = document.createElement('div')
+					oBox.innerHTML = 'addOne'
+					document.body.appendChild(oBox)
+					count++
+				}else if(count > 0){
+					count = 0;
+					return
+				}
+			}
+
+			document.querySelector('.btnX').onclick = function(){
+				createBox()
+			}
+
+		}
+
+	</script>
+</body>
+</html>

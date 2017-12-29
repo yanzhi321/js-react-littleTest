@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>sleep func</title>
+</head>
+
+<body>
+    <div class="container"></div>
+    <script>
+    window.onload = function() {
+
+        //三种时间戳求法
+        let t1 = new Date().getTime()
+        let t2 = (new Date()).valueOf()
+        let t3 = +new Date()
+
+        console.log(t1, t2, t3)
+
+        //三种数组去重
+        //first---for()
+        var a = [1, 1, '1', '2', 1]
+
+        function unique(arr) {
+            var res = []
+            for (var i = 0, len = arr.length; i < len; i++) {
+                var item = arr[i]
+                for (var j = 0, jlen = res.length; j < jlen; j++) {
+                    if (item === res[j]) //arr数组的item在res已经存在,就跳出循环
+                        break
+                }
+                if (j === jlen) //循环完毕,arr数组的item在res找不到,就push到res数组中
+                    res.push(item)
+            }
+            return res
+        }
+        console.log(unique(a)) // [1, 2, "1"]
+
+        //Second--filter
+        var b = [1, 1, '1', '2', 1]
+
+        function filterS(arr) {
+        	return arr.filter( (ele, index, array) => {
+        		return array.indexOf(ele) === index
+        	})
+        }
+        console.log(filterS(b))
+
+        //Third--obj
+        let c = [1, 1, '1', '2', 1]
+		function objT(arr) {
+			let obj = {}
+			return arr.filter(function(item, index, array){
+				return obj.hasOwnProperty(typeof item + item) ? false : (obj[typeof item + item] = true)
+			})
+		}
+		console.log(objT(c))
+
+		//Four--new Set()
+		let d = [1, 1, '1', '2', 1]
+		const setF = (arr) => [...new Set(arr)]
+		console.log(setF(d))
+
+		console.log(new Date(2011, 12, 25))
+
+		//数字格式化format三种
+		//first-- slice(start, end)截取数组， splice(),添加删除， split()字符串分割成字符串数组:
+		function formatNumber(str) {
+		let arr = [],
+		    count = str.length
+
+		  while (count >= 3) {
+		    arr.unshift(str.slice(count - 3, count))
+		    count -= 3
+		  }
+
+		  // 如果是不是3的倍数就另外追加到上去
+		  str.length % 3 && arr.unshift(str.slice(0, str.length % 3))
+
+		  return arr.toString()
+
+		}
+		console.log(formatNumber("1234567890")) // 1,234,567,890
+
+		//second---
+		function formatNumberS(str) {
+			// ["0", "9", "8", "7", "6", "5", "4", "3", "2", "1"]
+		    return str.split("").reverse().reduce((prev, next, index) => {
+		    	return ((index % 3) ? next : (next + ',')) + prev
+		    })
+		}
+		console.log(formatNumber("1234567890")) // 1,234,567,890
+		
+		//third--reg
+		function formatNumberT(str) {
+		  return str.replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+		}
+
+		console.log(formatNumberT("1234567890")) // 1,234,567,890
+
+		//Fourth
+		const foF = (1234567890).toLocaleString('en-US')  // 1,234,567,890
+		console.log(foF)
+
+		//fifth
+		const foFif = new Intl.NumberFormat().format(1234567890) // 1,234,567,890
+		console.log(foFif)
+
+    }
+    </script>
+</body>
+
+</html>
