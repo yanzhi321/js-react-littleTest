@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>rssi</title>
+</head>
+<body>
+	<script>
+		
+		window.onload = function(){
+
+			// db:hotmap   table:locOrg
+			locationObj = {
+				id: "4cfacaf650a0@1515028396607",
+				mac: "4cfacaf650a0",
+				t: 1515028396607,
+				np: 13,
+				devics: [
+					{
+						mac: "cc2db739c543",
+						ip: "0.0.0.0",
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: -87,
+						noiseFloor: -105
+					}
+					
+				]
+			};
+
+
+			let rssi = 0;
+			let np = 0;
+			let mac = macRandom()
+			
+			//rssiMin && rssiMax && npMax && t
+			const rssiMin = -110;
+			const rssiMax = -50;
+			const npMax = 90;
+			const t = 15; //seconds
+
+			//sendNp
+			let npArr = [];
+			for(let i = 0; i<210; i++){
+				npArr.push(i)
+			}
+
+			let count = 0;
+			function sendNp(npArr){
+				
+				if(npArr.length >= 90){
+					npArr.splice(0, 90)
+					++count;
+					console.log('seonds', new Date().getSeconds())
+					console.log(npArr, count)
+					//console.log(npNum)
+					if(npArr.length < 90){
+						setTimeout(function(){
+							console.log('seonds', new Date().getSeconds())
+							++count;
+							npArr.splice(0, npArr.length)
+							console.log(npArr, count)
+						}, 3000)
+						window.clearTimeout()
+					}
+				}
+			}
+
+			let timer = setInterval(function(){
+				sendNp(npArr)
+				//console.log("1111")
+			}, 3000)
+
+
+			//macRandom
+			function macRandom(){
+
+				const letterArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+				'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+				const numArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+				let str = ''
+
+				for(let i = 0; i < 6; i++){
+					const n = Math.round(Math.random() * 25)
+					const m = Math.round(Math.random() * 9)
+					str += letterArr[n].concat(numArr[m])
+					//console.log(n, m)
+				}
+				return str
+			}
+
+			
+			//rssiRan
+			let rssiRan = Math.round(Math.random() * 60) + (-110)
+			console.log(rssiRan)
+			function rssiRange(rssiInit){
+
+				if(rssiInit === rssiMax){
+					console.log('信号最差')
+				}
+				if(rssiInit === rssiMin){
+					console.log('信号最好')
+				}
+				if(rssiMax > rssiInit > rssiMin){
+					console.log('信号有干扰', rssiInit)
+				}
+
+			}
+			
+			rssiRange(rssiRan)
+
+		}
+		
+	</script>
+</body>
+</html>

@@ -15,14 +15,64 @@
        		//有了 Promise 对象，就可以将异步操作以同步操作的流程表达出来，避免了层层嵌套的回调函数
        		//Promise 构造函数包含一个参数和一个带有 resolve（解析）和 reject（拒绝）两个参数的回调
        		const promise = new Promise((resolve, reject) => {
-			  console.log(1)
+			  //console.log(1)
 			  resolve()
-			  console.log(2)
+			  //console.log(2)
 			})
 			promise.then(() => {
-			  console.log(3)
+			  //console.log(3)
 			})
-			console.log(4)
+			//console.log(4)
+
+			/*function func(){
+				console.log("func")
+				return func()
+			}
+
+			let arr = []
+			for(let i = 0; i<90; i++){
+				arr.push(i)
+			}
+			console.log(arr)
+
+			let newArr = arr.splice(0, 10)
+			console.log(newArr)*/
+
+			let url = 'http://192.168.30.211'
+			/*fetch(url)
+			  .then(function(response) {
+			    return response.json()
+			  }).then(function(json) {
+			    console.log('parsed json', json)
+			  }).catch(function(ex) {
+			    console.log('parsing failed', ex)
+			  })*/
+
+			/*var xhr = new XMLHttpRequest();
+
+			xhr.onreadystatechange = function () {
+			    if(xhr.readyState === 4 && xhr.status === 200) {
+			        console.log(xhr.responseText);
+			    }
+			}
+
+			xhr.open('POST', url, true);
+
+			xhr.setRequestHeader('Content-Type', 'application/json;charset=utf-8');    //设置HTTP header字段值
+
+			var postData = {domain: "xywy.com"};    //需要发送的数据 
+
+			xhr.send(postData);*/
+
+			
+			let timer1
+			timer1 = setInterval(function(){
+				console.log('1')
+			}, 1000)
+
+			console.log(timer1)
+			window.clearInterval(timer1);
+			console.log(timer1)
 
        }
 

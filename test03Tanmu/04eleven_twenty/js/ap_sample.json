@@ -1,0 +1,126 @@
+// db:hotmap   table:locOrg
+locationObj = {
+    id: "4cfacaf650a0@1515028396607",
+    mac: "4cfacaf650a0",
+    t: 1515028396607,
+    np: 13,
+    devics: [
+        {
+            mac: "cc2db739c543",
+            ip: "0.0.0.0",
+            channel: 153,
+            radioType: 1,
+            connected: 0,
+            rssi: -87,
+            noiseFloor: -105
+        },
+        {
+            mac: "5ca86a28326c",
+            ip: "0.0.0.0",
+            channel: 153,
+            radioType: 1,
+            connected: 0,
+            rssi: -92,
+            noiseFloor: -105
+        },
+        {
+            mac: "a434d99f6ff0",
+            ip: "0.0.0.0",
+            channel: 153,
+            radioType: 1,
+            connected: 0,
+            rssi: -51,
+            noiseFloor: -105
+        },
+        {
+            mac: "c0eefbd1d5f2",
+            ip: "0.0.0.0",
+            channel: 153,
+            radioType: 1,
+            connected: 0,
+            rssi: -93,
+            noiseFloor: -105
+        },
+        {
+            mac: "c40bcbb01dd3",
+            ip: "0.0.0.0",
+            channel: 153,
+            radioType: 1,
+            connected: 0,
+            rssi: -88,
+            noiseFloor: -105
+        },
+        {
+            mac: "98541b2eac93",
+            ip: "0.0.0.0",
+            channel: 153,
+            radioType: 1,
+            connected: 0,
+            rssi: -69,
+            noiseFloor: -105
+        },
+        {
+            mac: "acc1ee3b4034",
+            ip: "0.0.0.0",
+            channel: 153,
+            radioType: 1,
+            connected: 0,
+            rssi: -88,
+            noiseFloor: -105
+        },
+        {
+            mac: "02182a8493f4",
+            ip: "0.0.0.0",
+            channel: 153,
+            radioType: 1,
+            connected: 0,
+            rssi: -75,
+            noiseFloor: -105
+        },
+        {
+            mac: "ecd09ff87e55",
+            ip: "0.0.0.0",
+            channel: 153,
+            radioType: 1,
+            connected: 0,
+            rssi: -87,
+            noiseFloor: -105
+        },
+        {
+            mac: "94652d9b8d96",
+            ip: "0.0.0.0",
+            channel: 153,
+            radioType: 1,
+            connected: 0,
+            rssi: -94,
+            noiseFloor: -105
+        },
+        {
+            mac: "ecd09f9c1259",
+            ip: "0.0.0.0",
+            channel: 153,
+            radioType: 1,
+            connected: 0,
+            rssi: -92,
+            noiseFloor: -105
+        },
+        {
+            mac: "940e6bc85b9c",
+            ip: "0.0.0.0",
+            channel: 153,
+            radioType: 1,
+            connected: 0,
+            rssi: -93,
+            noiseFloor: -105
+        },
+        {
+            mac: "0c8fff060d7f",
+            ip: "0.0.0.0",
+            channel: 153,
+            radioType: 1,
+            connected: 0,
+            rssi: -92,
+            noiseFloor: -105
+        }
+    ]
+};

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>rssi04</title>
+</head>
+<body>
+	<script>
+		
+		window.onload = function(){
+
+			// db:hotmap   table:locOrg
+			let rssi = 0;
+			let np = 0;
+			let mac = "4cfacaf650a0";
+			
+			//rssiMin && rssiMax && npMax && t
+			const rssiMin = -110;
+			const rssiMax = -50;
+			const npMax = 90;
+			const t = 1515028396607; //seconds
+
+
+			let npArr = [
+				{
+					mac: macRandom(),
+					ip: '0.0.0.0',
+					channel: 153,
+					radioType: 1,
+					connected: 0,
+					rssi: rssiRandom(),
+					noiseFloor: -105
+				}
+			]
+
+			let locationObj = {
+				id: '4cfacaf650a0@1515028396607',
+				mac: "4cfacaf650a0",
+				t: 1515028396607,
+				np: npArr.length,
+				devices: addNp(npArr)
+			}
+
+			
+			
+			//macRandom---mac设备id
+			function macRandom(){
+
+				const letterArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+				'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+				const numArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+				let str = ''
+
+				for(let i = 0; i < 6; i++){
+					const n = Math.round(Math.random() * 25)
+					const m = Math.round(Math.random() * 9)
+					str += letterArr[n].concat(numArr[m])
+					//console.log(n, m)
+				}
+				return str
+			}
+
+			//rssiRandom---rssi值的范围
+			function rssiRandom(){
+				let rssiRan = Math.round(Math.random() * 60) + (-110)
+				return rssiRan
+			}
+
+			//locationObj -- npArr
+			console.log('locationObj', locationObj)
+			//addNp--循环模拟设备数量
+			function addNp(newArr){
+				
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+			
+			//senNp---模拟3s报告一次数量,发满90个,多余的下一次发送
+			let count = 0;
+			function sendNp(npArr){
+
+				if(npArr.length === 0){
+					++count;
+					console.log("npArr is empty---seconds", count,  new Date().getSeconds())
+					window.clearInterval(inter)
+					//console.log('inter', inter)
+					//addNp(npArr)
+					//console.log('npArr', npArr)
+					//console.log('locationObj', locationObj)
+				}
+				if(npArr.length < 90 && npArr.length > 0){
+					++count;
+					let sendArr = npArr.splice(0, npArr.length)
+					console.log('seconds', new Date().getSeconds())
+					console.log(sendArr, count)
+					return  false;
+				}
+
+				if(npArr.length >= 90){
+
+					let sendArr = npArr.splice(0, 90)
+					++count;
+					console.log('seonds', new Date().getSeconds())
+					console.log(sendArr, count)
+					//console.log(npNum)
+					if(npArr.length < 90){
+						const timer = setTimeout(function(){
+							console.log('seonds', new Date().getSeconds())
+							++count;
+							let sendArr = npArr.splice(0, npArr.length)
+							console.log(sendArr, count)
+						}, 3000)
+						clearInterval(timer)
+					}
+				} 
+			}
+
+			let inter = 0
+			inter = setInterval(function(){
+				sendNp(npArr)
+				//console.log("1111")
+			}, 3000)
+
+			console.log('inter', inter)
+		}
+		
+	</script>
+</body>
+</html>
