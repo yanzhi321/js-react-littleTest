@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js-setInterval</title>
+</head>
+<body>
+	
+	<script>
+		
+        window.onload = function(){
+
+            /*setTimeout(function(){
+                for(var i=0;i<10;i++){
+                 	//console.log("first", i)
+                }
+                //分段处理 五千次分成两段
+                setTimeout(function(){
+                    for(var i=0;i<10;i++){
+			           	//console.log("second", i)
+			        }
+    			},100);
+			},1000);
+
+
+			//setTimeout
+			function fun1(){
+			   	console.log("1", new Date().getSeconds())
+			}
+			function fun2(){
+			    console.log("2", new Date().getSeconds())
+			}
+			function fun3(){
+			    console.log("3", new Date().getSeconds())
+			}
+
+			var farr = [fun1,fun2,fun3];　　//将任务存储到数组中
+
+			setTimeout(function(){
+			    
+			    if(farr.length>0){
+			        
+			        var func=farr.shift();  //取出
+			               //func(); //执行函数
+			        setTimeout(arguments.callee,300);
+			    }else{
+			        //alert("执行完成")
+			    }
+
+			},1000);*/      //300秒执行一次
+
+
+			//setInterval
+			let timer = 0;
+			if(timer == 1){
+				clearInterval(timer)
+			}
+
+			timer = setInterval(function(){
+				clearInterval(timer)
+				console.log("111")
+				console.log(timer, new Date().getSeconds())
+			}, 1000)
+			console.log(timer)
+
+
+        }
+
+	</script>
+</body>
+</html>

@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>rssi04</title>
+	<title>rssi06</title>
 </head>
 <body>
+
 	<script>
 		
 		window.onload = function(){
@@ -41,7 +42,6 @@
 				devices: addNp(npArr)
 			}
 
-			
 			//macRandom---mac设备id
 			function macRandom(){
 
@@ -66,7 +66,7 @@
 			}
 
 			//locationObj -- npArr
-			console.log('locationObj', locationObj)
+			// console.log('locationObj', locationObj)
 			//addNp--循环模拟设备数量
 			function addNp(newArr){
 				
@@ -84,67 +84,39 @@
 				}
 				return newArr
 			}
+
+			//sendNp(npArr)
+			//console.log(locationObj.devices)
+			console.log(npArr)
 			
-			//senNp---模拟3s报告一次数量,发满90个,多余的下一次发送
+			//interval
 			let count = 0;
-			function sendNp(npArr){
+			let timer = 0;
+			let timer2 = 0;
+			
+			//定时器第一次不延时
+			var data2=0;
+		    var count2= function(){
+		      console.log("count2:",data2++);
+		      return count2;//若不返回时，此函数只会执行一次
+		    }
+		    //setInterval(count2(),1000);
 
-				if(npArr.length === 0){
-					++count;
-					console.log("npArr is empty---seconds", count,  new Date().getSeconds())
-					window.clearInterval(inter)
-					console.log('inter', inter)
-					//addNp(npArr)
-					//console.log('npArr', npArr)
-					//console.log('locationObj', locationObj)
-				}
-				if(npArr.length < 90 && npArr.length > 0){
-					++count;
-					let sendArr = npArr.splice(0, npArr.length)
-					console.log('seconds', new Date().getSeconds())
-					console.log(sendArr, count)
-					return  false;
-				}
+		    function func(){
 
-				if(npArr.length >= 90){
+		    	let sendArr = npArr.splice(0, 90)
+		    	console.log(sendArr)
+		    	console.log('count && seconds:', ++count, new Date().getSeconds())
+		    	if(npArr.length === 0){
+		    		window.clearInterval(timer)
+		    		//return false;
+		    	}
+		    	return func
+		    }
 
-					let sendArr = npArr.splice(0, 90)
-					++count;
-					console.log('seonds', new Date().getSeconds())
-					console.log(sendArr, count)
-					//console.log(npNum)
-					if(npArr.length < 90){
-						const timer = setTimeout(function(){
-							console.log('seonds', new Date().getSeconds())
-							++count;
-							let sendArr = npArr.splice(0, npArr.length)
-							console.log(sendArr, count)
-						}, 3000)
-						clearInterval(timer)
-					}
-				} 
-			}
-
-			let inter = 0;
-
-			inter = setInterval(function(){
-				sendNp(npArr)
-				//console.log("1111")
-				console.log('inter', inter)
-			}, 3000)
-
-
-			/*let timer = 0;
-			timer = setInterval(function(){
-
-				inter = setInterval(function(){
-					sendNp(npArr)
-					//console.log("1111")
-				}, 3000)
-			}, 30000)*/
-
-
-
+		   	//func(count)
+		   	timer = setInterval(func(), 1000)
+			
 		}
 		
 	</script>

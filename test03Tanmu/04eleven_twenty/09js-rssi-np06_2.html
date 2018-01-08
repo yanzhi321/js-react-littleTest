@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>rssi06</title>
+</head>
+<body>
+
+	<script>
+		
+		window.onload = function(){
+
+			// db:hotmap   table:locOrg
+			let rssi = 0;
+			let np = 0;
+			let mac = "4cfacaf650a0";
+			
+			//rssiMin && rssiMax && npMax && t
+			const rssiMin = -110;
+			const rssiMax = -50;
+			const npMax = 90;
+			const t = 1515028396607; //seconds
+
+
+			let npArr = [
+				{
+					mac: macRandom(),
+					ip: '0.0.0.0',
+					channel: 153,
+					radioType: 1,
+					connected: 0,
+					rssi: rssiRandom(),
+					noiseFloor: -105
+				}
+			]
+
+			let locationObj = {
+				id: '4cfacaf650a0@1515028396607',
+				mac: "4cfacaf650a0",
+				t: 1515028396607,
+				np: npArr.length,
+				devices: addNp(npArr)
+			}
+
+			//macRandom---mac设备id
+			function macRandom(){
+
+				const letterArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+				'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+				const numArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+				let str = ''
+
+				for(let i = 0; i < 6; i++){
+					const n = Math.round(Math.random() * 25)
+					const m = Math.round(Math.random() * 9)
+					str += letterArr[n].concat(numArr[m])
+					//console.log(n, m)
+				}
+				return str
+			}
+
+			//rssiRandom---rssi值的范围
+			function rssiRandom(){
+				let rssiRan = Math.round(Math.random() * 60) + (-110)
+				return rssiRan
+			}
+
+			//locationObj -- npArr
+			// console.log('locationObj', locationObj)
+			//addNp--循环模拟设备数量
+			function addNp(newArr){
+				
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+			console.log(npArr)
+			
+			//interval
+			let count = 0;
+			let timer = 0;
+			let timer2 = 0;
+			let delayer = 0;
+			
+			
+			//sendNp
+		    function sendNp(){
+
+		    	let sendArr = []
+
+		    	if(npArr.length === 0){
+		    		//console.log('npArr is empty', npArr, ++count, new Date().getSeconds())
+		    		window.clearInterval(timer)
+		    		window.clearTimeout(delayer)
+		    	}
+
+		    	if(npArr.length >= 90){
+		    		sendArr = npArr.splice(0, 90)
+		    		console.log(sendArr)
+		    		console.log('count && seconds:', ++count, new Date().getSeconds())
+
+		    		if(npArr.length < 90 && npArr.length > 0){
+		    			delayer = setTimeout(function(){
+		    				sendArr = npArr.splice(0, npArr.length)
+		    				console.log(sendArr)                                                                                                            
+		    				console.log('count && seconds:', ++count, new Date().getSeconds())
+
+		    			}, 1000)
+		    			window.clearTimeout(delayer)
+		    			return false;
+		    		}
+
+		    	} 
+
+		    	if(npArr.length < 90  && npArr.length > 0){
+		    		sendArr = npArr.splice(0, npArr.length)
+		    		console.log(sendArr)
+		    		console.log('count && seconds: ', ++count, new Date().getSeconds())
+		    	}
+
+		    	return sendNp
+		    }
+
+		   	//sendNp()
+		   	//timer = setInterval(sendNp(), 1000)
+
+		   	//发完之后，数据为空，（再次模拟数据， 循环发送）
+		   	//sendNpNext()
+		   	function sendNpNext(){
+
+		   	}
+			
+			let num  = 0;
+			let nextArr = []
+
+		   	let test = setInterval(function(){
+		   		if(npArr.length <=  90){
+		   			//console.log(npArr)
+		   			clearInterval(test)
+		   			test = 0;
+		   		}
+		   		if(test === 0){
+		   			//console.log('test is zero')
+		   			console.log('num:', ++num)
+		   			nextArr = npArr.splice(0, npArr.length)
+		   			console.log("nextArr", nextArr, new Date().getSeconds() )
+		   			console.log('npArr', npArr)
+		   			addNp(npArr)
+
+		   			//test2 && delayer2
+		   			let delayer2 =setTimeout(function(){
+		   				console.log('seconds:', new Date().getSeconds())
+			   			let test2 = setInterval(function(){
+			   				nextArr = []
+
+			   				if(npArr.length === 0){
+			   					window.clearInterval(test2)
+			   					console.log('npArr is empty')
+			   				}
+			   				if(npArr.length < 90 && npArr.length > 0){
+			   					nextArr = npArr.splice(0, npArr.length)
+			   					console.log('nextArr', nextArr)
+			   				}
+			   				if(npArr.length >= 90){
+			   					nextArr = npArr.splice(0, 90)
+			   					console.log(nextArr)
+			   					if(npArr.length < 90 && npArr.length > 0){
+			   						delayer = setTimeout(function(){
+					    				nextArr = npArr.splice(0, npArr.length)
+					    				console.log('nextArr', nextArr)
+					    				console.log('count && seconds:', ++count, new Date().getSeconds())
+
+					    			}, 1000)
+					    			
+					    			return false;
+			   					}
+			   				}
+
+			   			}, 1000)
+
+		   			}, 3000)
+		   			console.log('npArr', npArr)
+		   			return false;
+		   		}
+		   		console.log(++num)
+		   		nextArr = npArr.splice(0, 90)
+		   		console.log(nextArr, new Date().getSeconds())
+
+		   	}, 1000)
+		   	//function --npArrS
+		   	function npArrS(npArr, num, nextArr){
+		   		if(npArr.length >= 90){
+		   			nextArr = npArr.splice(0, 90)
+		   			console.log(nextArr)
+		   			if(npArr.length < 90){
+		   				nextArr  = npArr.splice(0, npArr.length)
+		   				console.log(nextArr)
+		   				return false;
+		   			}
+		   		}
+
+		   		if(npArr.length < 90  && npArr.length > 0){
+		   			nextArr = npArr.splice(0, npArr.length)
+		   			console.log(nextArr)
+		   		}
+
+		   		if(npArr.length === 0){
+		   			console.log('npArr', npArr)
+		   		}
+		   	}
+
+		   	//
+		   	let calc = 1000 > 10  ? console.log("true") : console.log('false')
+
+		}
+		
+	</script>
+</body>
+</html>
