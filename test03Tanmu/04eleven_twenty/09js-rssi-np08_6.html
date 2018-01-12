@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>rssi08_6</title>
+</head>
+<body>
+
+	<script>
+		
+		window.onload = function(){
+
+			// db:hotmap   table:locOrg
+			let rssi = 0;
+			let np = 0;
+			let mac = "4cfacaf650a0";
+			
+			//rssiMin && rssiMax && npMax && t
+			const rssiMin = -110;
+			const rssiMax = -50;
+			const npMax = 90;
+			const t = 1515028396607; //seconds
+
+
+			//macRandom---mac设备id
+			function macRandom(){
+
+				const letterArr = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
+				"o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+				const numArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+				let str = ""
+
+				for(let i = 0; i < 6; i++){
+					const n = Math.round(Math.random() * 25)
+					const m = Math.round(Math.random() * 9)
+					str += letterArr[n].concat(numArr[m])
+					//console.log(n, m)
+				}
+				return str
+			}
+
+			//rssiRandom---rssi值的范围
+			function rssiRandom(){
+				let rssiRan = Math.round(Math.random() * 60) + (-110)
+				return rssiRan
+			}
+
+			//locationObj -- npArr
+			// console.log("locationObj", locationObj)
+			//addNp--循环模拟设备数量
+			function addNp(newArr){
+				
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: "0.0.0.0",
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+			
+			//addNp2 && addNp3
+			function addNp2(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+			function addNp3(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+
+			function addNp4(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+
+			function addNp5(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+
+			function addNp6(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+
+			function addNp7(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+
+			function addNp8(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+
+			function addNp9(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+			function addNp10(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			} 
+
+			function addNp11(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			} 
+
+			function addNp12(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+			function addNp13(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+			function addNp14(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+			function addNp15(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+			function addNp16(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+			function addNp17(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+			function addNp18(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+			function addNp19(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+			function addNp20(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+			let npArr = [
+				
+			]
+
+			let locationObj = {
+				id: "4cfacaf650a0@1515028396607",
+				mac: "4cfacaf650a0",
+				t: 1515028396607,
+				np: npArr.length,
+				devices: addNp(npArr)
+			}
+
+			//npArr2 && npArr3
+			let npArr2 = [], npArr3 = [], npArr4 = [], npArr5 = [], npArr6 = [],
+				npArr7 = [], npArr8 = [], npArr9 = [], npArr10 = [], npArr11 = [],
+				npArr12 = [], npArr13 = [], npArr14 = [], npArr15 = [], npArr16 = [],
+				npArr17 = [], npArr18 = [], npArr19 = [], npArr20 = [];
+
+			let locationObj2 = {
+				id: '4cfacaf650a0@1515028396607_S2',
+				mac: "4cfacaf650a0_S2",
+				t: 1515028396607,
+				np: npArr2.length,
+				devices: addNp2(npArr2)
+			}
+
+			let locationObj3  = {
+				id: '4cfacaf650a0@1515028396607_S3',
+				mac: "4cfacaf650a0_S3",
+				t: 1515028396607,
+				np: npArr.length,
+				devices: addNp3(npArr3)
+			}
+
+			let locationObj4 = {
+				id: '4cfacaf650a0@1515028396607_S4',
+				mac: "4cfacaf650a0_S4",
+				t: 1515028396607,
+				np: npArr4.length,
+				devices: addNp4(npArr4)
+			}
+
+			let locationObj5 = {
+				id: '4cfacaf650a0@1515028396607_S5',
+				mac: "4cfacaf650a0_S5",
+				t: 1515028396607,
+				np: npArr5.length,
+				devices: addNp5(npArr5)
+			}
+
+			let locationObj6 = {
+				id: '4cfacaf650a0@1515028396607_S6',
+				mac: "4cfacaf650a0_S6",
+				t: 1515028396607,
+				np: npArr6.length,
+				devices: addNp6(npArr6)
+			}
+
+			let locationObj7 = {
+				id: '4cfacaf650a0@1515028396607_S7',
+				mac: "4cfacaf650a0_S7",
+				t: 1515028396607,
+				np: npArr7.length,
+				devices: addNp7(npArr7)
+			}
+
+			let locationObj8 = {
+				id: '4cfacaf650a0@1515028396607_S8',
+				mac: "4cfacaf650a0_S8",
+				t: 1515028396607,
+				np: npArr8.length,
+				devices: addNp8(npArr8)
+			}
+
+			let locationObj9 = {
+				id: '4cfacaf650a0@1515028396607_S9',
+				mac: "4cfacaf650a0_S9",
+				t: 1515028396607,
+				np: npArr9.length,
+				devices: addNp9(npArr9)
+			}
+
+			let locationObj10 = {
+				id: '4cfacaf650a0@1515028396607_S10',
+				mac: "4cfacaf650a0_S10",
+				t: 1515028396607,
+				np: npArr10.length,
+				devices: addNp10(npArr10)
+			}
+
+			let locationObj11 = {
+				id: '4cfacaf650a0@1515028396607_S11',
+				mac: "4cfacaf650a0_S11",
+				t: 1515028396607,
+				np: npArr10.length,
+				devices: addNp11(npArr11)
+			}
+
+			let locationObj12 = {
+				id: '4cfacaf650a0@1515028396607_S12',
+				mac: "4cfacaf650a0_S12",
+				t: 1515028396607,
+				np: npArr12.length,
+				devices: addNp12(npArr12)
+			}
+
+			let locationObj13 = {
+				id: '4cfacaf650a0@1515028396607_S13',
+				mac: "4cfacaf650a0_S13",
+				t: 1515028396607,
+				np: npArr13.length,
+				devices: addNp13(npArr13)
+			}
+
+			let locationObj14 = {
+				id: '4cfacaf650a0@1515028396607_S14',
+				mac: "4cfacaf650a0_S14",
+				t: 1515028396607,
+				np: npArr14.length,
+				devices: addNp14(npArr14)
+			}
+
+			let locationObj15 = {
+				id: '4cfacaf650a0@1515028396607_S15',
+				mac: "4cfacaf650a0_S15",
+				t: 1515028396607,
+				np: npArr15.length,
+				devices: addNp15(npArr15)
+			}
+
+			let locationObj16 = {
+				id: '4cfacaf650a0@1515028396607_S16',
+				mac: "4cfacaf650a0_S16",
+				t: 1515028396607,
+				np: npArr16 .length,
+				devices: addNp16(npArr16)
+			}
+
+			let locationObj17 = {
+				id: '4cfacaf650a0@1515028396607_S17',
+				mac: "4cfacaf650a0_S17",
+				t: 1515028396607,
+				np: npArr17.length,
+				devices: addNp17(npArr17)
+			}
+
+			let locationObj18 = {
+				id: '4cfacaf650a0@1515028396607_S18',
+				mac: "4cfacaf650a0_S18",
+				t: 1515028396607,
+				np: npArr18.length,
+				devices: addNp18(npArr18)
+			}
+
+			let locationObj19 = {
+				id: '4cfacaf650a0@1515028396607_S19',
+				mac: "4cfacaf650a0_S19",
+				t: 1515028396607,
+				np: npArr19.length,
+				devices: addNp11(npArr19)
+			}
+
+			let locationObj20 = {
+				id: '4cfacaf650a0@1515028396607_S20',
+				mac: "4cfacaf650a0_S20",
+				t: 1515028396607,
+				np: npArr20.length,
+				devices: addNp20(npArr20)
+			}
+			//locationObjArr
+			let locationObjArr = []
+			if(locationObjArr.length === 0){
+				locationObjArr.push(locationObj)
+				locationObjArr.push(locationObj2)
+				locationObjArr.push(locationObj3)
+				locationObjArr.push(locationObj4)
+				locationObjArr.push(locationObj5)
+				locationObjArr.push(locationObj6)
+				locationObjArr.push(locationObj7)
+				locationObjArr.push(locationObj8)
+				locationObjArr.push(locationObj9)
+				locationObjArr.push(locationObj10)
+				locationObjArr.push(locationObj11)
+				locationObjArr.push(locationObj12)
+				locationObjArr.push(locationObj13)
+				locationObjArr.push(locationObj14)
+				locationObjArr.push(locationObj15)
+				locationObjArr.push(locationObj16)
+				locationObjArr.push(locationObj17)
+				locationObjArr.push(locationObj18)
+				locationObjArr.push(locationObj19)
+				locationObjArr.push(locationObj20)
+			}
+
+			let npArrAll = []
+			if(npArrAll.length === 0){
+				npArrAll.push(npArr)
+				npArrAll.push(npArr2)
+				npArrAll.push(npArr3)
+				npArrAll.push(npArr4)
+				npArrAll.push(npArr5)
+				npArrAll.push(npArr6)
+				npArrAll.push(npArr7)
+				npArrAll.push(npArr8)
+				npArrAll.push(npArr9)
+				npArrAll.push(npArr10)
+				npArrAll.push(npArr11)
+				npArrAll.push(npArr12)
+				npArrAll.push(npArr13)
+				npArrAll.push(npArr14)
+				npArrAll.push(npArr15)
+				npArrAll.push(npArr16)
+				npArrAll.push(npArr17)
+				npArrAll.push(npArr18)
+				npArrAll.push(npArr19)
+				npArrAll.push(npArr20)
+			}
+
+			//console.log(npArr)
+			//senNp---模拟3s报告一次数量,发满90个,多余的下一次发送
+			let count = 0;
+			function sendNp(){
+				
+				let url = 'http://192.168.30.211:8000'
+
+				for(let i = 0; i<npArrAll.length; i++){
+					let sendArr = []
+					
+					if(npArrAll[i].length >= 90){
+						sendArr = npArrAll[i].splice(0, 90)
+						console.log(sendArr, i, new Date().getSeconds())
+						if(npArrAll[i].length < 90 && npArrAll[i].length > 0){
+							setTimeout(function(){
+								sendArr = npArrAll[i].splice(0, npArrAll[i].length)
+								console.log(sendArr, i, new Date().getSeconds())
+							}, 3000)
+						}
+
+						fetch(url, {
+						  method: 'POST',
+						  headers: {
+						    'Content-Type': 'application/json'
+						  },
+						  body: JSON.stringify(Object.assign({}, locationObjArr[i], {
+						  	np: sendArr.length,
+						  	devices: sendArr
+						  }))
+						})
+						.then(function(response) {
+							return response.json()
+						}).then(function(json) {
+							console.log('parsed json', json)
+						}).catch(function(ex) {
+							console.log('parsing failed', ex)
+						})
+
+					} 
+
+
+					if(npArrAll[i].length === 0){
+						window.clearInterval(inter)
+						inter = 0;
+						npArrAll = []
+						console.log(npArrAll, new Date().getSeconds())
+					}
+
+				} 
+
+				return sendNp
+			}
+
+			//循环发送
+			function sendCircu(){
+				if(inter === 0){
+
+					npArrAll.push(addNp(npArr))
+					npArrAll.push(addNp(npArr2))
+					npArrAll.push(addNp(npArr3))
+					npArrAll.push(addNp(npArr4))
+					npArrAll.push(addNp(npArr5))
+					npArrAll.push(addNp(npArr6))
+					npArrAll.push(addNp(npArr7))
+					npArrAll.push(addNp(npArr8))
+					npArrAll.push(addNp(npArr9))
+					npArrAll.push(addNp(npArr10))
+					npArrAll.push(addNp(npArr11))
+					npArrAll.push(addNp(npArr12))
+					npArrAll.push(addNp(npArr13))
+					npArrAll.push(addNp(npArr14))
+					npArrAll.push(addNp(npArr15))
+					npArrAll.push(addNp(npArr16))
+					npArrAll.push(addNp(npArr17))
+					npArrAll.push(addNp(npArr18))
+					npArrAll.push(addNp(npArr19))
+					npArrAll.push(addNp(npArr20))
+					
+					//console.log(npArr)
+					inter = setInterval(sendNp(), 3000)
+					//console.log('time', new Date().getSeconds())
+				}else if(inter > 0){
+					//console.log("hhhhhhh", inter)
+					//console.log(npArrAll)
+					//console.log('time', new Date().getSeconds())
+				}
+				return sendCircu
+			}
+
+			let inter = 0, inter2 = 0;
+		
+			//第一次不延时
+			inter = setInterval(sendNp(), 3000)
+			
+			//循环发送
+			inter2 = setInterval(sendCircu(), 10000)
+
+		}
+		
+	</script>
+</body>
+</html>

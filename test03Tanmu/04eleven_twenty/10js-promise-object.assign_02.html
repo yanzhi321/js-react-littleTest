@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>object.assign</title>
+</head>
+<body>
+	
+	<div id="container">
+		
+	</div>
+	
+	<script>
+		
+		window.onload = function(){
+
+            //for
+            /*for(let i = 0; i<5; i++){
+            	for(let j = 0; j<5; j++){
+            		console.log('◆')
+            		console.log(j)
+            	}
+            	console.log(i)
+          		console.log('<br />')
+            }
+
+            //
+            for(let i = 0; i<5; i++){
+            	for(let j = 0; j<5-i; j++){
+            		console.log('★')
+            	}
+            	console.log('<br />')
+            }*/
+
+         	
+         	//rssiRandom---rssi值的范围
+			function rssiRandom(){
+				let rssiRan = Math.round(Math.random() * 60) + (-110)
+				return rssiRan
+			}
+
+			//macRandom---mac设备id
+			function macRandom(){
+
+				const letterArr = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
+				"o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+				const numArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+				let str = ""
+
+				for(let i = 0; i < 6; i++){
+					const n = Math.round(Math.random() * 25)
+					const m = Math.round(Math.random() * 9)
+					str += letterArr[n].concat(numArr[m])
+					//console.log(n, m)
+				}
+				return str
+			}
+
+			let npArr = [
+				{
+					mac: macRandom(),
+					ip: "0.0.0.0",
+					channel: 153,
+					radioType: 1,
+					connected: 0,
+					rssi: rssiRandom(),
+					noiseFloor: -105
+				}
+			]
+
+			let locationObj = {
+				id: "4cfacaf650a0@1515028396607",
+				mac: "4cfacaf650a0",
+				t: 1515028396607,
+				np: npArr.length,
+				devices: addNp(npArr)
+			}
+
+			function addNp(newArr){
+				
+				for(let i = 0; i<10; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: "0.0.0.0",
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+			console.log(locationObj)
+			//每3s发送一次发满90个，多余的下一次发送
+			function sendNp(){
+				//let sendArr = []
+
+				console.log("每3s", new Date().getSeconds())
+				return sendNp
+			}
+
+			//每10s循环
+			function sendCircu(){
+				console.log("每5s", new Date().getSeconds())
+				timer = setInterval(sendNp(), 3000)
+			}
+
+			let timer = 0, timer2 = 0;
+			//timer = setInterval(sendNp(), 3000)
+			//timer2 = setInterval(sendCircu(), 5000)
+
+			
+			
+
+
+		}
+
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js-object</title>
+</head>
+<body>
+	
+	
+	<script>
+		
+        window.onload = function(){
+
+        	//addNp--循环模拟设备数量
+			function addNp(newArr){
+				
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: "0.0.0.0",
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+
+			//rssiRandom---rssi值的范围
+			function rssiRandom(){
+				let rssiRan = Math.round(Math.random() * 60) + (-110)
+				return rssiRan
+			}
+
+			//macRandom---mac设备id
+			function macRandom(){
+
+				const letterArr = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
+				"o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+				const numArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+				let str = ""
+
+				for(let i = 0; i < 6; i++){
+					const n = Math.round(Math.random() * 25)
+					const m = Math.round(Math.random() * 9)
+					str += letterArr[n].concat(numArr[m])
+					//console.log(n, m)
+				}
+				return str
+			}
+
+			let npArr = []
+
+        	let locationObj = {
+				id: "4cfacaf650a0@1515028396607",
+				mac: "4cfacaf650a0",
+				t: 1515028396607,
+				np: npArr.length,
+				devices: addNp(npArr)
+			}
+
+			console.log(locationObj)
+			for(let i = 0; i<10; i++){
+				locationObj2 = Object.assign({}, locationObj)
+			}
+			console.log(locationObj2)
+
+			/*let obj2 = Object.assign({}, locationObj2, locationObj)
+			console.log(obj2)
+			let obj3 = JSON.stringify(obj2)
+			console.log(obj3)*/
+			//Promise
+			const myFirstPromise = new Promise((resolve, reject) => {
+			  // ?异步操作，最终调用:
+			  //
+			  //   resolve(someValue); // fulfilled
+			  // ?或
+			  //   reject("failure reason"); // rejected
+			});
+
+			const mySecond = new Promise((resolve, reject) => {
+				console.log(resolve, reject)
+			})
+
+
+			let myFirstPromise2 = new Promise(function(resolve, reject){
+			    //当异步代码执行成功时，我们才会调用resolve(...), 当异步代码失败时就会调用reject(...)
+			    //在本例中，我们使用setTimeout(...)来模拟异步代码，实际编码时可能是XHR请求或是HTML5的一些API方法.
+			    setTimeout(function(){
+			        resolve("成功!"); //代码正常执行！
+			    }, 1000);
+			});
+
+			myFirstPromise2.then(function(successMessage){
+			    //successMessage的值是上面调用resolve(...)方法传入的值.
+			    //successMessage参数不一定非要是字符串类型，这里只是举个例子
+			    console.log("Yay! " + successMessage);
+			});
+
+			let myFirstPromise3 = new Promise(function(resolve, reject){
+					resolve("what is fork")
+			})
+			myFirstPromise3.then(function(responseMsg){
+				console.log("hahahha" + responseMsg)
+			})
+			
+
+        }
+
+	</script>
+
+</body>
+</html>

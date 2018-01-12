@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>JS-Promise</title>
+</head>
+<body>
+  <script>
+    //url:http://upload-images.jianshu.io/upload_images/2956919-2c89d2dde2a7ee0d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1536/q/50
+      let url = 'http://upload-images.jianshu.io/upload_images/2956919-2c89d2dde2a7ee0d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1536/q/50'
+
+      var p = new Promise(function(resolve,reject){
+           
+        var img=new Image();
+       
+         img.src='http://upload-images.jianshu.io/upload_images/2956919-2c89d2dde2a7ee0d.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1536/q/50'
+        img.onload=function(){
+          resolve();
+        }
+        img.onerror = function(){
+          reject();
+        }
+      }).then( 
+        ()=> console.log('图片加载成功')
+      ).catch(
+        ()=> console.log('图片加载失败')
+      )
+      
+      let url2 = 'images/myLittleVader.jpg'
+      let promise2 = new Promise(function(resolve, reject){
+        
+        let img2 = new Image();
+        img2.src = url2
+
+        img2.onload = function(){
+          resolve()
+        }
+        img2.onerror = function(){
+          reject()
+        }
+
+      }).then(
+          () => console.log("loading success")
+      ).catch(
+          () => console.log("loading failed")
+      )
+
+      //callback回调地狱
+      /*setTimeout(function(){
+        left(function(){
+          setTimeout(function(){
+             left(function(){
+               setTimeout(function(){
+                 left();
+               },2000);
+             });
+          }, 2000);
+        });
+      }, 2000);
+      */
+      var p2 = new Promise((resolve,reject)=>{
+        setTimeout( resolve , 2000 )
+      })
+      .then( ()=>setTimeout( null, 2000 ) )
+      .then( ()=>setTimeout(function(){
+        console.log(11)
+      },2000) )
+
+      var p3 = new Promise(function(resolve,reject){
+        var a=1
+        resolve(a);  
+      
+      }).then(function(data){
+          console.log(data)
+          return ++data;
+      }).then( function(data){
+          console.log(data)
+      } )
+    //打印出来的结果依次是： 1  2 。
+
+     var p4 = new Promise((resolve,reject)=> {
+            n
+    } ).then(()=>console.log('运行成功'))
+    .catch( ()=>{a;console.log('报错');} )//这里我们没有定义a的值会报错
+    .catch( ()=> console.log('报错2') )
+    .then( ()=>console.log('报错后的回调') )
+
+    let promise6 = new Promise(function (resolve, reject) {
+        let request = require('request')
+        request(url, function(error, responses, body) {
+          if(error){
+            reject(error);
+            return;
+          }
+          if(response.statusCode == 200){
+            resolve(body)
+          }else {
+            reject(response.status)
+          }
+        })
+        return promise6
+    })
+    
+
+    getRequest("https://github.com/").then(function (result){
+      console.log(result)
+    }, function(error){
+      console.log('error', error)
+    })
+
+  </script>
+</body>
+</html>

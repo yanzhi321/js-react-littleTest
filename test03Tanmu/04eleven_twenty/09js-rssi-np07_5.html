@@ -1,0 +1,986 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>rssi07_5</title>
+</head>
+<body>
+
+	<script>
+		
+		window.onload = function(){
+
+			// db:hotmap   table:locOrg
+			let rssi = 0;
+			let np = 0;
+			let mac = "4cfacaf650a0";
+			
+			//rssiMin && rssiMax && npMax && t
+			const rssiMin = -110;
+			const rssiMax = -50;
+			const npMax = 90;
+			const t = 1515028396607; //seconds
+
+
+			let npArr = [
+				
+			]
+
+			let locationObj = {
+				id: "4cfacaf650a0@1515028396607",
+				mac: "4cfacaf650a0",
+				t: 1515028396607,
+				np: npArr.length,
+				devices: addNp(npArr)
+			}
+
+			//npArr2 && npArr3
+			let npArr2 = [], npArr3 = [], npArr4 = [], npArr5 = [], npArr6 = [],
+				npArr7 = [], npArr8 = [], npArr9 = [], npArr10 = [];
+
+			let locationObj2 = {
+				id: '4cfacaf650a0@1515028396607S2',
+				mac: "4cfacaf650a0S2",
+				t: 1515028396607,
+				np: npArr2.length,
+				devices: addNp2(npArr2)
+			}
+
+			let locationObj3  = {
+				id: '4cfacaf650a0@1515028396607S3',
+				mac: "4cfacaf650a0S3",
+				t: 1515028396607,
+				np: npArr.length,
+				devices: addNp3(npArr3)
+			}
+
+			let locationObj4 = {
+				id: '4cfacaf650a0@1515028396607S4',
+				mac: "4cfacaf650a0S4",
+				t: 1515028396607,
+				np: npArr4.length,
+				devices: addNp4(npArr4)
+			}
+
+			let locationObj5 = {
+				id: '4cfacaf650a0@1515028396607S5',
+				mac: "4cfacaf650a0S5",
+				t: 1515028396607,
+				np: npArr5.length,
+				devices: addNp5(npArr5)
+			}
+
+			let locationObj6 = {
+				id: '4cfacaf650a0@1515028396607S6',
+				mac: "4cfacaf650a0S6",
+				t: 1515028396607,
+				np: npArr6.length,
+				devices: addNp6(npArr6)
+			}
+
+			let locationObj7 = {
+				id: '4cfacaf650a0@1515028396607S7',
+				mac: "4cfacaf650a0S7",
+				t: 1515028396607,
+				np: npArr7.length,
+				devices: addNp7(npArr7)
+			}
+
+			let locationObj8 = {
+				id: '4cfacaf650a0@1515028396607S8',
+				mac: "4cfacaf650a0S8",
+				t: 1515028396607,
+				np: npArr8.length,
+				devices: addNp8(npArr8)
+			}
+
+			let locationObj9 = {
+				id: '4cfacaf650a0@1515028396607S9',
+				mac: "4cfacaf650a0S9",
+				t: 1515028396607,
+				np: npArr9.length,
+				devices: addNp9(npArr9)
+			}
+
+			let locationObj10 = {
+				id: '4cfacaf650a0@1515028396607S10',
+				mac: "4cfacaf650a0S10",
+				t: 1515028396607,
+				np: npArr10.length,
+				devices: addNp10(npArr10)
+			}
+			//macRandom---mac设备id
+			function macRandom(){
+
+				const letterArr = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n",
+				"o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"]
+				const numArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+				let str = ""
+
+				for(let i = 0; i < 6; i++){
+					const n = Math.round(Math.random() * 25)
+					const m = Math.round(Math.random() * 9)
+					str += letterArr[n].concat(numArr[m])
+					//console.log(n, m)
+				}
+				return str
+			}
+
+			//rssiRandom---rssi值的范围
+			function rssiRandom(){
+				let rssiRan = Math.round(Math.random() * 60) + (-110)
+				return rssiRan
+			}
+
+			//locationObj -- npArr
+			// console.log("locationObj", locationObj)
+			//addNp--循环模拟设备数量
+			function addNp(newArr){
+				
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: "0.0.0.0",
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+			
+			//addNp2 && addNp3
+			function addNp2(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+			function addNp3(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+
+			function addNp4(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+
+			function addNp5(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+
+			function addNp6(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+
+			function addNp7(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+
+			function addNp8(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+
+			function addNp9(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+			function addNp10(newArr){
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			} 
+			//console.log(npArr)
+			//senNp---模拟3s报告一次数量,发满90个,多余的下一次发送
+			let count = 0;
+			function sendNp(){
+
+				let url = 'http://192.168.30.211:8000'
+				let sendArr = [], sendArr2 = [], sendArr3 = [], sendArr4 = [], sendArr5 = [],
+					sendArr6 = [], sendArr7 = [], sendArr8 = [], sendArr9 = [], sendArr10 = [];
+				if(npArr.length === 0){
+					++count;
+					// console.log("npArr is empty---seconds", new Date().getSeconds())
+					//window.clearInterval(inter)
+					
+				}
+				if(npArr.length < 90 && npArr.length > 0){
+					++count;
+					sendArr = npArr.splice(0, npArr.length)
+					sendArr2 = npArr2.splice(0, npArr2.length)
+					sendArr3 = npArr3.splice(0, npArr3.length)
+					sendArr4 = npArr4.splice(0, npArr4.length)
+					sendArr5 = npArr5.splice(0, npArr5.length)
+					sendArr6 = npArr6.splice(0, npArr6.length)
+					sendArr7 = npArr7.splice(0, npArr7.length)
+					sendArr8 = npArr8.splice(0, npArr8.length)
+					sendArr9 = npArr9.splice(0, npArr9.length)
+					sendArr10 = npArr10.splice(0, npArr10.length)
+					// console.log('seconds', new Date().getSeconds())
+					console.log(sendArr, new Date().getSeconds())
+					console.log('sendArr2', sendArr2)
+					console.log('sendArr3', sendArr3)
+					console.log('sendArr4', sendArr4)
+					console.log('sendArr5', sendArr5)
+					console.log('sendArr6', sendArr6)
+					console.log('sendArr7', sendArr7)
+					console.log('sendArr8', sendArr8)
+					console.log('sendArr9', sendArr9)
+					console.log('sendArr10', sendArr10)
+
+					fetch(url, {
+					  method: 'POST',
+					  headers: {
+					    'Content-Type': 'application/json'
+					  },
+					  body: JSON.stringify(Object.assign({}, locationObj, {
+					  	np: sendArr.length,
+					  	devices: sendArr
+					  }))
+					})
+					.then(function(response) {
+						return response.json()
+					}).then(function(json) {
+						console.log('parsed json', json)
+					}).catch(function(ex) {
+						console.log('parsing failed', ex)
+					})
+
+					fetch(url, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(Object.assign({}, locationObj2, {
+							np: sendArr2.length,
+							devices: sendArr2
+						}))
+					})
+					.then(function(response) {
+						return response.json()
+					}).then(function(json) {
+						console.log('parsed json', json)
+					}).catch(function(ex) {
+						console.log('parsing failed', ex)
+					})
+
+					fetch(url, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(Object.assign({}, locationObj3, {
+							np: sendArr3.length,
+							devices: sendArr3
+						}))
+					})
+					.then(function(response) {
+						return response.json()
+					}).then(function(json) {
+						console.log('parsed json', json)
+					}).catch(function(ex) {
+						console.log('parsing failed', ex)
+					})
+
+					fetch(url, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(Object.assign({}, locationObj4, {
+							np: sendArr4.length,
+							devices: sendArr4
+						}))
+					})
+					.then(function(response) {
+						return response.json()
+					}).then(function(json) {
+						console.log('parsed json', json)
+					}).catch(function(ex) {
+						console.log('parsing failed', ex)
+					})
+
+					fetch(url, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(Object.assign({}, locationObj5, {
+							np: sendArr5.length,
+							devices: sendArr5
+						}))
+					})
+					.then(function(response) {
+						return response.json()
+					}).then(function(json) {
+						console.log('parsed json', json)
+					}).catch(function(ex) {
+						console.log('parsing failed', ex)
+					})
+
+					fetch(url, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(Object.assign({}, locationObj6, {
+							np: sendArr6.length,
+							devices: sendArr6
+						}))
+					})
+					.then(function(response) {
+						return response.json()
+					}).then(function(json) {
+						console.log('parsed json', json)
+					}).catch(function(ex) {
+						console.log('parsing failed', ex)
+					})
+
+
+					fetch(url, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(Object.assign({}, locationObj7, {
+							np: sendArr7.length,
+							devices: sendArr7
+						}))
+					})
+					.then(function(response) {
+						return response.json()
+					}).then(function(json) {
+						console.log('parsed json', json)
+					}).catch(function(ex) {
+						console.log('parsing failed', ex)
+					})
+
+					fetch(url, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(Object.assign({}, locationObj8, {
+							np: sendArr8.length,
+							devices: sendArr8
+						}))
+					})
+					.then(function(response) {
+						return response.json()
+					}).then(function(json) {
+						console.log('parsed json', json)
+					}).catch(function(ex) {
+						console.log('parsing failed', ex)
+					})
+
+					fetch(url, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(Object.assign({}, locationObj9, {
+							np: sendArr9.length,
+							devices: sendArr9
+						}))
+					})
+					.then(function(response) {
+						return response.json()
+					}).then(function(json) {
+						console.log('parsed json', json)
+					}).catch(function(ex) {
+						console.log('parsing failed', ex)
+					})
+
+
+					fetch(url, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(Object.assign({}, locationObj10, {
+							np: sendArr10.length,
+							devices: sendArr10
+						}))
+					})
+					.then(function(response) {
+						return response.json()
+					}).then(function(json) {
+						console.log('parsed json', json)
+					}).catch(function(ex) {
+						console.log('parsing failed', ex)
+					})
+
+					return  false;
+				}
+
+				if(npArr.length >= 90){
+					//console.log(npArr2)
+					++count
+					sendArr = npArr.splice(0, 90)
+					sendArr2 = npArr2.splice(0, 90)
+					sendArr3 = npArr3.splice(0, 90)
+					sendArr4 = npArr4.splice(0, 90)
+					sendArr5 = npArr5.splice(0, 90)
+					sendArr6 = npArr6.splice(0, 90)
+					sendArr7 = npArr7.splice(0, 90)
+					sendArr8 = npArr8.splice(0, 90)
+					sendArr9 = npArr9.splice(0, 90)
+					sendArr10 = npArr10.splice(0, 90)
+					// console.log('seconds', new Date().getSeconds())
+					console.log(sendArr, new Date().getSeconds())
+					console.log('sendArr2', sendArr2)
+					console.log('sendArr3', sendArr3)
+					console.log('sendArr4', sendArr4)
+					console.log('sendArr5', sendArr5)
+					console.log('sendArr6', sendArr6)
+					console.log('sendArr7', sendArr7)
+					console.log('sendArr8', sendArr8)
+					console.log('sendArr9', sendArr9)
+					console.log('sendArr10', sendArr10)
+
+					fetch(url, {
+					  method: 'POST',
+					  headers: {
+					    'Content-Type': 'application/json'
+					  },
+					  body: JSON.stringify(Object.assign({}, locationObj, {
+					  	np: sendArr.length,
+					  	devices: sendArr
+					  }))
+					})
+					.then(function(response) {
+						return response.json()
+					}).then(function(json) {
+						console.log('parsed json', json)
+					}).catch(function(ex) {
+						console.log('parsing failed', ex)
+					})
+
+					fetch(url, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(Object.assign({}, locationObj2, {
+							np: sendArr2.length,
+							devices: sendArr2
+						}))
+					})
+					.then(function(response) {
+						return response.json()
+					}).then(function(json) {
+						console.log('parsed json', json)
+					}).catch(function(ex) {
+						console.log('parsing failed', ex)
+					})
+
+					fetch(url, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(Object.assign({}, locationObj3, {
+							np: sendArr3.length,
+							devices: sendArr3
+						}))
+					})
+					.then(function(response) {
+						return response.json()
+					}).then(function(json) {
+						console.log('parsed json', json)
+					}).catch(function(ex) {
+						console.log('parsing failed', ex)
+					})
+
+
+					fetch(url, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(Object.assign({}, locationObj4, {
+							np: sendArr4.length,
+							devices: sendArr4
+						}))
+					})
+					.then(function(response) {
+						return response.json()
+					}).then(function(json) {
+						console.log('parsed json', json)
+					}).catch(function(ex) {
+						console.log('parsing failed', ex)
+					})
+
+					fetch(url, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(Object.assign({}, locationObj5, {
+							np: sendArr5.length,
+							devices: sendArr5
+						}))
+					})
+					.then(function(response) {
+						return response.json()
+					}).then(function(json) {
+						console.log('parsed json', json)
+					}).catch(function(ex) {
+						console.log('parsing failed', ex)
+					})
+
+					fetch(url, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(Object.assign({}, locationObj6, {
+							np: sendArr6.length,
+							devices: sendArr6
+						}))
+					})
+					.then(function(response) {
+						return response.json()
+					}).then(function(json) {
+						console.log('parsed json', json)
+					}).catch(function(ex) {
+						console.log('parsing failed', ex)
+					})
+
+
+					fetch(url, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(Object.assign({}, locationObj7, {
+							np: sendArr7.length,
+							devices: sendArr7
+						}))
+					})
+					.then(function(response) {
+						return response.json()
+					}).then(function(json) {
+						console.log('parsed json', json)
+					}).catch(function(ex) {
+						console.log('parsing failed', ex)
+					})
+
+					fetch(url, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(Object.assign({}, locationObj8, {
+							np: sendArr8.length,
+							devices: sendArr8
+						}))
+					})
+					.then(function(response) {
+						return response.json()
+					}).then(function(json) {
+						console.log('parsed json', json)
+					}).catch(function(ex) {
+						console.log('parsing failed', ex)
+					})
+
+					fetch(url, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(Object.assign({}, locationObj9, {
+							np: sendArr9.length,
+							devices: sendArr9
+						}))
+					})
+					.then(function(response) {
+						return response.json()
+					}).then(function(json) {
+						console.log('parsed json', json)
+					}).catch(function(ex) {
+						console.log('parsing failed', ex)
+					})
+
+
+					fetch(url, {
+						method: 'POST',
+						headers: {
+							'Content-Type': 'application/json'
+						},
+						body: JSON.stringify(Object.assign({}, locationObj10, {
+							np: sendArr10.length,
+							devices: sendArr10
+						}))
+					})
+					.then(function(response) {
+						return response.json()
+					}).then(function(json) {
+						console.log('parsed json', json)
+					}).catch(function(ex) {
+						console.log('parsing failed', ex)
+					})
+					
+					//console.log(npNum)
+					if(npArr.length < 90 && npArr.length > 0){
+						const delayer = setTimeout(function(){
+							//console.log('seonds', new Date().getSeconds())
+							++count;
+							sendArr = npArr.splice(0, npArr.length)
+							sendArr2 = npArr2.splice(0, npArr2.length)
+							sendArr3 = npArr3.splice(0, npArr3.length)
+							sendArr4 = npArr4.splice(0, npArr4.length)
+							sendArr5 = npArr5.splice(0, npArr5.length)
+							sendArr6 = npArr6.splice(0, npArr6.length)
+							sendArr7 = npArr7.splice(0, npArr7.length)
+							sendArr8 = npArr8.splice(0, npArr8.length)
+							sendArr9 = npArr9.splice(0, npArr9.length)
+							sendArr10 = npArr10.splice(0, npArr10.length)
+							// console.log('seconds', new Date().getSeconds())
+							console.log(sendArr, new Date().getSeconds())
+							console.log('sendArr2', sendArr2)
+							console.log('sendArr3', sendArr3)
+							console.log('sendArr4', sendArr4)
+							console.log('sendArr5', sendArr5)
+							console.log('sendArr6', sendArr6)
+							console.log('sendArr7', sendArr7)
+							console.log('sendArr8', sendArr8)
+							console.log('sendArr9', sendArr9)
+							console.log('sendArr10', sendArr10)
+
+							fetch(url, {
+							  method: 'POST',
+							  headers: {
+							    'Content-Type': 'application/json'
+							  },
+							  body: JSON.stringify(Object.assign({}, locationObj, {
+							  	np: sendArr.length,
+							  	devices: sendArr
+							  }))
+							})
+							.then(function(response) {
+								return response.json()
+							}).then(function(json) {
+								console.log('parsed json', json)
+							}).catch(function(ex) {
+								console.log('parsing failed', ex)
+							})
+
+							fetch(url, {
+								method: 'POST',
+								headers: {
+									'Content-Type': 'application/json'
+								},
+								body: JSON.stringify(Object.assign({}, locationObj2, {
+									np: sendArr2.length,
+									devices: sendArr2
+								}))
+							})
+							.then(function(response) {
+								return response.json()
+							}).then(function(json) {
+								console.log('parsed json', json)
+							}).catch(function(ex) {
+								console.log('parsing failed', ex)
+							})
+
+							fetch(url, {
+								method: 'POST',
+								headers: {
+									'Content-Type': 'application/json'
+								},
+								body: JSON.stringify(Object.assign({}, locationObj3, {
+									np: sendArr3.length,
+									devices: sendArr3
+								}))
+							})
+							.then(function(response) {
+								return response.json()
+							}).then(function(json) {
+								console.log('parsed json', json)
+							}).catch(function(ex) {
+								console.log('parsing failed', ex)
+							})
+
+							fetch(url, {
+								method: 'POST',
+								headers: {
+									'Content-Type': 'application/json'
+								},
+								body: JSON.stringify(Object.assign({}, locationObj4, {
+									np: sendArr4.length,
+									devices: sendArr4
+								}))
+							})
+							.then(function(response) {
+								return response.json()
+							}).then(function(json) {
+								console.log('parsed json', json)
+							}).catch(function(ex) {
+								console.log('parsing failed', ex)
+							})
+
+							fetch(url, {
+								method: 'POST',
+								headers: {
+									'Content-Type': 'application/json'
+								},
+								body: JSON.stringify(Object.assign({}, locationObj5, {
+									np: sendArr5.length,
+									devices: sendArr5
+								}))
+							})
+							.then(function(response) {
+								return response.json()
+							}).then(function(json) {
+								console.log('parsed json', json)
+							}).catch(function(ex) {
+								console.log('parsing failed', ex)
+							})
+
+							fetch(url, {
+								method: 'POST',
+								headers: {
+									'Content-Type': 'application/json'
+								},
+								body: JSON.stringify(Object.assign({}, locationObj6, {
+									np: sendArr6.length,
+									devices: sendArr6
+								}))
+							})
+							.then(function(response) {
+								return response.json()
+							}).then(function(json) {
+								console.log('parsed json', json)
+							}).catch(function(ex) {
+								console.log('parsing failed', ex)
+							})
+
+
+							fetch(url, {
+								method: 'POST',
+								headers: {
+									'Content-Type': 'application/json'
+								},
+								body: JSON.stringify(Object.assign({}, locationObj7, {
+									np: sendArr7.length,
+									devices: sendArr7
+								}))
+							})
+							.then(function(response) {
+								return response.json()
+							}).then(function(json) {
+								console.log('parsed json', json)
+							}).catch(function(ex) {
+								console.log('parsing failed', ex)
+							})
+
+							fetch(url, {
+								method: 'POST',
+								headers: {
+									'Content-Type': 'application/json'
+								},
+								body: JSON.stringify(Object.assign({}, locationObj8, {
+									np: sendArr8.length,
+									devices: sendArr8
+								}))
+							})
+							.then(function(response) {
+								return response.json()
+							}).then(function(json) {
+								console.log('parsed json', json)
+							}).catch(function(ex) {
+								console.log('parsing failed', ex)
+							})
+
+							fetch(url, {
+								method: 'POST',
+								headers: {
+									'Content-Type': 'application/json'
+								},
+								body: JSON.stringify(Object.assign({}, locationObj9, {
+									np: sendArr9.length,
+									devices: sendArr9
+								}))
+							})
+							.then(function(response) {
+								return response.json()
+							}).then(function(json) {
+								console.log('parsed json', json)
+							}).catch(function(ex) {
+								console.log('parsing failed', ex)
+							})
+
+							fetch(url, {
+								method: 'POST',
+								headers: {
+									'Content-Type': 'application/json'
+								},
+								body: JSON.stringify(Object.assign({}, locationObj10, {
+									np: sendArr10.length,
+									devices: sendArr10
+								}))
+							})
+							.then(function(response) {
+								return response.json()
+							}).then(function(json) {
+								console.log('parsed json', json)
+							}).catch(function(ex) {
+								console.log('parsing failed', ex)
+							})
+
+						}, 3000)
+						window.clearInterval(inter)
+						return false;
+					}
+				} 
+				return sendNp
+			}
+
+			let inter = 0, inter2 = 0;
+			/*inter = setInterval(function(){
+				sendNp(npArr)
+				//console.log("1111")
+			}, 3000)*/
+
+			//第一次不延时
+			inter = setInterval(sendNp(), 3000)
+
+			//循环发送
+			inter2 = setInterval(function(){
+				if(inter > 0){
+					window.clearInterval(inter)
+					console.log('循环inter', inter)
+					inter = 0
+				}else if(inter === 0){
+					addNp(npArr)
+					addNp2(npArr2)
+					addNp3(npArr3)
+					addNp4(npArr4)
+					addNp5(npArr5)
+					addNp6(npArr6)
+					addNp7(npArr7)
+					addNp8(npArr8)
+					addNp9(npArr9)
+					addNp10(npArr10)
+					inter = setInterval(sendNp(), 3000)
+				}
+			}, 10000)
+
+		}
+		
+	</script>
+</body>
+</html>

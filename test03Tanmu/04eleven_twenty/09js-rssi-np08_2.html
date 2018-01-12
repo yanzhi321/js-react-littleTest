@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>rssi08_2</title>
+</head>
+<body>
+	<button type="button" class="click">click</button>
+	<script>
+		
+		window.onload = function(){
+
+			// db:hotmap   table:locOrg
+			let rssi = 0;
+			let np = 0;
+			let mac = "4cfacaf650a0";
+			
+			//rssiMin && rssiMax && npMax && t
+			const rssiMin = -110;
+			const rssiMax = -50;
+			const npMax = 90;
+			const t = 1515028396607; //seconds
+
+
+			let npArr = [
+				{
+					mac: macRandom(),
+					ip: '0.0.0.0',
+					channel: 153,
+					radioType: 1,
+					connected: 0,
+					rssi: rssiRandom(),
+					noiseFloor: -105
+				}
+			]
+
+			let locationObj = {
+				id: '4cfacaf650a0@1515028396607',
+				mac: "4cfacaf650a0",
+				t: 1515028396607,
+				np: npArr.length,
+				devices: addNp(npArr)
+			}
+
+			//npArr2, npArr3
+			let npArr2 = [], npArr3 = [];
+			
+
+			let locationObj2 = {
+				id: '4cfacaf650a0@1515028396607S2',
+				mac: "4cfacaf650a0S2",
+				t: 1515028396607,
+				np: npArr.length,
+				devices: addNp2(npArr2)
+			}
+
+			let locationObj3 = {
+				id: '4cfacaf650a0@1515028396607S3',
+				mac: "4cfacaf650a0S3",
+				t: 1515028396607,
+				np: npArr.length,
+				devices: addNp3(npArr3)
+			} 
+
+ 			let locationObjArr = []
+ 			if(locationObjArr.length === 0){
+ 				locationObjArr.push(locationObj)
+ 				locationObjArr.push(locationObj2)
+ 				locationObjArr.push(locationObj3)
+ 			}
+ 			console.log(locationObjArr)
+
+ 			let npArrAll = []
+ 			if(npArrAll.length === 0){
+ 				npArrAll.push(npArr)
+ 				npArrAll.push(npArr2)
+ 				npArrAll.push(npArr3)
+ 			}
+ 			console.log(npArrAll)
+
+			//macRandom---mac设备id
+			function macRandom(){
+
+				const letterArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
+				'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+				const numArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+				let str = ''
+
+				for(let i = 0; i < 6; i++){
+					const n = Math.round(Math.random() * 25)
+					const m = Math.round(Math.random() * 9)
+					str += letterArr[n].concat(numArr[m])
+					//console.log(n, m)
+				}
+				return str
+			}
+
+			//rssiRandom---rssi值的范围
+			function rssiRandom(){
+				let rssiRan = Math.round(Math.random() * 60) + (-110)
+				return rssiRan
+			}
+
+			//locationObj -- npArr
+			//console.log('locationObj', locationObj)
+			//console.log('locationObj2', locationObj2)
+			//console.log('locationObj3', locationObj3)
+			//addNp--循环模拟设备数量
+			function addNp(newArr){
+				
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),                                                                                                            
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+			//addNp2, addNp3
+			function addNp2(newArr){
+				
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+			function addNp3(newArr){
+				
+				for(let i = 0; i<300; i++){
+					let newNp = {
+						mac: macRandom(),
+						ip: '0.0.0.0',
+						channel: 153,
+						radioType: 1,
+						connected: 0,
+						rssi: rssiRandom(),
+						noiseFloor: -105
+					}
+					newArr.push(newNp)
+				}
+				return newArr
+			}
+
+			
+			//interval
+			let count = 0;
+			let timer = 0;
+			let timer2 = 0;
+			let delayer = 0;
+		
+		
+			//数据发完之后， 重启定时器， 重新发送
+			let t1, t2;
+
+			function fun1(){
+				let nextArr = [], nextArr2 = [], nextArr3 = [];
+
+				if(npArr.length === 0){
+					console.log("newArr is empty", new Date().getSeconds())
+					window.clearInterval(t1)
+				} 
+
+				if(npArr.length >= 90){
+					nextArr = npArr.splice(0, 90)
+					nextArr2 = npArr2.splice(0, 90)
+					nextArr3 = npArr3.splice(0, 90)
+					console.log(nextArr, new Date().getSeconds())
+					console.log('nextArr2', nextArr2)
+					console.log('nextArr3', nextArr3)
+					if(npArr.length < 90 && npArr.length > 0){
+						delayer = setTimeout(function(){
+							nextArr = npArr.splice(0, npArr.length)
+							nextArr2 = npArr2.splice(0, npArr2.length)
+							nextArr3 = npArr3.splice(0, npArr3.length)
+							console.log(nextArr, new Date().getSeconds())
+							console.log('nextArr2', nextArr2)
+							console.log('nextArr3', nextArr3)
+						}, 1000)
+						window.clearInterval(t1)
+						return false;
+					}
+				}
+
+				if(npArr.length < 90 && npArr.length > 0){
+					nextArr = npArr.splice(0, npArr.length)
+					nextArr2 = npArr2.splice(0, npArr2.length)
+					nextArr3 = npArr3.splice(0, npArr3.length)
+					console.log(nextArr, new Date().getSeconds())
+					console.log('nextArr2', nextArr2)
+					console.log('nextArr3', nextArr3)
+				} 
+
+				return fun1
+			}
+
+			//t1 = setInterval(fun1(), 1000)
+			t2 = setInterval(function(){
+				if(t1 > 0){
+					console.log('循环t1', t1)
+					window.clearInterval(t1)
+					t1 = 0
+				}else if(t1 === 0){
+					addNp(npArr)
+					addNp2(npArr2)
+					addNp3(npArr3)
+					t1 = setInterval(fun1(), 1000)
+				}
+			}, 6000)
+
+			
+		}
+		
+	</script>
+</body>
+</html>
