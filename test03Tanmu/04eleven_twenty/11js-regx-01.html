@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>regX</title>
+</head>
+<body>
+	<div id="container"></div>
+
+	<script>
+		
+        window.onload  = function(){
+
+        	//blog --- https://www.cnblogs.com/whitewolf/archive/2013/04/14/3019838.html
+           //regX --- https://www.jianshu.com/p/e7bb97218946
+           //regX-shouce --- http://tool.oschina.net/uploads/apidocs/jquery/regexp.html
+
+          //https://zhidao.baidu.com/question/1303423923181189779.html?&mzl=qb_xg_0&mzl_jy=0&word=%E9%80%9A%E8%BF%87mac%E5%9C%B0%E5%9D%80%E8%8E%B7%E5%8F%96%E6%89%8B%E6%9C%BA%E5%93%81%E7%89%8C&hitRelateOptimi=&samplow_val=58
+
+         //匹配oui.txt的文本 
+         //http://standards-oui.ieee.org/oui.txt
+
+         //连接到的MAC ,就直接能显示出手机品牌哦。。。
+         //  http://mac.51240.com/00-01-6C-06-A6-29%20__mac/
+
+   
+        //^(\w{8}|\w{10})$
+
+            //txt--json
+            let str3 = "20-5C-FA"
+            let str4 = "205CFA"
+            let patt3 = /[0-9]+/g
+            console.log(str3.match(patt3))
+
+            let patt4 = /[a-zA-Z0-9_]+/g
+            //let patt4 = /\d\D+/g
+            //console.log(patt4.test(str4))
+            //console.log(str4.match(patt4))
+
+            let str5 = "E0-43-DB   (hex)		Shenzhen ViewAt Technology Co.,Ltd.     E043DB     (base 16)		Shenzhen ViewAt Technology Co.,Ltd." 
+            let json5 = { "E0-43-DB": "Shenzhen ViewAt Technology Co.,Ltd.", "E043DB": "Shenzhen ViewAt Technology Co.,Ltd." }
+           	let patt5 = /[A-Z0-9-]{6,8}/g
+           	let pattt = /[A-Z0-9]{2}[-][A-Z0-9]{2}[-][A-Z0-9]{2}/g
+           	let pattt2 = /[A-Z0-9]{6}/g
+
+           	let arr5 = str5.match(pattt)
+           	console.log('arr5', arr5)
+           	let arr6 = arr5[0].replace(/[-]/g, '')
+           	console.log('arr6', arr6)
+
+           	console.log(str5.match(pattt2))
+
+           	let json6 = {}
+
+           	//indexOf
+         	let a = str5.substring()
+         	console.log(a)
+          
+
+			let urlstr = "www.baidu.com?a=1&b=xx&c"
+			let s = urlstr.split("?")
+			console.log(s)
+			let argstr = '';
+			if(s.length > 1){
+				argstr = s[1]
+			}
+			
+			let parttern = /([a-z]+)(=)?([a-z0-9]*)/gi;	//	
+			let matches = parttern.exec(argstr);
+			let arraymatches = [];
+
+
+			var reg = /[^\s]/g;
+			var str = "a b c d e f";
+			var arr = str.match(reg);
+			console.log (arr);
+
+
+			//txt --- json
+			let data = "zhangsan 100 lisi 200 wangwu 150" 
+			var myStr = data.toString(); 
+			var reg=/([^\r\n\f\t\x20]+)[\r\n\f\t\x20]+(\d+)/g;
+			myStr="["+myStr.replace(reg,'{"name":"$1","idvalue":$2},').replace(/,$/,"]");
+			var obj={"st":eval("("+myStr+")")};
+			console.log(obj);
+
+			//object -- 属性值
+			var aaa = "name";
+			var b = 10;
+			 
+			var obj = {};
+			obj[aaa] = b;
+			console.log(obj)
+
+
+        }
+
+	</script>
+</body>
+</html>

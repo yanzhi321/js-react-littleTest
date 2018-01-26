@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js-regx-02</title>
+</head>
+<body>
+	
+	<div id="container"></div>
+	
+	<script>
+		
+        window.onload = function(){
+
+            let str2 = "E0-43-DB   (hex)		Shenzhen ViewAt Technology Co.,Ltd.     E043DB     (base 16)		Shenzhen ViewAt Technology Co.,Ltd." 
+            let obj2 = { "E0-43-DB": "Shenzhen ViewAt Technology Co.,Ltd.", "E043DB": "Shenzhen ViewAt Technology Co.,Ltd." }
+
+            let data = "zhangsan 100 lisi 200 wangwu 150" 
+			var myStr = data.toString(); 
+			var reg=/([^\r\n\f\t\x20]+)[\r\n\f\t\x20]+(\d+)/g;
+			myStr="["+myStr.replace(reg,'{"name":"$1","idvalue":$2},').replace(/,$/,"]");
+			var obj={"st":eval("("+myStr+")")};
+			console.log(obj);
+
+			let str3 = `00-08-14   (hex)		TIL Technologies
+						000814     (base 16)		TIL Technologies
+						00-08-1A   (hex)		Sanrad Intelligence Storage Communications (2000) Ltd.
+						00081A     (base 16)		Sanrad Intelligence Storage Communications (2000) Ltd.
+					   `
+			let myStr3 = str3.toString();
+			let reg2 = /[A-Z0-9]{2}(-)[A-Z0-9]{2}(-)[A-Z0-9]{2}/g
+			let resArr = myStr3.match(reg2)
+
+			let reg3 = /([^\r\n\f\t\x20]+)[\r\n\f\t\x20]+(\d+)/g
+			let reg4 = /(\s+)\(hex\)(\s+)/g
+			let reg5 = /[A-Z0-9]{2}(-)[A-Z0-9]{2}(-)[A-Z0-9]{2}(\s+)\(hex\)(\s+)/g
+
+			let myStr4 = myStr3.match(reg4)
+			//console.log(myStr4)
+
+			let myStr5 = myStr3.match(reg5)
+			//console.log(myStr5)
+
+
+			let reg6 = /[A-Z0-9]{2}(-)[A-Z0-9]{2}(-)[A-Z0-9]{2}(\s+)\(hex\)(\s+)(.+)(\n)/g
+			let myStr6 = myStr3.match(reg6)
+			console.log(myStr6)
+			document.write(myStr6)
+
+			let reg7 = /(\(hex\))(\s+)(.+)(\n)/g
+			let myStr7 = myStr3.match(reg7)
+			console.log(myStr7)
+			let myStr77 = []
+			for(let i = 0; i<myStr7.length; i++){
+				let str = myStr7[i].replace(/(\(hex\))(\s+)/g, '')
+				myStr77.push(str)
+			}
+			console.log(myStr77)
+
+			//(base 16)
+			let reg8 = /(\(base 16\))(\t+)(.+)(\n)/g
+			let myStr8 = myStr3.match(reg8)
+			console.log(myStr8)
+			let myStr88 = []
+			for(let i = 0; i<myStr8.length; i++){
+				let str = myStr8[i].replace(/(\(base 16\))(\s+)/g, '')
+				myStr88.push(str)
+			}
+			console.log(myStr88)
+
+
+
+			//\r
+			let aArr = [
+							{
+								"E0-43-DB": "Shenzhen ViewAt Technology Co.,Ltd. \r",
+								"E043DB": "Shenzhen ViewAt Technology Co.,Ltd. \r"
+							},
+							{
+								"24-05-F5": "Integrated Device Technology (Malaysia) Sdn. Bhd.\r",
+								"2405F5": "Integrated Device Technology (Malaysia) Sdn. Bhd.\r"
+							}
+						]
+			
+			let aObj = {
+				"listMac":[
+					{
+								"E0-43-DB": "Shenzhen ViewAt Technology Co.,Ltd. \r",
+								"E043DB": "Shenzhen ViewAt Technology Co.,Ltd. \r"
+					},
+					{
+						"24-05-F5": "Integrated Device Technology (Malaysia) Sdn. Bhd.\r",
+						"2405F5": "Integrated Device Technology (Malaysia) Sdn. Bhd.\r"
+					}
+				]
+			}
+
+			console.log('aObj', aObj.listMac)
+			
+			var str4 = '2013-6-7';
+			// 全局匹配数字，横杠，横杠数量至少为1，匹配结果为： 3- 6-
+			var re1 = /\d-+/g; 
+			// 全局匹配数字，横杠，数字和横杠整体数量至少为1 3-6-
+			var re1 = /(\d-)+/g; 
+			//全局匹配至少一个数字，匹配一个横杠 匹配结果：2013- 6-
+			var re2 = /(\d+)(-)/g; 
+
+			//一维数组 => 二维数组
+			var dataArr = ['法国','澳大利亚','智利','新西兰','西班牙','加拿大','阿根廷','美国','0','国产','波多黎各','英国','比利时','德国','意大利','意大利'];
+			var result = [];
+			for(var i=0,len=dataArr.length;i<len;i+=3){
+			   result.push(dataArr.slice(i,i+3));
+			}
+			console.log('result', result)
+
+			let strOne = ''
+			for(let i = 0; i<result[0].length; i++){
+				strOne += result[0][i]
+				//console.log(result[0][i])
+			}
+			console.log('strOne', strOne)
+
+			console.log('result', result)
+
+			//strMore
+			let arrMore = []
+			for(let i = 0; i<result.length; i++){
+				let strMore = ''
+				
+				for(let j = 0; j<result[0].length; j++){
+					if(result[i][j] == undefined){
+						break;
+					}
+					//strMore += result[i][j] + '\t'
+					j <2 ? strMore+= result[i][j] + '\t'  : strMore += result[i][j]
+				}
+				arrMore.push(strMore)
+			}
+			console.log('arrMore', arrMore)
+
+			//一维数组 && 二维数组, 简化
+			var arrOne = [ '1', '头', '猪', '2', '匹', '马', '四', '条', '腿', 'hahah' ]
+			let arrRes = []
+			for(let i = 0; i<arrOne.length; i+=3){
+				let str = arrOne.slice(i, i+3).join('\t')
+				arrRes.push(str)
+			}
+			console.log('arrRes', arrRes)
+
+        }
+
+	</script>
+
+</body>
+</html>

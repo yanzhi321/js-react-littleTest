@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>js事件委托</title>
+</head>
+<body>
+	
+	<ul id="ul1">
+		<li>111</li>
+		<li>222</li>
+		<li>333</li>
+		<li>444</li>
+	</ul>
+
+	<div id="box">
+        <input type="button" id="add" value="添加" />
+        <input type="button" id="remove" value="删除" />
+        <input type="button" id="move" value="移动" />
+        <input type="button" id="select" value="选择" />
+    </div>
+	
+	<ul id="test">
+        <li>
+            <p>11111111111</p>
+        </li>
+        <li>
+            <div>
+                22222222
+            </div>
+        </li>
+        <li>
+            <span>3333333333</span>
+        </li>
+        <li>4444444</li>
+    </ul>
+
+	<script>
+		
+        window.onload = function(){
+
+        	// 事件委托：https://www.cnblogs.com/liugang-vip/p/5616484.html
+
+            const oUl = document.getElementById('ul1')
+            const aLi = document.getElementsByTagName('li') 
+
+            //for循环click,dom操作
+            /*for(let i = 0; i<aLi.length; i++){
+            	aLi[i].onclick = function(){
+            		alert(this.innerText)
+            	}
+            }*/
+
+            //事件委托
+            oUl.onclick = function(evt){
+            	let ev = evt || window.event 
+            	let target = ev.target || ev.srcElement
+            	console.log(ev)
+            	console.log(target)
+            	if(target.nodeName.toLowerCase() == 'li'){
+            		//alert(target.innerHTML)
+            	}
+            }
+
+            //事件不同
+            var oBox = document.getElementById("box");
+            oBox.onclick = function (ev) {
+                var ev = ev || window.event;
+                var target = ev.target || ev.srcElement;
+                if(target.nodeName.toLocaleLowerCase() == 'input'){
+                    switch(target.id){
+                        case 'add' :
+                            alert('添加');
+                            break;
+                        case 'remove' :
+                            alert('删除');
+                            break;
+                        case 'move' :
+                            alert('移动');
+                            break;
+                        case 'select' :
+                            alert('选择');
+                            break;
+                    }
+                }
+            }
+
+            //子元素
+            var oUl2 = document.getElementById('test');
+		    oUl2.addEventListener('click',function(ev){
+		        var target = ev.target;
+		        while(target !== oUl2 ){
+		            if(target.tagName.toLowerCase() == 'li'){
+		                //console.log('li click~');
+		                break;
+		            }
+		            target = target.parentNode;
+		        }
+		    })
+
+		    //suiji
+		    //mac: "5ca86a28326c",
+		    var letArr = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+		    var numArr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,]
+		    const m = Math.round(Math.random() * 25)
+		    const n = Math.round(Math.random() * 9)
+		    console.log(letArr[m], numArr[n])
+
+
+            const url = 'http://standards-oui.ieee.org/oui.txt'
+            fetch(url).then(function(response) {
+              return response.json();
+            }).then(function(data) {
+              console.log(data);
+            }).catch(function(e) {
+              console.log("Oops, error");
+            });
+           
+
+            const data = {
+                    "listMac": [
+                        
+                        { "E0-43-DB": "Shenzhen ViewAt Technology Co.,Ltd", "E043DB": "Shenzhen ViewAt Technology Co.,Ltd", "sitePlace": "9A,Microprofit,6th Gaoxin South Road, High-Tech Industrial Park, Nanshan, Shenzhen, CHINA. shenzhen guangdong 518057 CN" },
+                        { "24-05-F5": "Integrated Device Technology (Malaysia) Sdn. Bhd", "2405F5": "Integrated Device Technology (Malaysia) Sdn. Bhd", "sitePlace": "Phase 3, Bayan Lepas FIZ Bayan Lepas Penang 11900 MY" },
+                        { "3C-D9-2B": "Hewlett Packard", "3CD92B": "Hewlett Packard", "sitePlace": "11445 Compaq Center Drive Houston 77070 US" },
+                        { "9C-8E-99": "Hewlett Packard", "9C8E99": "Hewlett Packard", "sitePlace": "11445 Compaq Center Drive Houston 77070 US" },
+                        { "B4-99-BA": "Hewlett Packard", "B499BA": "Hewlett Packard", "sitePlace": "11445 Compaq Center Drive Houston 77070 US" },
+                        { "1C-C1-DE": "Hewlett Packard", "1CC1DE": "Hewlett Packard", "sitePlace": "11445 Compaq Center Drive Houston 77070 US" },
+                        { "3C-35-56": "Cognitec Systems GmbH", "3C3556": "Cognitec Systems GmbH", "sitePlace": "Großenhainer Str. 101 Dresden Saxony 01127 DE" },
+                        { "00-50-BA": "D-Link Corporation", "0050BA": "D-Link Corporation", "sitePlace": "2F, NO. 233L-2, PAO-CHIAO RD. TAIPEI 0000 TW" },
+                        { "00-17-9A": "D-Link Corporation", "00179A": "D-Link Corporation", "sitePlace": "No. 289, Sinhu 3rd Rd., Neihu District, Taipei 114 TW" },
+                        { "1C-BD-B9": "D-Link International", "1CBDB9": "D-Link International", "sitePlace": "1 INTERNATIONAL BUSINESS PARK, SINGAPORE 609917 SG" },
+                        { "90-94-E4": "D-Link International", "9094E4": "D-Link International", "sitePlace": "1 International Business Park, #03-12, The Synergy SINGAPORE 609917 SG" },
+                        { "28-10-7B": "D-Link International", "28107B": "D-Link International", "sitePlace": "1 International Business Park, #03-12, The Synergy SINGAPORE 609917 SG" },
+                        { "1C-7E-E5": "D-Link International", "1C7EE5": "D-Link International", "sitePlace": "1 International Business Park, #03-12, The Synergy SINGAPORE 609917 SG" },
+                        { "C4-A8-1D": "D-Link International", "C4A81D": "D-Link International", "sitePlace": "1 Internal Business Park, #03-12, SINGAPORE Singapore 609917 SG" },
+                        { "18-62-2C": "Sagemcom Broadband SAS", "18622C": "Sagemcom Broadband SAS", "sitePlace": "250 route de l'Empereur RUEIL MALMAISON CEDEX Hauts de Seine 92848 FR" },
+                        { "7C-03-D8": "Sagemcom Broadband SAS", "7C03D8": "Sagemcom Broadband SAS", "sitePlace": "250 route de l'Empereur RUEIL MALMAISON CEDEX Hauts de Seine 92848 FR" },
+
+                    ]
+                        
+                }
+            // console.log('data', data)
+            // console.log('data.listMac.length', data.listMac.length)
+            // console.log(data.listMac[0].E043DB)
+            
+           
+
+        }
+
+	</script>
+
+</body>
+</html>

@@ -111,8 +111,27 @@
 			let timer = 0, timer2 = 0;
 			//timer = setInterval(sendNp(), 3000)
 			//timer2 = setInterval(sendCircu(), 5000)
-
 			
+			var reg = /(http:\/\/|https:\/\/)((\w|=|\?|\.|\/|&|-)+)/g;
+			var v = "欢迎访问我的个人网站：http://www.zhangxinxu.com/";
+			v = v.replace(reg, "<a href='$1$2'>$1$2</a>"); //这里的reg就是上面的正则表达式
+			//alert(v);
+
+			let t = 0
+			let t2 = 0
+			for(let i = 0; i<10; i++){
+				t = setTimeout(function(){
+					//console.log(i)
+				}, 300)
+			}
+
+			t2 = setTimeout(function(){
+				for(let i = 0; i<10; i++){
+					console.log(i)
+				}
+			}, 30)
+			console.log('t2', t2)		
+			console.log('t', t)
 			
 
 

@@ -604,7 +604,6 @@
 						console.log('parsing failed', ex)
 					})
 
-
 					fetch(url, {
 						method: 'POST',
 						headers: {
@@ -734,7 +733,7 @@
 					})
 					
 					//console.log(npNum)
-					if(npArr.length < 90 && npArr.length > 0){
+					/*if(npArr.length < 90 && npArr.length > 0){
 						const delayer = setTimeout(function(){
 							//console.log('seonds', new Date().getSeconds())
 							++count;
@@ -944,11 +943,10 @@
 						}, 3000)
 						window.clearInterval(inter)
 						return false;
-					}
+					}*/
 				} 
 				return sendNp
 			}
-
 
 
 			let inter = 0, inter2 = 0;
@@ -977,6 +975,7 @@
 					inter = setInterval(sendNp(), 3000)
 				}	
 			}
+
 
 			//第一次不延时
 			inter = setInterval(sendNp(), 3000)

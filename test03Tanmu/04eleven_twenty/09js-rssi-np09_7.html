@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>rssi09_1</title>
+	<title>rssi09_2</title>
 </head>
 <body>
 
@@ -21,7 +21,24 @@
 			const npMax = 90;
 			const t = 1515028396607; //seconds
 
-
+			// locationObj = {
+			//     id: "4cfacaf650a0@1515028396607",
+			//     mac: "4cfacaf650a0",
+			//     t: 1515028396607,
+			//     np: 13,
+			//     devices: [
+			//         {
+			//             mac: "cc2db739c543",
+			//             ip: "0.0.0.0",
+			//             channel: 153,
+			//             radioType: 1,
+			//             connected: 0,
+			//             rssi: -87,
+			//             noiseFloor: -105
+			//         }
+			//     ]
+		 	//  }
+		        
 			//macRandom---mac设备id
 			function macRandom(){
 
@@ -67,7 +84,7 @@
 			
 			//addNp2 && addNp3
 			function addNp2(newArr){
-				for(let i = 0; i<30; i++){
+				for(let i = 0; i<300; i++){
 					let newNp = {
 						mac: macRandom(),
 						ip: '0.0.0.0',
@@ -83,7 +100,7 @@
 			}
 
 			function addNp3(newArr){
-				for(let i = 0; i<30; i++){
+				for(let i = 0; i<300; i++){
 					let newNp = {
 						mac: macRandom(),
 						ip: '0.0.0.0',
@@ -114,6 +131,7 @@
 				}
 				return newArr
 			}
+
 
 			function addNp5(newArr){
 				for(let i = 0; i<300; i++){
@@ -375,9 +393,12 @@
 				return newArr
 			}
 
-			let npArr = [
-				
-			]
+			
+			//npArr2 && npArr3
+			let npArr = [], npArr2 = [], npArr3 = [], npArr4 = [], npArr5 = [], npArr6 = [],
+				npArr7 = [], npArr8 = [], npArr9 = [], npArr10 = [], npArr11 = [],
+				npArr12 = [], npArr13 = [], npArr14 = [], npArr15 = [], npArr16 = [],
+				npArr17 = [], npArr18 = [], npArr19 = [], npArr20 = [];
 
 			let locationObj = {
 				id: "4cfacaf650a0@1515028396607",
@@ -387,11 +408,6 @@
 				devices: addNp(npArr)
 			}
 
-			//npArr2 && npArr3
-			let npArr2 = [], npArr3 = [], npArr4 = [], npArr5 = [], npArr6 = [],
-				npArr7 = [], npArr8 = [], npArr9 = [], npArr10 = [], npArr11 = [],
-				npArr12 = [], npArr13 = [], npArr14 = [], npArr15 = [], npArr16 = [],
-				npArr17 = [], npArr18 = [], npArr19 = [], npArr20 = [];
 
 			let locationObj2 = {
 				id: '4cfacaf650a0@1515028396607_S2',
@@ -534,7 +550,7 @@
 				mac: "4cfacaf650a0_S19",
 				t: 1515028396607,
 				np: npArr19.length,
-				devices: addNp11(npArr19)
+				devices: addNp19(npArr19)
 			}
 
 			let locationObj20 = {
@@ -544,110 +560,203 @@
 				np: npArr20.length,
 				devices: addNp20(npArr20)
 			}
+
+
+
 			//locationObjArr
 			let locationObjArr = []
 			if(locationObjArr.length === 0){
 				locationObjArr.push(locationObj)
 				locationObjArr.push(locationObj2)
-				locationObjArr.push(locationObj3)
-				locationObjArr.push(locationObj4)
-				locationObjArr.push(locationObj5)
-				locationObjArr.push(locationObj6)
-				locationObjArr.push(locationObj7)
-				locationObjArr.push(locationObj8)
-				locationObjArr.push(locationObj9)
-				locationObjArr.push(locationObj10)
-				locationObjArr.push(locationObj11)
-				locationObjArr.push(locationObj12)
-				locationObjArr.push(locationObj13)
-				locationObjArr.push(locationObj14)
-				locationObjArr.push(locationObj15)
-				locationObjArr.push(locationObj16)
-				locationObjArr.push(locationObj17)
-				locationObjArr.push(locationObj18)
-				locationObjArr.push(locationObj19)
-				locationObjArr.push(locationObj20)
+				// locationObjArr.push(locationObj3)
+				// locationObjArr.push(locationObj4)
+				// locationObjArr.push(locationObj5)
+				// locationObjArr.push(locationObj6)
+				// locationObjArr.push(locationObj7)
+				// locationObjArr.push(locationObj8)
+				// locationObjArr.push(locationObj9)
+				// locationObjArr.push(locationObj10)
+				// locationObjArr.push(locationObj11)
+				// locationObjArr.push(locationObj12)
+				// locationObjArr.push(locationObj13)
+				// locationObjArr.push(locationObj14)
+				// locationObjArr.push(locationObj15)
+				// locationObjArr.push(locationObj16)
+				// locationObjArr.push(locationObj17)
+				// locationObjArr.push(locationObj18)
+				// locationObjArr.push(locationObj19)
+				// locationObjArr.push(locationObj20)
+
 			}
+
 
 			let npArrAll = []
 			if(npArrAll.length === 0){
 				npArrAll.push(npArr)
-				npArrAll.push(npArr2)
-				npArrAll.push(npArr3)
-				npArrAll.push(npArr4)
-				npArrAll.push(npArr5)
-				npArrAll.push(npArr6)
-				npArrAll.push(npArr7)
-				npArrAll.push(npArr8)
-				npArrAll.push(npArr9)
-				npArrAll.push(npArr10)
-				npArrAll.push(npArr11)
-				npArrAll.push(npArr12)
-				npArrAll.push(npArr13)
-				npArrAll.push(npArr14)
-				npArrAll.push(npArr15)
-				npArrAll.push(npArr16)
-				npArrAll.push(npArr17)
-				npArrAll.push(npArr18)
-				npArrAll.push(npArr19)
-				npArrAll.push(npArr20)
+			    npArrAll.push(npArr2)
+				// npArrAll.push(npArr3)
+				// npArrAll.push(npArr4)
+				// npArrAll.push(npArr5)
+				// npArrAll.push(npArr6)
+				// npArrAll.push(npArr7)
+				// npArrAll.push(npArr8)
+				// npArrAll.push(npArr9)
+				// npArrAll.push(npArr10)
+				// npArrAll.push(npArr11)
+				// npArrAll.push(npArr12)
+				// npArrAll.push(npArr13)
+				// npArrAll.push(npArr14)
+				// npArrAll.push(npArr15)
+				// npArrAll.push(npArr16)
+				// npArrAll.push(npArr17)
+				// npArrAll.push(npArr18)
+				// npArrAll.push(npArr19)
+				// npArrAll.push(npArr20)
 			}
 
-			//console.log(npArr)
+
+			//npArrRe--验证输出
+			let npArrRe = []
+			for(let i = 0; i<npArr.length; i++){
+				npArrRe.push(npArr[i])
+			}
+			//console.log('npArrRe', npArrRe.splice(90, 90))
+			//console.log('npArr', npArr.splice(90, 90))
+
+			let npObj = {}
+			 
+		 	npObj.id = locationObj.id;
+		 	npObj.mac = locationObj.mac;
+		 	npObj.t = Date.now()
+		 	npObj.np = npArrRe.length
+		 	npObj.devices = npArrRe
+
+		 	//console.log('npObj', npObj)
+
+			//splice(0, 90)
+			let npObjDe = []
+				npObjDe = npObj.devices.splice(0, 90)
+
+			//npArrReAll
+			let npArrReAll = []
+			let npLocObjAll = []
+			let npLocObjOne
+			for(let i = 0; i<npArrAll.length; i++){
+				//console.log(npArrAll.length)
+				let npArrReOne = []
+				npLocObjOne = {}
+
+				for(let j = 0; j<npArr.length; j++){
+					npArrReOne.push(npArrAll[i][j])
+				}
+				npArrReAll.push(npArrReOne)
+
+				npLocObjOne.id = locationObjArr[i].id
+				npLocObjOne.mac = locationObjArr[i].mac
+				npLocObjOne.np = npArrReAll[i]
+				npLocObjOne.t = Date.now()
+				npLocObjOne.devices = npArrReAll[i]
+				//console.log(npLocObjOne)
+				npLocObjAll.push(npLocObjOne)
+			}
+			let npArrOnes = npArrReAll[0].splice(0, 90)
+
+			//console.log('npLocObjAll', npLocObjAll)
+
 			//senNp---模拟3s报告一次数量,发满90个,多余的下一次发送
 			let count = 0;
-			let resultArr = {}
+			let dealyer = 0;
+			let resultFirst = locationObj
+			let resultNpArr = npArr
+
 			function sendNp(){
 				
-				let url = 'http://192.168.30.211:8000'
+				//let url = 'http://192.168.30.211:8000'
 
 				for(let i = 0; i<npArrAll.length; i++){
-
 					let sendArr = []
-					
+					let sendObj = {}
+					let resultObj = {}
 					if(npArrAll[i].length >= 90){
+
 						sendArr = npArrAll[i].splice(0, 90)
-						console.log(sendArr, i, new Date().getSeconds())
+						sendObj.id = locationObjArr[i].id
+						sendObj.mac = locationObjArr[i].mac
+						sendObj.np = sendArr.length
+						sendObj.t = Date.now()
+						sendObj.devices = sendArr
+						
+						console.log(sendObj, new Date().getSeconds())
 
-						resultObj.push(sendArr)
-						console.log(resultObj)
-
-						if(npArrAll[i].length < 90 && npArrAll[i].length > 0){
-							setTimeout(function(){
-								sendArr = npArrAll[i].splice(0, npArrAll[i].length)
-								console.log(sendArr, i, new Date().getSeconds())
-							}, 3000)
+						for(let i = 0; i<npObjDe.length; i++){
+							for(let j = 0; j<sendArr.length; j++){
+								if(npObjDe[i] === sendArr[j]){
+									//console.log(true)
+								}
+							}
 						}
 
-						fetch(url, {
-						  method: 'POST',
-						  headers: {
-						    'Content-Type': 'application/json'
-						  },
-						  body: JSON.stringify(Object.assign({}, locationObjArr[i], {
-						  	np: sendArr.length,
-						  	devices: sendArr
-						  }))
-						})
-						.then(function(response) {
-							return response.json()
-						}).then(function(json) {
-							console.log('parsed json', json)
-						}).catch(function(ex) {
-							console.log('parsing failed', ex)
-						})
+						if(sendObj.id == npObj.id){
+							//console.log("right")
+						}
+						
+						if(sendArr[0] == npArrOnes[0]){
+							//console.log('what fork')
+						}
+
+						//console.log('npLocObjAll', i,  npLocObjAll[i].id)
+						//console.log('npArrReAll', i,  npArrReAll[i])
+
+						if(sendObj.id == npLocObjAll[i].id){
+							console.log("hahaahah", sendObj.id)
+
+						}
+						if(sendArr[0] == npArrReAll[i][0]){
+							console.log('gagaga', sendArr)
+						}
+
+						// fetch(url, {
+						//   method: 'POST',
+						//   headers: {
+						//     'Content-Type': 'application/json'
+						//   },
+						//   body: JSON.stringify(Object.assign({}, locationObjArr[i], {
+						//   	np: sendArr.length,
+						//   	devices: sendArr
+						//   }))
+						// })
+						// .then(function(response) {
+						// 	return response.json()
+						// }).then(function(json) {
+						// 	console.log('parsed json', json)
+						// }).catch(function(ex) {
+						// 	console.log('parsing failed', ex)
+						// })
 
 					} 
-					/*if(npArrAll[i].length < 90 && npArrAll[i].length > 0){
-						let nextArr = npArrAll[i].splice(0, npArrAll[i].length)
-						console.log(nextArr, i, new Date().getSeconds())
-					}*/
+
+					if(npArrAll[i].length < 90 &&  npArrAll[i].length > 0){
+						let sendArr2 = []
+						delayer = setTimeout(function(){
+							sendArr2 = npArrAll[i].splice(0, npArrAll[i].length)
+							//console.log(sendArr)
+							
+							sendObj.id = locationObjArr[i].id
+							sendObj.mac = locationObjArr[i].mac
+							sendObj.np = sendArr2.length
+							sendObj.t = Date.now()
+							sendObj.devices = sendArr2
+
+							//console.log('sendObj', sendObj, new Date().getSeconds())
+						}, 1000)
+						
+					}
 
 					if(npArrAll[i].length === 0){
 						window.clearInterval(inter)
 						inter = 0;
-						npArrAll = []
-						console.log(npArrAll, new Date().getSeconds())
+						//npArrAll = []
+						//console.log(npArrAll, new Date().getSeconds())
 					}
 
 				} 
@@ -660,44 +769,73 @@
 				if(inter === 0){
 
 					npArrAll.push(addNp(npArr))
-					npArrAll.push(addNp(npArr2))
-					npArrAll.push(addNp(npArr3))
-					npArrAll.push(addNp(npArr4))
-					npArrAll.push(addNp(npArr5))
-					npArrAll.push(addNp(npArr6))
-					npArrAll.push(addNp(npArr7))
-					npArrAll.push(addNp(npArr8))
-					npArrAll.push(addNp(npArr9))
-					npArrAll.push(addNp(npArr10))
-					npArrAll.push(addNp(npArr11))
-					npArrAll.push(addNp(npArr12))
-					npArrAll.push(addNp(npArr13))
-					npArrAll.push(addNp(npArr14))
-					npArrAll.push(addNp(npArr15))
-					npArrAll.push(addNp(npArr16))
-					npArrAll.push(addNp(npArr17))
-					npArrAll.push(addNp(npArr18))
-					npArrAll.push(addNp(npArr19))
-					npArrAll.push(addNp(npArr20))
+					// npArrAll.push(addNp(npArr2))
+					// npArrAll.push(addNp(npArr3))
+					// npArrAll.push(addNp(npArr4))
+					// npArrAll.push(addNp(npArr5))
+					// npArrAll.push(addNp(npArr6))
+					// npArrAll.push(addNp(npArr7))
+					// npArrAll.push(addNp(npArr8))
+					// npArrAll.push(addNp(npArr9))
+					// npArrAll.push(addNp(npArr10))
+					// npArrAll.push(addNp(npArr11))
+					// npArrAll.push(addNp(npArr12))
+					// npArrAll.push(addNp(npArr13))
+					// npArrAll.push(addNp(npArr14))
+					// npArrAll.push(addNp(npArr15))
+					// npArrAll.push(addNp(npArr16))
+					// npArrAll.push(addNp(npArr17))
+					// npArrAll.push(addNp(npArr18))
+					// npArrAll.push(addNp(npArr19))
+					// npArrAll.push(addNp(npArr20))
 					
 					//console.log(npArr)
-					inter = setInterval(sendNp(), 3000)
+					inter = setInterval(sendNp(), 1000)
 					//console.log('time', new Date().getSeconds())
 				}else if(inter > 0){
+					//npArrAll = []
 					//console.log("hhhhhhh", inter)
 					//console.log(npArrAll)
 					//console.log('time', new Date().getSeconds())
 				}
-				return sendCircu
+				//return sendCircu
 			}
 
 			let inter = 0, inter2 = 0;
 		
 			//第一次不延时
-			inter = setInterval(sendNp(), 3000)
+			inter = setInterval(sendNp(), 1000)
 			
 			//循环发送
-			inter2 = setInterval(sendCircu(), 10000)
+			inter2 = setInterval(sendCircu(), 3000)
+
+
+
+			// var arr1 = ["i", "b", "c", "d", "e", "f","x"]; //数组A 
+
+			// var arr2 = ["a", "b", "c", "d", "e", "f", "g"];//数组B 
+
+			// var temp = []; //临时数组1 
+
+			// var temparray = [];//临时数组2 
+
+			// for (var i = 0; i < arr2.length; i++) { 
+
+			// 	temp[arr2[i]] = true;//巧妙地方：把数组B的值当成临时数组1的键并赋值为真 
+
+			// }; 
+
+			// for (var i = 0; i < arr1.length; i++) { 
+
+			// if (!temp[arr1[i]]) { 
+
+			// 	temparray.push(arr1[i]);//巧妙地方：同时把数组A的值当成临时数组1的键并判断是否为真，如果不为真说明没重复，就合并到一个新数组里，这样就可以得到一个全新并无重复的数组 
+
+			// } ; 
+
+			// }; 
+
+			// document.write(temparray.join(",") + "");
 
 		}
 		

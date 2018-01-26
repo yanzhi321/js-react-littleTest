@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>rssi07_1</title>
+	<title>rssi09_4</title>
 </head>
 <body>
 	<button type="button" class="click">click</button>
@@ -33,6 +33,7 @@
 					noiseFloor: -105
 				}
 			]
+			let npArr2 = []
 
 			let locationObj = {
 				id: '4cfacaf650a0@1515028396607',
@@ -42,6 +43,13 @@
 				devices: addNp(npArr)
 			}
 
+			let locationObj2 = {
+				id: '4cfacaf650a0@1515028396607',
+				mac: "4cfacaf650a0",
+				t: 1515028396607,
+				np: npArr2.length,
+				devices: addNp(npArr2)
+			}
 			//macRandom---mac设备id
 			function macRandom(){
 
@@ -85,7 +93,7 @@
 				return newArr
 			}
 
-			console.log(npArr)
+			//console.log(npArr)
 			
 			//interval
 			let count = 0;
@@ -93,79 +101,70 @@
 			let timer2 = 0;
 			let delayer = 0;
 			
-			//sendNp
-		    function sendNp(){
-
-		    	let sendArr = []
-
-		    	if(npArr.length === 0){
-		    		//console.log('npArr is empty', npArr, ++count, new Date().getSeconds())
-		    		window.clearInterval(timer)
-		    		window.clearTimeout(delayer)
-		    	}
-
-		    	if(npArr.length >= 90){
-		    		sendArr = npArr.splice(0, 90)
-		    		console.log(sendArr)
-		    		console.log('count && seconds:', ++count, new Date().getSeconds())
-
-		    		/*if(npArr.length < 90 && npArr.length > 0){
-		    			delayer = setTimeout(function(){
-		    				sendArr = npArr.splice(0, npArr.length)
-		    				console.log(sendArr)                                                                                                            
-		    				console.log('count && seconds:', ++count, new Date().getSeconds())
-
-		    			}, 1000)
-		    			window.clearTimeout(delayer)
-		    			return false;
-		    		}*/
-
-		    	} 
-
-		    	if(npArr.length < 90  && npArr.length > 0){
-		    		sendArr = npArr.splice(0, npArr.length)
-		    		console.log(sendArr)
-		    		console.log('count && seconds: ', ++count, new Date().getSeconds())
-		    	}
-
-		    	return sendNp
-		    }
-
-		   	//sendNp()--第一次不延时
-		    //timer = setInterval(sendNp(), 1000)
 		
 			//数据发完之后， 重启定时器， 重新发送
 			let t1, t2;
 
 			function fun1(){
-				let nextArr = []
+				let sendArr = []
+				let url = 'http://192.168.30.211:8000'
 
 				if(npArr.length === 0){
 					console.log("newArr is empty", new Date().getSeconds())
-					//console.log(npArr)
 					window.clearInterval(t1)
-					//addNp(npArr)
-					//console.log(npArr)
-					//t1 = setInterval(fun1(), 1000)
 				} 
 
 				if(npArr.length >= 90){
-					nextArr = npArr.splice(0, 90)
-					console.log(nextArr, new Date().getSeconds())
-					if(npArr.length < 90 && npArr.length > 0){
-						setTimeout(function(){
-							nextArr = npArr.splice(0, npArr.length)
-							console.log(nextArr, new Date().getSeconds())
-						}, 1000)
-						window.clearInterval(t1)
-						return false;
-					}
+					sendArr = npArr.splice(0, 90)
+					console.log(sendArr, new Date().getSeconds())
+
+					fetch(url, {
+					  method: 'POST',
+					  headers: {
+					    'Content-Type': 'application/json'
+					  },
+					  body: JSON.stringify(Object.assign({}, locationObj, {
+					  	np: sendArr.length,
+					  	devices: sendArr
+					  }))
+					})
+					.then(function(response) {
+						return response.json()
+					}).then(function(json) {
+						console.log('parsed json', json)
+					}).catch(function(ex) {
+						console.log('parsing failed', ex)
+					})
 				}
 
 				if(npArr.length < 90 && npArr.length > 0){
-					nextArr = npArr.splice(0, npArr.length)
-					console.log(nextArr, new Date().getSeconds())
-				} 
+					setTimeout(function(){
+						sendArr = npArr.splice(0, npArr.length)
+						console.log(sendArr, new Date().getSeconds())
+
+						fetch(url, {
+						  method: 'POST',
+						  headers: {
+						    'Content-Type': 'application/json'
+						  },
+						  body: JSON.stringify(Object.assign({}, locationObj, {
+						  	np: sendArr.length,
+						  	devices: sendArr
+						  }))
+						})
+						.then(function(response) {
+							return response.json()
+						}).then(function(json) {
+							console.log('parsed json', json)
+						}).catch(function(ex) {
+							console.log('parsing failed', ex)
+						})
+
+					}, 1000)
+
+					window.clearInterval(t1)
+					return false;
+				}
 
 				return fun1
 			}
@@ -179,7 +178,6 @@
 				}else if(t1 === 0){
 					addNp(npArr)
 					t1 = setInterval(fun1(), 1000)
-
 				}
 			}, 6000)
 
