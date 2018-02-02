@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>data-render</title>
+	<style type="text/css" media="screen">
+		#container{
+			margin: 30px;
+		}
+		.error{
+			color: red;
+		}
+	</style>
+</head>
+<body>
+	
+	
+
+	<input type="button" class="btn" value="stop">
+
+	<div id="container">
+		
+		<h1 class="error">error:</h1>
+		<!-- <ol class="error">
+			<li class="errors"></li>
+		</ol> -->
+
+        <table class="tableNow" border="1">
+        	<caption>typeNow</caption>
+            <thead>
+	            <tr>
+	                <th>ID</th>
+	                <th>RT_type</th>
+	                <th>canuse</th>
+	                <th>total</th>
+	                <th>true</th>
+	                <th>false</th>
+	            </tr>
+            </thead>
+            <tbody class="dataNow">
+
+            </tbody>
+        </table>
+		
+		<table class="tableAll" border="1">
+        	<caption>typeAll</caption>
+
+            <thead>
+	            <tr>
+	                <th>ID</th>
+	                <th>RT_type</th>
+	                <th>canuse</th>
+	                <th>total</th>
+	                <th>true</th>
+	                <th>false</th>
+	            </tr>
+            </thead>
+            <tbody class="dataAll">
+
+            </tbody>
+        </table>
+
+        
+
+        <div class="datachange">
+        	<h3>changeJson</h3>
+        	<ol class="change">
+        		
+        	</ol>
+        </div>
+
+        <div class="datalog">
+        	<h3>typeLog</h3>
+        	<ol class="log">
+        		<!-- <li></li> -->
+        	</ol>
+        </div>
+		
+
+
+	</div>
+	<script src="./mqtt/browserMqtt.js"></script>
+	<script>
+		
+		
+		var client  = mqtt.connect('mqtt://116.62.169.175:9909')
+
+		let isClick  = true
+
+		const dataNow = document.querySelector('.dataNow')
+		const dataAll = document.querySelector('.dataAll')
+		const dataLog = document.querySelector('.log')
+		const dataChange = document.querySelector('.change')
+		const dataError = document.querySelector('.error')
+		
+		let objArr = []
+	  	let arrLog = []
+	  	let arrChange = []
+	  	let arrErr = []
+
+		if(isClick){
+
+			client.on('connect', function () {
+			    client.subscribe('/typeNow')
+			    client.subscribe('/typeAll')
+
+			    client.subscribe('/typeChangeLog')
+			    client.subscribe('/typeChangeJson')
+			    client.subscribe('/error')
+
+			})
+
+			client.on('message', function (topic, message) {
+
+			   console.log(topic)
+
+			  if(topic == '/typeNow'  && isClick){
+
+				  	let objArr = JSON.parse(message.toString())
+
+				  	let msg2 = message.toString()
+				  	let msg = JSON.parse(msg2, null, 4)
+
+				  	let strNow = ''
+					for(let i = 0; i<msg.length; i++){
+						
+						strNow += `<tr><td>${i+1}</td><td class="nowRt">${msg[i].RT_type}</td><td class="nowCan">${msg[i].canuse}</td><td>${msg[i].total}</td> <td><input type="button" value="true" class="btnT"></td>  <td><input type="button" value="false" class="btnF" /></td> </tr> `
+					}
+					dataNow.innerHTML = strNow
+
+				  	const nowRt  = document.querySelectorAll('.nowRt')
+				  	const btnT = document.querySelectorAll('.btnT')
+				  	const btnF = document.querySelectorAll('.btnF')
+
+				 	changeState(btnT, btnF, nowRt)
+			  	
+			    }else if(topic == '/typeAll'  && isClick){
+
+
+				  	let msg3 = message.toString()
+				  	let msg4 = JSON.parse(msg3, null, 4)
+
+				  	let strAll  = ''
+					for(let i = 0; i<msg4.length; i++){
+						strAll += `<tr><td>${i+1}</td><td class="allRt">${msg4[i].RT_type}</td><td class="allCan">${msg4[i].canuse}</td><td>${msg4[i].total}</td><td><input type="button" value="true" class="btnT2"></td>  <td><input type="button" value="false" class="btnF2" /></td></tr>`
+					}
+					dataAll.innerHTML = strAll
+
+				  	const allRt = document.querySelectorAll('.allRt')
+				  	const btnT2 = document.querySelectorAll('.btnT2')
+				  	const btnF2 = document.querySelectorAll('.btnF2')
+				  	
+
+				 	changeState(btnT2, btnF2, allRt)
+
+				}else if(topic == '/typeChangeJson'){
+			  		let msg7 = message.toString()
+			  		// console.log(msg7)
+
+			  		arrChange.push(msg7)
+			  		let strCha = ''
+
+				  	for(let i = 0; i<arrChange.length; i++){
+				  		if(arrChange.length > 2){
+				  			arrChange.splice(0, 1)
+				  		}
+				  		strCha += `<li>${arrChange[i]}</li>`
+				  	}
+				  	dataChange.innerHTML = strCha
+				  	
+				}else if(topic == '/error'){
+
+					let msg8 = message.toString()
+					console.log(msg8, 'msg8')
+
+					dataError.innerText = `error:${msg8}` 
+					// arrErr.push(msg8)
+					// let strErr = ''
+
+					// for(let i = 0; i<arrChange.length; i++){
+					// 	if(arrErr.length > 2){
+					// 		arrErr.splice(0, 1)
+					// 	}
+					// 	strErr += `<li>${arrErr[i]}</li>`
+					// }
+					// dataError.innerHTML = strErr
+				}
+
+			    if(topic == '/typeChangeLog'  ){
+				  	let msg6 = message.toString()
+				  	
+				  	arrLog.push(msg6)
+
+			  		let strLog = ''
+			  		for(let i = 0; i<arrLog.length; i++){
+			  			if(arrLog.length > 10){
+			  				arrLog.splice(0, 1)
+			  			}
+			  			strLog += `<li>${arrLog[i]}</li>`
+			  		}
+			  		dataLog.innerHTML = strLog
+
+			    }
+
+			})
+
+		}	
+
+		function changeState(selector, selector2, selectorType){
+			let obj = {}
+			
+			for(let i = 0; i<selector.length; i++){
+				selector[i].onclick = function(){
+					obj.type = selectorType[i].innerText
+					obj.val = true
+
+				 	client.publish('/typeChange',  JSON.stringify(obj) )
+				}
+				
+			}
+			for(let j = 0; j<selector2.length; j++){
+				selector2[j].onclick = function(){
+					obj.type = selectorType[j].innerText
+					obj.val = false
+				 	
+				 	client.publish('/typeChange',  JSON.stringify(obj) )
+				}
+			}
+		}
+
+		//btn
+		const btn = document.querySelector('.btn')
+		let count = 0;
+		btn.onclick = function(){
+			
+			if(count == 0){
+				isClick = false;
+				btn.value = "start"
+				count++
+			}else if(count == 1){
+				isClick = true;
+				btn.value = "stop"
+				count = 0
+			}
+			// isClick = false
+
+		}
+
+
+	</script>
+
+</body>
+</html>

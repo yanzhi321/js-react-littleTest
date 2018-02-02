@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>box</title>
+	<style type="text/css" media="screen">
+		.list{
+			list-style: none;
+			padding: 0;
+			width: 300px;
+			height: 300px;
+			margin: 50px;
+			border: 1px solid purple;
+		}
+		.list li{
+			list-style: none;
+			width: 100px;
+			height: 100px;
+			box-sizing: border-box;
+			border: 1px solid #ccc;
+			float: left;
+			text-align: center;
+			line-height: 100px;
+			font-size: 20px;
+		}
+
+	</style>
+</head>
+<body>
+	<div id="container">
+		<ul class="list">
+			
+		</ul>
+	</div>
+
+	<script>
+		
+		window.onload = function(){
+
+            const list = document.querySelector('.list')
+            let str = ''
+            for(let i = 0; i<9; i++){
+            	str += `<li>${i}</li>`
+            }
+            list.innerHTML = str
+            const liArr = document.querySelectorAll('li')
+
+            console.log(liArr.length)
+            // for(let i = 0; i<liArr.length; i++){
+
+            // 	setTimeout(function(){
+            // 		liArr[i].style.background = 'pink'
+            // 	}, 1000)
+            // }
+
+            setTimeout(function(){
+            	for(let i = 0; i<liArr.length; i++){
+            		liArr[i].style.background = 'purple'
+            	}
+            }, 1000)
+
+		}
+
+	</script>
+</body>
+</html>

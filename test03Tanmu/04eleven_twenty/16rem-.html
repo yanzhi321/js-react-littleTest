@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>rem-</title>
+</head>
+<body>
+	<div style="background-color:red;width:32px;height:32px;display:inline-block" class="red"></div>
+	<div style="background-color:green;width:2rem;height:2rem;display:inline-block" class="green"></div>
+
+	<script>
+		var defaultsize = 16
+        setInterval(
+            function(){
+                if(defaultsize>50){
+                    defaultsize = 16
+                }
+                document.documentElement.style.fontSize = defaultsize++ + "px"
+        },100)
+
+        console.log(document.documentElement.style)
+
+        const red = document.querySelector('.red')
+        const green = document.querySelector('.green')
+        console.log(red.style, green.style)
+
+	</script>
+</body>
+</html>

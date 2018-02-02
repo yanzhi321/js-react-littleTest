@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>sync-async-callback</title>
+</head>
+<body>
+	
+	<div id="container"></div>
+	<script>
+		
+        window.onload = function(){
+            
+            //let 解决了延时器
+            // for(let i = 0; i<5; i++){
+            // 	setTimeout(function(){
+            // 		console.log('i', i)
+            // 	},1000)
+            // }
+
+            for(var i = 0; i<5; i++){
+            	setTimeout(function(){
+            		console.log('i', i)
+            	},)
+            }
+
+            // setTimeout(function(){
+            // 	for(var i = 0; i<5; i++){
+            // 		console.log('i', i)
+            // 	}
+            // }, 2000)
+
+        }
+
+	</script>
+
+</body>
+</html>

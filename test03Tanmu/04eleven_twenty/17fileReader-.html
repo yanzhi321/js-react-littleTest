@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>fileReader-占位符</title>
+</head>
+<body>
+	
+	<div id="container">
+		<div class="show"></div>
+	</div>
+
+	<script>
+
+		//关于console.log()占位符的的使用  https://segmentfault.com/a/1190000000481884
+
+		let one = window.FileReader
+		console.log(typeof one)
+
+		//console.log()--占位符五种 
+		// 字符：%s,  整数：%d | %i, 浮点数： %f, 对象：%o, 添加样式：%c
+		console.log('%s是%d年%d月%d日', '今天', 2018, 2, 2)
+		console.log('圆周率取七位小数约等于：%f', 3.1415926)
+
+		const obj = {
+			name: 'zhangsan'
+		}
+		console.log('%o', obj)
+
+		//%c
+		console.log('%c这是一个可以在控制台添加样式的占位符', 'background: pink; font-size: 30px')
+
+	</script>
+</body>
+</html>

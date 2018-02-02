@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>socket io </title>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta charset="utf-8">
+	<meta name="keywords" content="node.js, web chat application,  前端开发">
+	<meta name="description" content="online web chat application">
+	<meta name="author" content="yanzhi321">
+	<meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit = no">
+	<link rel="shortcut icon" href="images/google.gif">
+</head>
+<body>
+	<div id="container"></div>
+
+	<script src="socket/socket.io.js"></script>
+	<script>
+		var socket = io.connect('http://localhost');
+		socket.on('news', function (data) {
+		    console.log(data);
+		    socket.emit('my other event', { my: 'data' });
+		});
+	</script>
+
+</body>
+</html>

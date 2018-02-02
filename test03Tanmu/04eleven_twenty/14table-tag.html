@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>table-test</title>
+	<style>
+		.table{
+			
+			border: 1px solid #ccc;
+			text-align: center;
+		}
+		.tableAll{
+			text-align: center;
+			color: purple;
+		}
+		.cap{
+			background: #ccc;
+			color: purple;
+			margin-bottom: 5px;
+		}
+	</style>
+</head>
+<body>
+
+	<h4>表格使用水平标题:</h4>
+	<table class="tableAll" border="1" cellpadding="10" cellSpacing="5" frame="border" rules="all" summary="this is one table">
+    	<caption class="cap">typeAll</caption>
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>RT_type</th>
+                <th>canuse</th>
+                <th>total</th>
+            </tr>
+        </thead>
+        <tbody class="dataAll">
+
+            <!-- <%for(var i=0;i<listAll.length;i++) {%>
+
+                <tr>
+                    <td><%= i+1 %></td>
+                    <td class="allRt"><%= listAll[i].RT_type %></td>
+                    <td class="allCan"><%= listAll[i].canuse %></td>
+                    <td><%= listAll[i].total %></td>
+                </tr>
+
+            <%}%> -->
+
+        </tbody>
+        <tfoot>
+        	<tr>
+        		<td>1</td>
+        		<td>2</td>
+        		<td>3</td>
+        		<td>4</td>
+        	</tr>
+        </tfoot>
+    </table>
+
+	<!-- <table border="1" class="table" cellpadding="5">
+	  <tr>
+	    <th>Name</th>
+	    <th>Telephone</th>
+	  </tr>
+	  <tr>
+	    <td>Bill Gates</td>
+	    <td>555 77 854</td>
+	  </tr>
+	</table>
+
+	<h4>表格使用垂直标题:</h4>
+	<table border="1">
+	  <tr>
+	    <th>First Name:</th>
+	    <td>Bill Gates</td>
+	  </tr>
+	  <tr>
+	    <th>Telephone:</th>
+	    <td>555 77 854</td>
+	  </tr>
+	</table> -->
+	<ol class="ol">
+		<!-- <li></li> -->
+	</ol>
+	
+	<button type="button" class="btn">start</button>
+	<button type="button" class="btn2">add</button>
+
+	<script>
+
+		const btn = document.querySelector('.btn')
+
+		// for(let i = 0; i<5; i++){
+		// 	btn.onclick = function(){
+		// 		console.log(i)
+		// 	}
+		// }
+
+		btn.onclick = function(){
+			for(let i = 0; i<5; i++){
+				console.log(i)
+			}
+		}
+		//遍历数据
+		const dataAll = document.querySelector('.dataAll')
+		let strAll  = ''
+		let obj = {
+			RT_type: 'Apple',
+			canuse: 'true', 
+			total: 10
+		}
+		for(let i = 0; i<10; i++){
+			strAll += `<tr><td>${i+1}</td><td class="allRt">${obj.RT_type}</td><td class="allCan">${obj.canuse}</td><td>${obj.total}</td></tr>`
+		}
+		dataAll.innerHTML = strAll
+
+		//Buffer二进制, nodejs中Buffer类是一个可以在任何模块被利用的全局类
+		// new Buffer()  https://www.cnblogs.com/tugenhua0707/p/4456300.html
+		//let buf = new Buffer([0, 1, 2])
+		// console.log(buf)
+		let bufArr = [68, 65, '6c', '6c', '6f' ]
+		for(let i = 0; i<bufArr.length; i++){
+			let str = bufArr[i].toString()
+			console.log(str)
+		}
+
+		//window
+		//console.log(window)
+		//console.log(FileReader.readBinaryString )
+		 var reader = new FileReader();
+		 console.log(reader)
+
+		 let objBool = {
+		 	click: 'true',
+		 	age: 10
+		 }
+		 console.log(objBool)
+		 
+		var value = "false";  
+		var flag = value ==="false" ? false : true; 
+		console.log(flag)
+
+		var ttt = "true"
+		var tttt = ttt === "false" ? false : true;
+		console.log(tttt)
+
+		var patt = /false/g
+		var str = "324324 false"
+		var result = patt.test(str)
+		console.log(result)
+
+		//splice(0, 1)
+		const oList = document.querySelector('.ol')
+		const btn2 = document.querySelector('.btn2')
+		let num = 0
+		let arr22 = []
+		let str22 = ''
+
+		btn2.onclick = function(){
+			for(let i = 0; i<arr22.length; i++){
+				if(arr22.length > 5){
+					arr22.splice(0, 1)
+				}
+				str22 += `<li>${arr22[i]}</li>`
+			}
+			arr22.push(`hello${num++}`)
+			
+			oList.innerHTML = str22
+
+		}
+
+		//setInterval
+		// setInterval( () => {
+		// 	console.log('interval', new Date().getSeconds())
+		// }, 300)
+
+	</script>
+
+
+</body>
+</html>
