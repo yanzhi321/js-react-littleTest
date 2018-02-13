@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="keywords" content="HTML, CSS, XML" />
+	<!-- 描述 -->
+	<meta name="description" content="Free Web tutorials on HTML, CSS, JavaScript 不超过150个字符">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+	<!-- 以下代码告诉IE浏览器，IE8/9及以后的版本都会以最高版本IE来渲染页面。   -->
+    <!-- GCF(Google Chrome Frame谷歌内嵌浏览器框架GCF)，则使用GCF来渲染页面，如果没有安装，则使用最高版本的IE内核进行渲染 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>js-</title>
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="normalize/normalize.css">
+	<link rel="stylesheet" type="text/css" href="iconfont/iconfont.css">
+	
+</head>
+<body>
+	<div class="container">
+		<div id="box">
+		    <select name="sel1" id="sel1">
+		        <option value="year">年</option>
+		    </select>
+		    <select name="sel2" id="sel2">
+		    	<option value="month">月</option>
+		    </select>
+		    <select name="sel3" id="sel3">
+		    	<option value="day">日</option>
+		    </select>
+		    <span id="result"></span>
+		</div>
+
+	</div>
+
+	<script>
+
+		//https://www.xiaohuochai.site/
+		//https://github.com/littlematch0123
+
+		
+		// /5种基本数据类型 
+		// Number 
+		// Boolean
+		// String
+		// undefined
+		// null
+
+		//switch
+		const num = 25
+		switch(true){
+			case num < 0: 
+			    console.log("num < 0");
+			    break;
+			case num >= 0 && num <= 10:
+                console.log("0<=num<=10");
+                break;
+            case num >10 && num < 25:
+                console.log("10<num<25");
+                break;
+            case num >= 25:
+                console.log("num >= 25");
+                break;
+            default:
+            	console.log("end")
+
+		}
+
+		//date select
+		//生成1900年-2100年
+		for(var i = 1900; i<=2100;i++){
+		    var option = document.createElement('option');
+		    option.setAttribute('value',i);
+		    option.innerHTML = i;
+		    sel1.appendChild(option);
+		}
+
+		//生成月份
+		for(let i = 1; i<13; i++){
+			const option2 = document.createElement('option')
+			option2.setAttribute('value', i)
+			option2.innerText = i;
+			sel2.appendChild(option2)
+		}
+		//生成日期
+		for(let i = 1; i<=31; i++){
+			const option3 = document.createElement('option')
+			option3.setAttribute('value', i)
+			option3.innerText = i;
+			sel3.appendChild(option3)
+		}
+
+		const num2 = 23
+		console.log(num2.toString(8))
+		//闭包
+		// const img = new Image()
+		// console.log(img)
+		// img.src="images/google.gif"
+		// document.body.appendChild(img)
+
+		//js继承prototype、proto和constructor的三角关系
+		//用来初始化新创建的对象的函数是构造函数
+		//通过构造函数的new操作创建的对象是实例对象
+		// function Foo(){
+		// 	//构造函数
+		// }
+		// const f1 = new Foo; //实例对象
+		
+		//构造函数有一个prototype属性，指向实例对象的原型对象
+		function Foo(){};
+		Foo.prototype.a = 1;
+		var f1 = new Foo;
+		var f2 = new Foo;
+		// console.log(Foo.prototype.a);//1
+		// console.log(f1.a);//1
+		// console.log(f2.a);//1
+		
+		Foo.prototype.b = 'hhh'
+		// console.log(f1.b, f2.b)
+
+		//原型对象有一个constructor属性，指向该原型对象对应的构造函数
+		function Foo2(){
+
+		}
+		const f3 = new Foo2
+		// console.log(f2.constructor === Foo, f3.constructor === Foo2)
+
+		//实例对象有一个proto属性，指向该实例对象对应的原型对象
+		// console.log(f1.__proto__ === Foo.prototype)
+		// console.log(f3.__proto__ === Foo2.prototype)
+		// console.log(f1, f3)
+
+		function Person(){
+			Person.prototype.name = 'hhh';
+			Person.prototype.age = 222;
+			Person.prototype.job = "Software Engineer";
+			Person.prototype.sayName = function(){
+				console.log(this.name);
+			}
+		}
+
+		const person = new Person()
+		person.sayName()
+		const person2 = new Person()
+		person.sayName()
+
+		//封装
+		function Person2(){
+
+		}
+		Person2.prototype = {
+			name: 'ggg',
+			age: 333,
+			job: 'developer',
+			sayName: function(){
+				console.log(this.name)
+			}
+		}
+
+		const person3 = new Person2()
+		person3.sayName()
+
+		var myObject = (function(){
+			var  name = 'match';    // 私有（private）变量
+		    return {
+		    	getName: function(){    // 公开（public）方法
+		      		return  name;
+		    	}
+		    }
+		})();
+		console.log( myObject.getName() );// 输出：match
+		console.log( myObject.name )    // 输出：undefined
+
+
+	</script>
+</body>
+</html>

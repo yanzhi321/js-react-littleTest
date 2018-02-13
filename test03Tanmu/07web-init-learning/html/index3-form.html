@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="keywords" content="HTML, CSS, XML" />
+	<!-- 描述 -->
+	<meta name="description" content="Free Web tutorials on HTML, CSS, JavaScript 不超过150个字符">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <!-- 以下代码告诉IE浏览器，IE8/9及以后的版本都会以最高版本IE来渲染页面。   -->
+    <!-- GCF(Google Chrome Frame谷歌内嵌浏览器框架GCF)，则使用GCF来渲染页面，如果没有安装，则使用最高版本的IE内核进行渲染 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>form-</title>
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="iconfont/iconfont.css">
+	<style type="text/css" media="screen">
+		body{
+			padding-bottom: 200px
+		}
+		::placeholder{
+			color: purple;
+		}
+	</style>
+</head>
+<body>
+	<div class="form-box">
+		<form method="get" action="php/form.php" name="test"></form>
+		<!-- get方法 -->
+		<h3>get方法</h3>
+		<form method="get" action="php/form.php" target = "_blank">
+		    <p><label>x:<input name="x"></label></p>
+		    <p><label>y:<input name="y"></label></p>
+		    <p><button type="submit">Submit</button></p>
+		</form>    
+		<a title="form.php?x=28&y=66" href="php/form.php?x=28&amp;y=66">a标签传参</a>
+
+		<!-- post方法 -->
+		<h3>post方法</h3>
+		<form method="post" action="php/form.php"  target = "_blank">
+		    <p><label>x:<input name="x"></label></p>
+		    <p><label>y:<input name="y"></label></p>
+		    <p><button type="submit">Submit</button></p>
+		</form>    
+	</div>
+
+	<div class="autocomplete">
+		<h3>autocomplete规定表单是否自动完成</h3>
+		<button id="btn1">打开自动完成</button>
+		<button id="btn2">关闭自动完成</button>
+		<form method="get" action="php/form.php" name="test">
+		    <p><label>x:<input name="x"></label></p>
+		    <p><label>y:<input name="y"></label></p>
+		    <p><button type="submit">Submit</button></p>    
+		</form>    
+	</div>
+
+	<div class="novalidate">
+		<button id="btn3">打开验证</button>
+		<button id="btn4">关闭验证</button>
+		<form method="get" action="#" name="test2">
+		    E-mail: <input type="email" name="user_email" />
+		    <input type="submit" />
+		</form>
+	</div>	
+
+
+	<!-- input 控件属性 -->
+	<div class="input-labe">
+		<!-- file-accept	 -->
+		<input type="file" accept="image/gif,image/jpeg,image/jpg">
+		<!-- image-alt -->
+		<input type="image" src="images/mm.jpg" width="99" height="99" alt="测试图片">
+		<input name="test2" autofocus>
+
+		<!-- multiple-文件多选 -->
+		<br /><br />
+		<h2>multiple-文件多选</h2>
+		<button id="btn5">打开文件多选</button>
+		<button id="btn6">关闭文件多选</button>
+		<br><br>
+		<input id="file-input" type="file" multiple>
+		
+		<!-- input-pattern	 -->
+		<br><br>
+
+		<p>请输入匹配/\d{3}/</p>
+		<form action="#">
+			<input pattern="\d{3}" placeholder="/\d{3}/">
+			<!-- 要修改placeholder的颜色需要使用::placeholder -->
+			 <input type="tel" placeholder="请输入数字" pattern="\d{11}">   
+			 <!-- required	 -->
+			 <input type="text" required="true" placeholder="required">
+			<input type="submit" name="sub">
+		</form>
+
+		<!-- select属性-选中 -->
+		<!-- select()方法用于选择文本框(指type为text的input元素和textarea元素)中的所有文本，该方法不接受参数，且无返回值 -->
+		<br><br>
+		<h2>select() && setSelectionRange()</h2>
+		<input type="text" name="" class="select-text">
+		<textarea name="" class="select-area"></textarea>
+		<button type="button" class="btn-slc">select text</button>
+		<button type="button" class="btn-range">setSelectionRange</button>
+
+
+		<br><br>
+		<h2>富文本编辑-contenteditable和contentEditable。contenteditable是元素的特性，而contentEditable是对象的属性</h2>
+		<p>一种是使用iframe元素，另一种是使用contenteditable属性</p>
+		<iframe name="wysiwyg" src="index.html" style="height: 100px;width: 100px;"></iframe>  
+		
+		
+	</div>
+
+
+
+	<script>
+		//name属性规定表单名称，如果name="test"，则Javascript可以使用document.forms.test来获取该表单
+		// const oForm = document.forms.test
+		// console.log(oForm.method, "method")
+
+		//autocomplete是HTML5新增的一个属性，规定表单是否应该启用自动完成功能。
+		var oForm = document.forms.test;
+		btn1.onclick = function(){
+		    oForm.autocomplete = 'on';
+		};
+		btn2.onclick = function(){
+		    oForm.autocomplete = 'off';
+		};
+
+		//novalidate
+		const btn3 = document.querySelector('#btn3')
+		const btn4 = document.querySelector('#btn4')
+		var oForm2 = document.forms.test2;
+		btn3.onclick = function(){
+		    oForm2.removeAttribute('novalidate');
+		};
+		btn4.onclick = function(){
+		    oForm2.setAttribute('novalidate','');
+		};
+
+		//multiple--文件多选属性
+		const btn5 = document.querySelector('#btn5')
+		const btn6 = document.querySelector('#btn6')
+		const file = document.querySelector('#file-input')
+		btn5.onclick = function(){
+			file.setAttribute('multiple', 'true')
+		}
+		btn6.onclick = function(){
+			file.removeAttribute('multiple')
+		}
+
+		//select()方法用于选择文本框(指type为text的input元素和textarea元素)中的所有文本，该方法不接受参数，且无返回值
+		const slcText = document.querySelector('.select-text')
+		const slcBtn = document.querySelector('.btn-slc')
+		const slcArea = document.querySelector('.select-area')
+		slcBtn.onclick = function(){
+			slcText.select()
+			// slcArea.select()
+		}
+		// onselect事件
+		slcText.onselect = function(){
+			this.style.background = 'pink'
+		}
+		//setSelectionRange()方法用于选择文本框中的部分文本，这个方法接收两个参数：
+		//要选择的第一个字符的索引和要选择的最后一个字符之后的字符的索引(类似于substring()方法的两个参数)
+		const slcRange = document.querySelector('.btn-range')
+		slcRange.onclick = function(){
+			slcText.focus()
+			slcText.setSelectionRange(0, 3)
+		}
+		
+
+		//有两种编辑富文本的方式，一种是使用iframe元素，另一种是使用contenteditable属性
+		frames['wysiwyg'].document.designMode = 'on';
+
+	</script>
+</body>
+</html>

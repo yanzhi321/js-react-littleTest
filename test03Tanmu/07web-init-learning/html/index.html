@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<!-- 关键词 -->
+	<meta name="keywords" content="HTML, CSS, XML" />
+	<!-- 描述 -->
+	<meta name="description" content="Free Web tutorials on HTML, CSS, JavaScript 不超过150个字符">
+	<!-- 作者 -->
+	<meta name="author" content="littlematch">
+	<!-- 版权 -->
+	<meta name="copyright" content="本页版权归小火柴所有">
+	<!-- 移动端使用 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <!-- 以下代码告诉IE浏览器，IE8/9及以后的版本都会以最高版本IE来渲染页面。   -->
+    <!-- GCF(Google Chrome Frame谷歌内嵌浏览器框架GCF)，则使用GCF来渲染页面，如果没有安装，则使用最高版本的IE内核进行渲染 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<!--  【定时跳转】 让网页多少秒刷新，或跳转到其他网页 -->
+    <!-- <meta http-equiv="refresh" content="1"> -->
+	<!-- <meta http-equiv="refresh" content="5;url=http://www.baidu.com"> -->
+	
+	<!-- 【缓存过期时间】可以用于设定网页的到期时间，一旦过期则必须到服务器上重新调用。需要注意的是必须使用GMT时间格式 -->
+	<meta http-equiv="Expires" Content="0">
+	<meta http-equiv="Expires" Content="Sat Nov 28 2016 21:19:15 GMT+0800">
+
+	<!-- 【禁止缓存】 用于设定禁止浏览器从本地机的缓存中调阅页面内容，用户无法脱机浏览 -->
+	<meta http-equiv="Pragma" Content="No-cach">
+	<!-- 独立页面】  强制页面在当前窗口中以独立页面显示，可以防止自己的网页被别人当作一个frame页调用 -->
+	<meta http-equiv="windows-Target" content="_top">
+	<!-- 【兼容模式】下面表示如果当前浏览器版本是小于等于IE8的，则使用chrome，如果不是，则使用IE标准模式 -->
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=IE8">
+
+	<title>01</title>
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<style type="text/css" media="screen">
+
+	</style>
+</head>
+<body>
+	
+	<!-- accesskey: alt+accesskey可跳转链接 -->
+	<div class="alt-accesskey">
+	    <a href="https://www.baidu.com" accesskey="b">百度</a>
+	    <a href="https://www.taobao.com" accesskey="a">阿里</a>
+	    <a href="https://www.qq.com" accesskey="t">腾讯</a>    
+	    <p>快捷键(alt+b)可以跳转到百度；快捷键(alt+a)可以跳转到阿里；快捷键(alt+t)可以跳转到腾讯</p>
+	</div>
+	
+	<!-- tableindex:按tab键选择 -->
+	<div class="tabindex">
+		<a href="https://www.baidu.com" tabindex="10" >百度</a>
+		<a href="https://www.taobao.com" tabindex = "2">阿里</a>
+		<a href="https://www.qq.com" tabindex = "5">腾讯</a>
+	</div>
+	
+	<!-- contenteditable:可编辑，spellcheck: 英文拼写检查 -->
+	<div class="contenteditable" contenteditable="true" spellcheck="true">
+		this is can edit
+		<p>are you sure</p>
+	</div>
+	
+	<!-- input-type ：label嵌套-->
+	<div class="input-type">
+		<label><input type="checkbox" name="confirm" value="on"> 我已确认上述条款</label>
+		<br />
+		<label>text<input type="text" name="" value="hhh"></label>
+		<br>
+		<label>date<input type="date" name="" value=""></label>
+	</div>
+	
+	<!-- audio-video	 -->
+	<!-- <div class="audio-video">
+		<audio controls>
+		  <source src="horse.ogg" type="audio/ogg">
+		  <source src="swf-video-audio/horse.mp3" type="audio/mpeg">
+		  您的浏览器不支持 audio 元素。
+		</audio>
+		<video width="320" height="240" controls>
+		  <source src="swf-video-audio/video.mp4"  type="video/mp4">
+		  <source src="movie.ogg"  type="video/ogg">
+		  您的浏览器不支持 HTML5 video 标签。
+		</video>
+
+		<embed src="swf-video-audio/video.swf"></embed>
+	</div> -->
+	
+	<!-- pre: 保留空格等， 原格式输出文本; blockquote:代表其中的文字是引用内容。 -->
+	<div class="pre-blockquote">
+		<pre>
+			pre
+				pre2
+					pre3
+		</pre>
+		
+		<!-- cite-mark: 作品标题引用， 高亮	 -->
+		<blockquote cite="http://baike.baidu.com/view/921793.htm">
+　　		<p>横眉冷对千夫指,俯首甘为<mark>孺子牛</mark>孺子牛</p>
+		</blockquote>    
+		<p>鲁迅</p>
+		<p>我最喜欢的电影是<cite>(作品标题引用)千与千寻</cite></p>
+		<!-- sup-sub	 -->
+		<p>
+			up<sup>上标</sup>
+			down<sub>下标</sub>
+		</p>
+		<!-- del-ins:删除-添加	 -->
+		<p>一打有 <del datetime="2015-12-30T00:00Z" cite="edit.html">二十</del> <ins>十二</ins> 件。</p>
+	</div>
+	
+	<!-- ruby:注音标识 : <ruby> 　   　表示ruby标记
+
+	<rt> 　　　 　表示ruby标记文字
+
+	<rp> 　　　　表示ruby标记括号
+
+	-->
+	<div class="ruby">
+		<ruby>
+	  		漢 <rt> ㄏㄢˋ </rt>
+		</ruby>
+
+		<ruby>
+			傻<rt>sha</rt>
+		</ruby>
+
+		<ruby>
+		    汉
+		    <rp>
+			    (</rp>
+			    <rt>hàn</rt>
+			    <rp>)
+		    </rp>
+
+			语
+			<rp>
+			    (</rp>
+			    <rt>yǔ</rt>
+			    <rp>)
+		    </rp> 
+			好
+			<rt>
+				hǎo
+			</rt>
+		</ruby>
+
+	</div>
+
+
+	<!-- bdi-bdo	 -->
+	<div class="bdi-bdo">
+		<p>When rendered by a browser, <bdo dir="rtl">these words</bdo> will appear as 'sdroweseht'</p>
+	</div>
+	
+	<!-- <code> 　　　 表示计算机代码
+
+	<kbd> 　　　  定义键盘码
+
+	<samp> 　　   定义计算机例子代码
+
+	<tt> 　　　　  定义打字机代码
+
+	<var>　　　　 定义变量 -->
+	<div class="code-var">
+		<p>
+		    <code>Computer code</code>
+		    <br />
+		    <kbd>Keyboard input</kbd>
+		    <br />
+		    <tt>Teletype text</tt>
+		    <br />
+		    <samp>Sample text</samp>
+		    <br />
+		    <var>Computer variable</var>
+		    <br />
+		</p>
+	</div>
+	
+	<!-- details-summary:details该标签仅有一个open属性，用来定义details是否可见(默认为不可见状态)	 -->
+	<div class="details-summary">
+		<details open="true">
+		    <summary>Copyright 2015.</summary>
+		    <p>小火柴的蓝色理想</p>
+		</details> 
+	</div>
+	 
+	<!-- a标签 -->
+	<!-- 1、<a>标签的文本颜色只能自身进行设置，从父级继承不到
+
+　　2、<a>标签的下划线颜色跟随文本颜色进行变化
+
+　　3、<a>标签不可嵌套<a>标签 -->
+	<div class="a-link">
+		<!-- 下载压缩包 -->
+		<a href="zip/test.rar">下载测试</a>
+		<!-- 锚点: href:#id名,跳转到id名下的标签里 -->
+		<a href="#test">目录</a>
+		<!-- <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+		<div id="test" style="height: 200px;width: 200px; border: 1px solid black;margin-bottom: 300px;">内容</div> -->
+		<!-- href:页面地址#id名 -->
+		<a href="http://baike.baidu.com/view/2202.htm#2">足球比赛规则</a>
+		
+		<!-- href与src的区别
+　　　　href(hypertext reference)指超文本引用，表示当前页面引用了别处的内容 -->
+		<!-- src(source)表示来源地址，表示把别处的内容引入到当前页面 -->
+	   <!-- 所以<img>、<script>、<iframe>等应该使用src，而<a>和<map>应该使用href -->
+		<!-- [注意】href属性一定不要留空，若暂时不需要写地址，则写#或javascript:;。若href留空，会刷新页面 -->
+
+		<!-- 手机号码 -->
+		<!-- 　在移动端，使用<a href="tel:15012345678>15012345678</a>可以唤出手机拨号盘 -->
+		<a href="tel:15012345678">15012345678</a>
+		<a href="mailto:123456@163.com">邮箱</a>
+	
+		<div style="color: red;">
+		    <a href="#">[1]从父级继承不到红色字体</a>
+		    <br>
+		    <a href="#" style="color: green">[2]下划线颜色与文本同色</a>
+		    <br>
+		    <a href="#">前面<a href="#">[3]a标签不可嵌套</a></a>
+		</div>
+
+	</div>
+
+	<!-- target -->
+	<!-- target属性表示链接打开方式
+
+　　1、_self    当前窗口（默认）
+
+　　2、_blank    新窗口
+
+　　3、_parent 父框架集
+
+　　4、_top 整个窗口
+
+　　5、_framename 指定框架 -->
+	<div class="target-attribute">
+		<ul class="list">
+		    <li class="in"><a href="chap1.html" target="_self">chap1(_self)</a></li>
+		    <li class="in"><a href="chap2.html" target="_blank">chap2(_blank)</a></li>
+		    <li class="in"><a href="chap3.html" target="_parent">chap3(_parent)</a></li>
+		    <li class="in"><a href="chap4.html" target="_top">chap4(_top)</a></li>    
+		    <li class="in"><a href="chap5.html" target="bottom">chap5(framename)</a></li>
+		</ul>
+
+		<!-- download-设置下载文件名	 -->
+		<a href="zip/test.rar" download="test.zip">download-name</a>
+
+	</div>
+	
+	<!-- img标签 -->
+	<!-- srcset:指定图片的地址和对应的图片质量。属性格式：图片地址 宽度描述w 多个资源之间用逗号分隔。
+	对于srcset里面出现了一个w单位，可以理解成图片质量。如果可视区域小于这个质量的值，就可以使用，
+	当然，浏览器会自动选择一个最小的可用图片。但是，会发现随着浏览器窗口宽度变大，图片也在不断变大
+	[注意]浏览器会自动匹配最佳显示的图片，如果大图既然缓存了就用大图了，再缩小也不会变成小图了 -->
+	<div class="img-tag">
+		<!-- <img src="images/mm.jpg" srcset="images/mm.jpg 300w,images/www.jpg 500w,images/google.gif 800w"> -->
+
+	</div>
+
+	<!-- area-map	　<area>用来定义图像热区，<area>总是嵌套在<map>标签中 -->
+	<!-- 1、coords:定义可点击区域的坐标
+
+　　2、href:定义此区域的目标URL
+
+　　3、nohref:排除某个区域(html5中已废弃)
+
+　　4、shape:定义区域的形状
+
+　　　　a、圆形(circ/circle) coords= "x,y,r" x,y是圆心坐标；r是半径
+
+　　　　b、多边形(poly/polygon) coords = "x1,y1,x2,y2,x3,y3……" x,y是多边形每个顶点的坐标
+
+　　　　c、矩形(rect/rectangle) coords = "x1,y1,x2,y2" x1,y1是左上角坐标；x2,y2是右下角坐标
+
+　　　　d、全部区域default(默认) -->
+	<div class="area-map">
+		<img src="images/jihe.png" alt="几何图形" width="600" height="220" usemap="#map">
+		<map name="map" id="map">
+		  <area shape="rect" coords="35,38,150,158" href="line4.html" alt="四边形">
+		  <area shape="poly" coords="175,109,193,44,268,41,296,109,233,151" href="line6.html" alt="六边形">
+		  <area shape="poly" coords="315,81,330,58,356,40,387,37,411,52,430,79,433,108,418,132,389,153,357,154,333,137,315,108" href="line12.html" alt="12边形">
+		  <area shape="circle" coords="512,95,60" href="line0.html" alt="圆形">
+		</map>
+	</div>
+
+	<!-- ol-ul-dl	 -->
+	<div class="ol-ul-dl">
+		<ol start="100" reversed="true">
+			<li></li>
+			<li></li>
+			<li></li>
+			<li></li>
+		</ol>
+	</div>
+
+	<!-- frameset-框架：每份HTML文档称为一个框架，并且每个框架都独立于其他的框架 -->
+	<div class="frameset">
+		<frameset rows = "40%,*">
+		    <frame src="https://cli.im/" name="topFrame">
+		    <frameset cols = "50%,50%">
+		        <frame src="https://shimo.im/" name="leftFrame">
+		        <frame src="https://www.w3cplus.com" name="rightFrame">
+		    </frameset>
+		</frameset>
+	</div>
+	
+	<div class="video-audio">
+		<audio controls="controls" height="100" width="100">
+            <source src="swf-video-audio/horse.mp3" type="audio/mp3" />
+            <embed height="100" width="100" src="swf-video-audio/horse.mp3" />
+        </audio>
+        <video width="320" height="240" controls="controls">
+		  <source src="swf-video-audio/video.mp4" type="video/mp4" />
+		  <object data="movie.mp4" width="320" height="240">
+		    <embed src="swf-video-audio/video.mp4" width="320" height="240" />
+		  </object>
+		</video>
+	</div>
+
+	<script>
+		// https://www.xiaohuochai.site/
+		
+	</script>
+</body>
+</html>

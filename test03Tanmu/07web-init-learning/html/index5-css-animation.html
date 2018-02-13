@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="keywords" content="HTML, CSS, XML" />
+	<!-- 描述 -->
+	<meta name="description" content="Free Web tutorials on HTML, CSS, JavaScript 不超过150个字符">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+	<!-- 以下代码告诉IE浏览器，IE8/9及以后的版本都会以最高版本IE来渲染页面。   -->
+    <!-- GCF(Google Chrome Frame谷歌内嵌浏览器框架GCF)，则使用GCF来渲染页面，如果没有安装，则使用最高版本的IE内核进行渲染 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>animation-</title>
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="normalize/normalize.css">
+	<link rel="stylesheet" type="text/css" href="iconfont/iconfont.css">
+	<link rel="stylesheet" href="https://unpkg.com/animate.css@3.5.2/animate.min.css">
+	<style type="text/css" media="screen">
+		/*     https://www.xiaohuochai.site   */
+		
+		.box{
+		    position: relative;
+		    height: 300px;
+		    width: 500px;
+		}    
+		.inner,.inner2{
+		    position: absolute;
+		    height: 100%;
+		    width: 100%;
+		    background-size:cover;
+		    animation: move 100s infinite linear alternate;
+		}
+		@keyframes move{
+		    100%{background-position: 500% 0;}
+		}
+		.in1{
+		    background-image: url('http://sandbox.runjs.cn/uploads/rs/26/ddzmgynp/cloud.png');   
+		}
+		.in2{
+		    background-image: url('http://sandbox.runjs.cn/uploads/rs/26/ddzmgynp/cloud1.png');
+		    animation-duration: 10s;
+		}
+		
+		/*/地球绕着太阳转*/
+		.box2{
+		    transform: scale(0.5);
+		    position: relative;
+		    padding: 1px;
+		    height: 300px;
+		    width: 300px;
+		}    
+		.sunline{
+		    position:relative;
+		    height: 400px;
+		    width: 400px;
+		    border: 2px solid black;
+		    border-radius: 50%;
+		    margin: 50px 0 0 50px;
+		    display: flex;
+		    animation: rotate 10s infinite linear;
+		}
+		.sun{
+		    height: 100px;
+		    width: 100px;
+		    margin: auto;
+		    background-color: red;
+		    border-radius: 50%;
+		    box-shadow: 5px 5px 10px red,-5px -5px 10px red,5px -5px 10px red,-5px 5px 10px red;
+		}
+		.earthline{
+		    position: absolute;
+		    right: 0;
+		    top: 50%;
+		    height: 200px;
+		    width: 200px;
+		    margin: -100px -100px 0 0;
+		    border: 1px solid black;
+		    border-radius: 50%;
+		    display: flex;
+		    animation: rotate 2s infinite linear;
+		}
+		.earth{
+		    margin: auto;
+		    height: 50px;
+		    width: 50px;
+		    background-color: blue;
+		    border-radius: 50%;
+		}
+		.moon{
+		    position: absolute;
+		    left: 0;
+		    top: 50%;
+		    height: 20px;
+		    width: 20px;
+		    margin: -10px 0 0 -10px;
+		    background-color: black;
+		    border-radius: 50%;
+		}
+		@keyframes rotate{
+		    100%{transform:rotate(360deg);}
+		}
+		
+		
+		/*3d cube*/
+		ul{
+		    margin: 0;
+		    padding: 0;
+		    list-style: none;
+		}
+		.box3{
+		    height: 100px;
+		    width: 100px;
+		    perspective: 500px;
+		    margin: 50px 0 0 50px;
+		}    
+		.list{
+		    position: relative;
+		    height: 100px;
+		    width: 100px;
+		    background-color: blue;
+		    transform-style: preserve-3d;
+		    transform-origin: 0 0 0;
+		    animation: rotate3 1s  10s 3 both linear;
+		}
+		.in{
+		    position: absolute;
+		    height: 100px;
+		    width: 100px;
+		}
+		.list .in:nth-child(6){
+		    background-color: pink;
+		    transform-origin: top;
+		    animation: in6 2s both;
+		}
+		.list .in:nth-child(5){
+		    background-color: lightgreen;
+		    transform-origin: right;
+		    animation: in5 2s 2s both;
+		}
+		.list .in:nth-child(4){
+		    background-color: lightblue;
+		    transform-origin: bottom;
+		    animation: in4 2s 4s both;
+		}
+		.list .in:nth-child(3){
+		    background-color: lightcoral;
+		    transform-origin: left;
+		    animation: in3 2s 6s both;
+		}
+		.list .in:nth-child(2){
+		    background-color: lightcyan;
+		    animation: in2 2s 8s both;
+		}
+		.list .in:nth-child(1){background-color: lightsalmon;}
+		.box:hover .list{animation-play-state: paused;}
+		.box:hover .in{animation-play-state: paused;}
+		@keyframes in6{100%{transform: rotateX(90deg);}}
+		@keyframes in5{100%{transform: rotateY(90deg);}}
+		@keyframes in4{100%{transform: rotateX(-90deg);}}
+		@keyframes in3{100%{transform: rotateY(-90deg);}}
+		@keyframes in2{100%{transform: translateZ(100px);}}
+		@keyframes rotate3{100%{transform: rotate3d(1,1,1,360deg);}}
+		
+
+		/*/glass effect*/
+		.outer{
+		  position:relative;
+		  height: 200px;
+		  width: 200px;
+		   background: hsl(20,40%,90%);
+		  background-image:linear-gradient(90deg,#fb3 11px,transparent 0),
+		  linear-gradient(90deg,#ab4 23px,transparent 0),
+		  linear-gradient(90deg,#655 41px,transparent 0);
+		  background-size: 41px 100%,61px 100%,83px 100%;
+		}
+		.inners{
+		  position:absolute;
+		  top: 0;right: 0;left: 0;bottom: 0;
+		  font: bold 20px/1.5 '宋体';
+		  height: 160px;
+		  width: 180px;
+		  margin:auto;
+		  background:hsla(0,0%,100%,.3);
+		}
+
+	</style>
+</head>
+<body>
+	<h1 class="animated infinite bounce">animate.css Example</h1>
+
+	<!-- 漂浮的白云 -->
+	<div class="box">
+		<div class="inner"></div>
+		<div class="inner2"></div>
+	</div>
+	<h3>The earth moves around the sun.</h3>
+	<div class="box2">
+	    <div class="sunline">
+	        <div class="sun"></div>
+	        <div class="earthline">
+	            <div class="earth"></div>
+	            <div class="moon"></div>
+	        </div>
+	    </div>
+	</div>
+	
+	<h3>cube</h3>
+	<div class="box3">
+	    <ul class="list" id="list">
+	        <li class="in"></li>
+	        <li class="in"></li>
+	        <li class="in"></li>
+	        <li class="in"></li>
+	        <li class="in"></li>
+	        <li class="in"></li>
+	    </ul>
+	</div>
+	
+	<h3>glass effect</h3>
+	<div class="outer">
+	  <div class="inners">前端入门容易精通难，说的是前端，更指javascript</div>
+	</div>
+		
+	<button type="button" id="btn22" onClick="logOne()">btn22</button>
+
+	<script>
+		
+			list.addEventListener('animationend',function(e){
+			    e = e || event;
+			    var target = e.target || e.srcElement;
+			    if(target.nodeName == 'UL'){
+			        list.style.animationName = 'none';
+			        var children = list.getElementsByTagName('li');
+			        for(var i = 0; i < children.length;i++){
+			            children[i].style.animationName = 'none';
+			        }
+			        setTimeout(function(){
+			            list.style.animationName = 'rotate';
+			            var children = list.getElementsByTagName('li');
+			            for(var i = 0; i < children.length;i++){
+			                children[i].style.animationName = 'in' + (i+1);
+			            }        
+			        },100);        
+			    }
+			},false);
+
+			function logOne(){
+				console.log("22222222")
+			}
+
+
+		
+	</script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="keywords" content="HTML, CSS, XML" />
+	<!-- 描述 -->
+	<meta name="description" content="Free Web tutorials on HTML, CSS, JavaScript 不超过150个字符">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+	<!-- 以下代码告诉IE浏览器，IE8/9及以后的版本都会以最高版本IE来渲染页面。   -->
+    <!-- GCF(Google Chrome Frame谷歌内嵌浏览器框架GCF)，则使用GCF来渲染页面，如果没有安装，则使用最高版本的IE内核进行渲染 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>contenteditable</title>
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="iconfont/iconfont.css">
+</head>
+<body>
+	<h2>contenteditable---document.designMode='on'</h2>
+	<div class="contenteditable">
+		<div id="wysiwyg" style="height: 100px;width: 100px;border:1px solid black; word-wrap:break-word"></div>
+		<button id="btn1">打开富文本编辑</button>
+		<button id="btn2">关闭富文本编辑</button> 
+	</div>
+	
+	<hr>
+	<h2>段落格式</h2>
+	<div class="content-style">
+		<!-- data-*方式来自定义属性，data-*实际上上就是data-前缀加上自定义的属性名，使用这样的结构可以进行数据存放。 -->
+		<div id="wysiwyg2" style="height: 100px;width: 300px;border:1px solid black" contenteditable>测试内容</div>
+        <button data-name="justifyCenter">居中</button>
+        <button data-name="justifyLeft">左对齐</button>
+        <button data-name="justifyRight">右对齐</button>
+        <button data-name="indent">添加缩进</button>
+        <button data-name="outdent">去掉缩进</button>    
+	</div>	
+	
+	<hr>
+	<h2>文本格式</h2>
+	<div class="text-style">
+		<div id="wysiwyg3" style="height: 100px;width: 300px;border:1px solid black" contenteditable>测试内容</div>
+		<button data-name="fontname" data-value="宋体">宋体</button>
+		<button data-name="fontsize" data-value="5">大字体</button>
+		<button data-name="forecolor" data-value="red">红色字体</button>
+		<button data-name="backColor" data-value="lightgreen">浅绿背景</button>
+		<button data-name="bold">加粗</button>
+		<button data-name="italic">斜体</button>    
+		<button data-name="underline">下划线</button>  
+	</div>	
+	
+	<hr>
+	<h2>编辑-复制-剪切</h2>
+	<div class="edit-copy">
+		<div id="wysiwyg4" style="height: 100px;width: 300px;border:1px solid black" contenteditable>测试内容</div>
+		<button data-name="copy">复制</button>
+		<button data-name="cut">剪切</button>    
+		<button data-name="paste">粘贴</button>    
+		<button data-name="selectAll">全选</button>
+		<button data-name="delete">删除</button>    
+		<button data-name="forwarddelete">后删除</button>    
+		<button data-name="removeFormat">清空格式</button>
+		<button data-name="redo">前进一步</button>    
+		<button data-name="undo">后退一步</button>
+		<button data-name="print">打印</button>  
+	</div>
+	
+	<hr>
+	<h2>插入：标签-链接-img</h2>
+	<div class="insert-link">
+		<div id="wysiwyg5" style="height: 100px;width: 300px;border:1px solid black;overflow:auto" contenteditable>测试内容</div>
+		<button data-name="formatblock" data-value="div">插入div</button>
+		<button data-name="inserthorizontalrule">插入hr</button>    
+		<button data-name="insertorderedlist">插入ol</button>    
+		<button data-name="insertunorderedlist">插入ul</button>
+		<button data-name="insertparagraph">插入p</button>    
+		<button data-name="insertimage" data-value="http://files.cnblogs.com/files/xiaohuochai/zan.gif">插入图像</button>    
+		<button data-name="createlink" data-value="www.cnblogs.com/xiaohuochai">增加链接</button>
+		<button data-name="unlink">删除链接</button> 
+	</div>	
+
+	<script>
+		//https://www.xiaohuochai.site/
+
+		//设置document.designMode='on'时，页面的任意位置都可以编辑；
+		//使用contenteditable='true'则只对具体元素和其包含的元素起作用
+		// document.designMode = 'on'
+
+       	//contenteditable-富文本编辑
+       	//定要区分contenteditable和contentEditable。contenteditable是元素的特性，而contentEditable是对象的属性
+       	btn1.onclick = function(){
+       		wysiwyg.contentEditable = true
+       	}
+       	btn2.onclick = function(){
+       		wysiwyg.contentEditable = false
+       		document.designMode = 'off'
+       	}
+
+       
+       	//段落格式-------------
+  		//居中        　　document.execCommand('justifyCenter');
+		// 左对齐     　　 document.execCommand('justifyLeft');
+		// 右对齐         document.execCommand('justifyRight');
+		// 添加缩进    　　document.execCommand('indent');
+		// 去掉缩进    　　document.execCommand('outdent');
+       	//data-name
+       	const conStyle = document.querySelector('.content-style')
+       	const btns = conStyle.querySelectorAll('button')
+       	// console.log(btns, 'btns')
+       	for(let i = 0; i<btns.length; i++){
+       		btns[i].onclick = function(){
+       			document.execCommand(this.getAttribute('data-name'))
+       		}
+       	}
+
+       	//文本格式
+  		//字体类型    　　document.execCommand('fontname',false,sFontName)
+		// 字体大小    　　document.execCommand('fontsize',false,sFontSize)
+		// 字体颜色    　　document.execCommand('forecolor',false,sFontColor)
+		// 背景色         document.execCommand('backColor',false,sBackColor)
+		// 加粗        　 document.execCommand('bold');
+		// 斜体        　 document.execCommand('italic');
+		// 下划线         document.execCommand('underline');
+		const textStyle = document.querySelector('.text-style')
+		const btnArr = textStyle.querySelectorAll('button')
+		for(let i = 0; i<btnArr.length; i++){
+			btnArr[i].onclick = function(){
+				document.execCommand(this.getAttribute('data-name'), false, this.getAttribute('data-value'))
+			}
+		}
+
+		//编辑， 复制、剪切
+		// 复制        　　document.execCommand('copy');
+		// 剪切        　　document.execCommand('cut');
+		// 粘贴        　　document.execCommand('paste');(经测试无效)
+		// 全选        　　document.execCommand('selectAll');    
+		// 删除        　　document.execCommand('delete');
+		// 后删除         document.execCommand('forwarddelete');
+		// 清空格式    　　document.execCommand('removeFormat');
+		// 前进一步    　　document.execCommand('redo');
+		// 后退一步    　　document.execCommand('undo');
+		// 打印       　　 document.execCommand('print');(对firefox无效)
+		const editCopy = document.querySelector('.edit-copy')
+		const btnArr2 = editCopy.querySelectorAll('button')
+		const ww = document.querySelector('#wysiwyg4')
+		for(let i = 0; i<btnArr2.length; i++){
+			btnArr2[i].onclick = function(){
+				document.execCommand(this.getAttribute('data-name'))
+			}
+		}
+
+		//插入--标签， ul
+		// 插入标签    　　 document.execCommand('formatblock',false,elementName);
+		// 插入<hr>    　　document.execCommand('inserthorizontalrule');
+		// 插入<ol>    　　document.execCommand('insertorderedlist');
+		// 插入<ul>    　　document.execCommand('insertunorderedlist');
+		// 插入<p>        document.execCommand('insertparagraph');
+		// 插入图像   　　 document.execCommand('insertimage',false,URL);
+		// 增加链接   　　 document.execCommand('createlink',false,URL);
+		// 删除链接   　　 document.execCommand('unlink');
+		const insLink = document.querySelector('.insert-link')
+		const btnArr3 = insLink.querySelectorAll('button')
+		for(let i = 0; i<btnArr3.length; i++){
+			btnArr3[i].onclick = function(){
+				document.execCommand(this.getAttribute('data-name'), false, this.getAttribute('data-value'))
+			}
+		}
+
+	</script>
+</body>
+</html>

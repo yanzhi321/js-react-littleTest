@@ -99,6 +99,8 @@
         		
         	</ul>
         </div>
+
+
 		
 	</div>
 	
@@ -115,7 +117,7 @@
 	        JSONEditor.defaults.theme = 'foundation4';
 	        JSONEditor.defaults.iconlib = 'fontawesome4';	
 
-	       	let udpJson = {}
+	       	
 	       	let initJson = {
 	       		type: 'object',
 	        		title: 'Person',
@@ -217,6 +219,14 @@
 	        const url2 = 'http://116.62.169.175:8080/oneEnvJsonSchema/get'
 	        const url3 = 'http://116.62.169.175:8080/envJson/get'
 	        const url4 = 'http://116.62.169.175:8080/envJson/write'
+
+	        let output = document.querySelector('#output')
+
+	        output.innerText = JSON.stringify(editor.getValue(), null, 4)
+	        document.body.addEventListener('click', function(){
+	        	output.innerText = JSON.stringify(editor.getValue(), null, 4)
+	        })
+	       
 			// 通过fetch获取
 			fetch(url,{
 			    method: 'POST',
@@ -231,12 +241,14 @@
 			    // console.log(res) // 获取JSON数据
 			     console.log(res.data)
 
+
 			    fetchRender(res.data, listData)
 			    //btnArr
 			    let btnArr = document.querySelectorAll('#btn')
 			    //for in btnArr
 			    for(let i = 0; i<btnArr.length; i++){
 			    	btnArr[i].onclick = function(){
+
 			    		// console.log(this.innerText)
 			    		let that = this
 			    		// fetch url2
@@ -254,35 +266,34 @@
 			    		})
 			    		.then( (json) => {
 			    			console.log('parsed json', json)
-
-			    			udpJson = json
-			   				// console.log(udpJson)
+			    			
+			   				
 			   				container.innerHTML  = ''
-
-			   				let  output = document.querySelector('#output')
-		        			output.value = JSON.stringify(udpJson, null, 4)
-		        			// console.log(output.value)
-
 			   				editor  = new JSONEditor(container, {
-			   				 	schema: udpJson
+			   				 	schema: json
 			   				});
 
+			   				output.value = JSON.stringify(editor.getValue(), null, 4)
+			   				document.body.addEventListener('click', function(){
+					        	output.value = JSON.stringify(editor.getValue(), null, 4)
+					        })
 			   				
 			   				//setvalue
-			   				const setvalue = document.querySelector('#setvalue')
+			   				
 			   				setvalue.addEventListener('click', function(){
-			   					console.log(that.innerText)
-			   					let  dataVal = output.value
+			   					// console.log(that.innerText)
+			   					let  dataVal = editor.getValue()
 			   					console.log(dataVal)
-			   					fetch(url4, {
+			   					
+			   					 fetch(url4, {
 			   						method: 'POST',
 			   						headers: {
 			   							'Content-Type': 'application/json'
 			   						},
-			   						body: JSON.stringify({
+			   						body: {
 			   							name: that.innerText,
 			   							data: dataVal
-			   						})
+			   						}
 			   					})
 			   					.then( (res) => {
 			   						return res.json()

@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="keywords" content="HTML, CSS, XML" />
+	<!-- 描述 -->
+	<meta name="description" content="Free Web tutorials on HTML, CSS, JavaScript 不超过150个字符">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+	<!-- 以下代码告诉IE浏览器，IE8/9及以后的版本都会以最高版本IE来渲染页面。   -->
+    <!-- GCF(Google Chrome Frame谷歌内嵌浏览器框架GCF)，则使用GCF来渲染页面，如果没有安装，则使用最高版本的IE内核进行渲染 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>CSS-布局</title>
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="normalize/normalize.css">
+	<link rel="stylesheet" type="text/css" href="iconfont/iconfont.css">
+	<style>
+		body{
+			width: 100%;
+			height: 800px;
+			cursor: url('images/favicon.ico') 30 30, auto;
+
+		}
+		.container{
+			width: 100%;
+			height: 100%;
+			position: relative;
+		}
+		.btn{
+			width:100px;
+			height: 30px;
+		    padding:6px 16px;
+		    border:1px solid #446d88;
+		    background:#58a linear-gradient(#77aebb,#58a);
+		    border-radius:4px;
+		    box-shadow:0 1px 5px gray;
+		    color:white;
+		    text-shadow:0 -1px 1px #335166;
+		    font-size:20px;
+		    text-align: center;
+		  	line-height: 1.2
+		}
+
+		::placeholder{
+			color: purple;
+		}
+		.search-box{
+			width: 100%;
+			display: flex;
+		}
+		.search-input{
+			width: 150px;
+			height: 30px;
+			float: left;
+			flex: 1;
+
+		}
+		.search-btn{
+			width: 80px;
+			height: 36px;
+		}
+
+		/*清除浮动 -zoom:1(放大的倍数)*/
+		.clear:after{
+			content: '';
+			display: block;
+			clear: both;
+		}
+		.clear{
+			zoom: 1;
+		}
+
+		/*clip: rect();*/
+		@keyframes loop{
+		    0%{
+		        clip:rect(0,0px,100px,0);
+		    }
+		    100%{
+		        clip:rect(0,520px,100px,0);
+		    }
+		}
+		.show,.con{
+		    width: 520px;
+		    height: 100px;
+		    line-height: 100px;
+		    font-size: 30px;
+		    position:absolute;
+		    background-color: lightgreen;
+
+		}
+		.con{
+		    animation: loop 6s linear infinite;
+		    -webkit-background-clip: text;
+		    color: red;
+		}
+		
+		/*clip-文字图片背景*/
+		.clip-img{
+			position: absolute;
+			margin: auto;
+		    width: 500px;
+		    height: 300px;
+		    line-height: 300px;
+		    text-align: center;
+		    font-size: 180px;
+		    font-weight: bold;
+		    color: transparent;
+		    background: url("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1493353832&di=c063b6b9c89082e96ffee0766112ffec&imgtype=jpg&er=1&src=http%3A%2F%2Fpic2016.5442.com%3A82%2F2016%2F0111%2F07%2F3.jpg%21960.jpg") no-repeat center center;
+		    background-size: cover;
+		    -webkit-background-clip: text;
+		}
+	
+		.clip-imgsec{
+			position: absolute;
+			top: 300px;
+			margin: auto;
+			width: 500px;
+			height: 300px;
+			line-height: 300px;
+			text-align: center;
+			font-size: 150px;
+			font-weight: bold;
+			color: transparent;
+			background: url('images/xiguajun.png') no-repeat center center;
+			background-size: cover;
+			-webkit-background-clip: text;
+		}
+
+
+		/*垂直居中：*/
+		.table-cell{
+			position: absolute;
+			width: 300px;
+			height: 50px;
+			border: 1px solid #ccc;
+			top: 600px;
+			display: table-cell;
+  			vertical-align: middle;
+  			text-align: center;
+		}
+		/*/图片居中*/
+		.img-center{
+			width: 200px;
+			height: 50px;
+			position: absolute;
+			top: 700px;
+			background: #eee;
+			line-height: 50px;
+			text-align: center;
+		}
+		.img-center img{
+			vertical-align: middle
+		}
+
+		/*/scroll*/
+		.scroll{
+			width: 100px;
+			height: 100px;
+			position: absolute;
+			top: 800px;
+			background: #F5F5F5;
+			overflow-y: scroll;
+			margin-bottom: 25px;
+		}
+		
+		.scroll .inner{
+			min-height: 400px
+		}
+	</style>
+</head>
+<body>
+	
+	<div class="container">
+		<div class="btn">button</div>
+		<div class="search-box">
+			<input type="text" class="search-input" placeholder="empty">
+			<button type="button" class="search-btn">search</button>
+		</div>
+
+		<!-- clip: rect(tip, right, bottom, left) -->
+		<br>
+		<h3>clip歌词</h3>
+		<div class="clip-lyric">
+			<div class="show">我曾经跨过山和大海，也穿过人山人海</div>
+			<div class="con">我曾经跨过山和大海，也穿过人山人海</div>
+			<div class="clip-img">
+				snow
+			</div>
+			<div class="clip-imgsec">
+				chief
+			</div>
+		</div>	
+		
+		<h3>垂直居中</h3>
+		<div class="table-cell">
+			<!-- <p>table-cell && verticla-align</p> -->
+			<p><img src="images/www.jpg" width="20" height="20" alt=""></p>
+		</div>
+		<div class="img-center">
+			<img src="images/mm.jpg" width="30" height="30" alt="">
+		</div>
+		
+		<!-- h3滚动条	 -->
+		<h3>滚动条</h3>
+		<div class="scroll">
+			<div class="inner">inner</div>
+		</div>
+	</div>
+	
+</body>
+</html>
