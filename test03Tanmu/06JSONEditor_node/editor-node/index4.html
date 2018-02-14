@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!-- 以上代码告诉IE浏览器，IE8/9及以后的版本都会以最高版本IE来渲染页面。   -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>jsonEditor data</title>
+	<link rel="stylesheet" type="text/css" href="normalize/normalize.css">
+	<link rel="stylesheet" type="text/css" href="foundation-5.0.2/foundation.min.css">
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+
+    <style>
+    	
+		body{
+			width: 100%;
+			height: 100%;
+			padding: 20px 20%;
+			box-sizing: border-box;
+		}
+    	.container-wrap{
+    		width: 100%;
+    		height: 100%;
+    		margin: 0 auto;
+    	}	
+    	.container-box{
+    		width: 40rem;
+    		margin-right: 30px;
+    	}
+		.con-output{
+			width: 18.75rem;
+
+		}
+    	.container-wrap > div{
+    		float: left;
+    	}
+
+
+    </style>
+</head>
+<body>
+	<div class="container-wrap">
+		<div class="container-box">
+			<h1>Editor</h1>
+			<p>Below is the editor generated from the JSON Schema.</p>
+			<div class="container">
+				
+			</div>
+		</div>
+
+		<div class="con-output">
+			<h2>JSON Output</h2>
+            <p>You can also make changes to the JSON here and set the value in the editor by clicking 
+            	<button class='btn btn-primary' id='setvalue'>Update Form</button>
+            </p>
+            <textarea id='output' style='width: 100%; height: 300px; font-family: monospace;' class='form-control'></textarea>
+
+            <h2>Options</h2>
+            <div id='options_holder'>
+                <div>
+                    <label>CSS Framework</label>
+                    <select id='theme_switcher' class='form-control'>
+                        <option value='foundation4'>Foundation 4</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Icon Library</label>
+                    <select id='icon_switcher' class='form-control'>
+                        <option value='fontawesome4'>FontAwesome 4</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Object Layout</label>
+                    <select id='object_layout' class='form-control'>
+                        <option value='normal'>normal</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Show Errors</label>
+                    <select id='show_errors' class='form-control'>
+                        <option value='interaction'>On Interaction</option>
+                    </select>
+                </div>
+                <div>
+                    <label>Boolean options</label>
+                    <select multiple size=9 id='boolean_options' style='width: 100%;' class='form-control'>
+                        <option value='required_by_default'>Object properties required by default</option>
+                    </select>
+                </div>
+            </div>
+
+            <h2>Validation</h2>
+            <p>This will update whenever the form changes to show validation errors if there are any.</p>
+            <textarea id='validate' style='width: 100%; height: 100px; font-family: monospace;' readonly disabled class='form-control'></textarea>
+        </div>
+
+        <div class="resData">
+        	<ul class="listData">
+        		
+        	</ul>
+        </div>
+
+
+		
+	</div>
+	
+	<script src="jsoneditor/jsoneditor.min.js"></script>
+	<script>
+		window.onload = function(){
+
+			// https://github.com/jdorn/json-editor
+			// http://jeremydorn.com/json-editor/
+			
+
+			// Set the default CSS theme and icon library globally
+			// 设置默认的主题和默认图标库
+	        JSONEditor.defaults.theme = 'foundation4';
+	        JSONEditor.defaults.iconlib = 'fontawesome4';	
+
+	       	
+	       	let initJson = {
+	       		type: 'object',
+	        		title: 'Person',
+	        		properties: {
+	        			name: {
+	        				type: 'string',
+	        				title: 'name',
+	        				default: 'Jeremy Dorn',
+	        				description: 'First and Last name'
+	        			},
+
+	        			age: {
+	        				type: 'integer',
+	        				title: 'age',
+	        				default: 25
+	        			},
+
+	        			favorite_color: {
+	        				type: 'string',
+	        				title: 'favorite color',
+	        				format: 'color'
+	        			},
+
+	        			gender: {
+	        				type: 'string',
+	        				title: 'gender',
+	        				enum: ['male', 'female'],
+	        				default: 'male'
+	        			},
+
+		                location: {
+		                	type: 'object',
+		                	title: 'Location',
+		                	properties: {
+		                		city: {
+		                			type: 'string',
+		                			title: 'city',
+		                			default: 'San Francisco'
+		                		},
+		                		state: {
+		                			type: 'string',
+		                			title: 'state',
+		                			default: 'CA'
+		                		},
+		                		citystate: {
+		                			type: 'string',
+		                			description: 'This is generated automatically from the previous two fields',
+		                			template: "{{city}}, {{state}}",
+		                			watch: {
+		                				city: 'location.city',
+		                				state: 'location.state'
+		                			}
+		                		}
+		                	}
+		                },
+
+		                pets: {
+		                	type: 'array',
+		                	title: 'Pets',
+		                	format: 'table',
+		                	items: {
+		                		type: 'object',
+		                		title: 'Pet',
+		                		properties: {
+		                			type: {
+		                				type: 'string',
+		                				title: 'type',
+		                				enum: ['cat', 'dog', 'bird', 'reptile', 'other' ],
+		                			},
+
+		                			name: {
+		                				type: 'string',
+		                				title: 'name'
+		                			}
+		                		}
+		                	},
+		                	default: [
+		                		{
+		                			type: 'dog',
+		                			name: 'Walter'
+		                		}
+		                	]
+		                }
+
+	        		}
+	       	}
+
+	        let  container = document.querySelector('.container')
+	        let editor = new JSONEditor(container, {
+	        	schema: initJson
+	        })
+
+
+	        //listData
+	        const listData = document.querySelector('.listData')
+
+	        //fetch url
+	        const url = 'http://116.62.169.175:8080/envJsonFileName/get'
+	        const url2 = 'http://116.62.169.175:8080/oneEnvJsonSchema/get'
+	        const url3 = 'http://116.62.169.175:8080/envJson/get'
+	        const url4 = 'http://116.62.169.175:8080/envJson/write'
+
+	        let output = document.querySelector('#output')
+
+	        output.innerText = JSON.stringify(editor.getValue(), null, 4)
+	        document.body.addEventListener('click', function(){
+	        	output.innerText = JSON.stringify(editor.getValue(), null, 4)
+	        })
+	       
+			// 通过fetch获取
+			fetch(url,{
+			    method: 'POST',
+			    headers: new Headers({
+			      'Accept': 'application/json' // 通过头指定，获取的数据类型是JSON
+			    })
+			})
+			.then( (res) => {
+			    return res.json() // 返回一个Promise，可以解析成JSON
+			})
+			.then( (res) => {
+			    // console.log(res) // 获取JSON数据
+			     console.log(res.data)
+
+
+			    fetchRender(res.data, listData)
+			    //btnArr
+			    let btnArr = document.querySelectorAll('#btn')
+			    //for in btnArr
+			    for(let i = 0; i<btnArr.length; i++){
+			    	btnArr[i].onclick = function(){
+
+			    		// console.log(this.innerText)
+			    		let that = this
+			    		// fetch url2
+			    		fetch(url2, {
+			    			method: 'POST',
+				   			headers: {
+				   				'Content-Type': 'application/json'
+				   			},
+				   			body: JSON.stringify({
+				   				name: this.innerText
+				   			})
+			    		})
+			    		.then( (response) => {
+			    			return response.json()
+			    		})
+			    		.then( (json) => {
+			    			console.log('parsed json', json)
+			    			
+			   				
+			   				container.innerHTML  = ''
+			   				editor  = new JSONEditor(container, {
+			   				 	schema: json
+			   				});
+
+			   				output.value = JSON.stringify(editor.getValue(), null, 4)
+			   				document.body.addEventListener('click', function(){
+					        	output.value = JSON.stringify(editor.getValue(), null, 4)
+					        })
+			   				
+			   				//setvalue
+			   				
+			   				setvalue.addEventListener('click', function(){
+			   					// console.log(that.innerText)
+			   					let  dataVal = editor.getValue()
+			   					console.log(dataVal)
+			   					
+			   					 fetch(url4, {
+			   						method: 'POST',
+			   						headers: {
+			   							'Content-Type': 'application/json'
+			   						},
+			   						body: {
+			   							name: that.innerText,
+			   							data: dataVal
+			   						}
+			   					})
+			   					.then( (res) => {
+			   						return res.json()
+			   					})
+			   					.then( (json) => {
+			   						console.log('dataVal', json)
+			   					})
+			   					.catch( (err) => {
+			   						console.log('err', err)
+			   					})
+			   				})
+
+			    		})
+			    		.catch( (err) => {
+			    			console.log('errors', err)
+			    		})
+			    	}
+			    }
+
+		    })
+		    .catch( (e) => {
+				console.log("message", e)
+			})
+
+
+		    //validate
+	        editor.on('change', function(){
+	        	const validate = document.querySelector('#validate')
+	        	const errors = editor.validate()
+	        	if(errors.length){
+	        		validate.value = 'Not valid'
+	        		validate.style.color = 'red'
+	        	}else {
+	        		validate.value = 'valid'
+	        	}
+	        })
+
+
+	        //fetch listData
+	        function fetchRender(data, ele){
+	        	let str = ''
+	        	for(let i = 0; i<data.length; i++){
+			    	str += `<li><button type="submit" class="btn-primary" id="btn">${data[i]}</button></li>`
+	        	}
+	        	ele.innerHTML = str
+	        }
+
+		}
+	</script>
+</body>
+</html>
