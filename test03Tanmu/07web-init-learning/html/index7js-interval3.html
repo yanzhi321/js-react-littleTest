@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="keywords" content="HTML, CSS, XML" />
+	<!-- 描述 -->
+	<meta name="description" content="Free Web tutorials on HTML, CSS, JavaScript 不超过150个字符">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+	<!-- 以下代码告诉IE浏览器，IE8/9及以后的版本都会以最高版本IE来渲染页面。   -->
+    <!-- GCF(Google Chrome Frame谷歌内嵌浏览器框架GCF)，则使用GCF来渲染页面，如果没有安装，则使用最高版本的IE内核进行渲染 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>js-interval3</title>
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="normalize/normalize.css">
+	<link rel="stylesheet" type="text/css" href="iconfont/iconfont.css">
+	<style>
+		body{
+           margin: 0;
+        }
+        input{
+           border: none;
+           padding: 0;
+        }
+		.box{
+		    width: 354px;
+		    margin: 30px auto 0;    
+		}
+		.DateBox{
+		    height: 300px;
+		    border: 2px solid black;
+		}    
+		.week{
+		    overflow: hidden;
+		    border-bottom: 1px solid black;
+		    line-height: 49px;
+		}
+		.week-in{
+		    height: 49px;
+		    float: left;
+		    width: 50px;
+		    text-align: center;
+		}
+		.dayBox{
+		    overflow: hidden;
+		}
+		.day{
+		    float: left;
+		    height: 50px;
+		    width: 50px;
+		    font:20px/50px '微软雅黑';
+		    text-align: center;
+		}
+		.control{
+		    overflow: hidden;
+		}
+		.con-in{
+		    height: 50px;
+		    float: left;
+		    width: 100px;
+		    text-align: center;
+		    font: 20px/50px "微软雅黑";
+		}
+	</style>
+</head>
+<body>
+	<div id="myDiv"></div>
+	<div id="con">
+	    <label for="hour"><input type="number" id="hour" min="0" max="23" step="1" value="0" />时</label>
+	    <label for="minute"><input type="number" id="minute" min="0" max="59" step="1" value="0" />分</label>
+	    <label for="second"><input type="number" id="second" min="0" max="23" step="1" value="0" />秒</label>
+	    <button id="btn">确定</button>
+	    <button id="reset">重置</button>
+	</div>
+	<div id="show"></div>
+
+	<div class="box">
+	    <header class='control'>
+	        <input id="conYear" class="con-in" type="number" min="1900" max="2100" step="1"/>
+	        <input id="conMonth" class="con-in" type="number" min="1" max="12" step="1"/>
+	    </header>
+	    <div class="DateBox">
+	        <header class='week'>
+	            <div class="week-in">周日</div>
+	            <div class="week-in">周一</div>
+	            <div class="week-in">周二</div>
+	            <div class="week-in">周三</div>
+	            <div class="week-in">周四</div>
+	            <div class="week-in">周五</div>
+	            <div class="week-in">周六</div>
+	        </header>
+	        <section class="dayBox" id='dayBox'>
+	            <div class="day" id="day1">1</div>
+	            <div class="day">2</div>
+	            <div class="day">3</div>
+	            <div class="day">4</div>
+	            <div class="day">5</div>
+	            <div class="day">6</div>
+	            <div class="day">7</div>
+	            <div class="day">8</div>
+	            <div class="day">9</div>
+	            <div class="day">10</div>
+	            <div class="day">11</div>
+	            <div class="day">12</div>
+	            <div class="day">13</div>
+	            <div class="day">14</div>
+	            <div class="day">15</div>
+	            <div class="day">16</div>
+	            <div class="day">17</div>
+	            <div class="day">18</div>
+	            <div class="day">19</div>
+	            <div class="day">20</div>
+	            <div class="day">21</div>
+	            <div class="day">22</div>
+	            <div class="day">23</div>
+	            <div class="day">24</div>
+	            <div class="day">25</div>
+	            <div class="day">26</div>
+	            <div class="day">27</div>
+	            <div class="day">28</div>
+	            <div class="day">29</div>
+	            <div class="day" id="day30">30</div>
+	            <div class="day" id="day31">31</div>
+	        </section>
+	    </div>    
+	</div>
+
+	<script>
+		var timer;
+        //所剩时间
+        var dis;
+        myDiv.innerHTML = /\d\d:\d\d:\d\d/.exec(new Date().toString())[0];
+        setInterval(function(){
+            myDiv.innerHTML = /\d\d:\d\d:\d\d/.exec(new Date().toString())[0];    
+        },100);
+        reset.onclick = function(){
+            history.go();
+        }
+		btn.onclick = function(){
+		    //原始储存值
+		    var setOri = hour.value*3600 + minute.value*60 + second.value*1;
+		    //原始值转换为1970年的毫秒数
+		    var setMs = +new Date(new Date().toDateString()) + setOri*1000;
+		    //如果设置的时间早于当前时间，则设置无效
+		    if(setMs < +new Date()){
+		        return;
+		    }
+		    for(var i = 0; i < 3; i++){
+		        con.getElementsByTagName('input')[i].setAttribute('disabled','disabled');
+		    }
+		    cancelAnimationFrame(timer);
+		    timer = requestAnimationFrame(function fn(){
+		        //算出设置时间与当前时间的差值
+		        dis = Math.ceil((setMs - (new Date()).getTime())/1000);
+		        var showHour = Math.floor((dis%86400)/3600);
+		        var showMinute = Math.floor((dis%3600)/60);
+		        var showSecond = Math.floor(dis%60);
+		        timer = requestAnimationFrame(fn);
+		        show.innerHTML = '距离预定时间还有 ' + showHour + '小时 ' + showMinute + '分 ' + showSecond + '秒';
+		        //当差值为0时，时间到
+		        if(dis==0){
+		            cancelAnimationFrame(timer);
+		            btn.innerHTML = '时间到了';
+		            for(var i = 0; i < 3; i++){
+		                con.getElementsByTagName('input')[i].removeAttribute('disabled');
+		            }
+		            timer = setTimeout(function(){
+		                btn.innerHTML = '确定';
+		            },1000)            
+		        }
+		    });
+		}
+
+		// http://www.cnblogs.com/xiaohuochai/p/5662213.html
+		//日历calendar
+		//准备:获取当前样式
+		function getCSS(obj,style){
+		    if(window.getComputedStyle){
+		        return getComputedStyle(obj)[style];
+		    }
+		    return obj.currentStyle[style];
+		}
+		//实现一：获取当月的天数，及当月第一天、第30日、第31日是星期几
+		function get_data(year,month){
+		    var result = {};
+		    var d = new Date();
+		    //如果是2月
+		    if(month == 2){
+		        //如果是闰年
+		        if((year % 4 === 0 && year % 100 !== 0)  || year % 400 === 0){
+		            result.days = 29;
+		        //如果是平年
+		        }else{
+		            result.days = 28;
+		        }
+		    //如果是第4、6、9、11月
+		    }else if(month == 4 || month == 6 ||month == 9 ||month == 11){
+		        result.days = 30;
+		    }else{
+		        result.days = 31;
+		        //当月第31天是星期几
+		        result.day31week = d.getDay(d.setFullYear(year,month-1,31));
+		    }
+		    //当月第一天是星期几
+		    result.day1week = d.getDay(d.setFullYear(year,month-1,1));
+		    if(month != 2){
+		        //当月第30天是星期几
+		        result.day30week = d.getDay(d.setFullYear(year,month-1,30));        
+		    }
+		    return result;
+		}
+
+		//实现三：根据当月的天数，来隐藏多余的天数。当然首先要先显示在其他月份被隐藏的天数
+		function hide_days(year,month){
+		    //恢复其他月份可能隐藏的天数
+		    for(var i = 28; i<31; i++){
+		        dayBox.children[i].style.display = 'block';
+		    }    
+		    //隐藏当月多余的天数
+		    var days = get_data(year,month).days;
+		    for(var i = days;i<31;i++){
+		        dayBox.children[i].style.display = 'none';
+		    }
+		};
+
+		//实现四：如果当月30日或31日是星期日，则会新占一行，通过设置margin-top把新占一行的天移动到第一行
+		function move_day30(year,month){
+		    //如果当月30日是星期日
+		    if(get_data(year,month).day30week === 0){
+		        day30.style.marginTop = parseInt(getCSS(day30,'height')) *(-5) + 'px';
+		        day31.style.marginTop = parseInt(getCSS(day31,'height')) *(-5) + 'px';
+		        day31.style.marginLeft= getCSS(day31,'width');
+		        return;
+		    }else{
+		        day30.style.marginTop = day31.style.marginTop = day31.style.marginLeft ='0';
+		    }
+		    //如果当月31日是星期日
+		    if(get_data(year,month).day31week === 0){
+		        day31.style.marginTop = parseInt(getCSS(day31,'height')) *(-5) + 'px';
+		    }else{
+		        day31.style.marginTop = '0';
+		    }
+		}
+
+		//实现五：当载入页面时，获取当前年和月，显示当月日历；当改变年或月时，获取改变后的年和月，更新当月日历
+		var year= conYear.value=new Date().getFullYear();
+		var month= conMonth.value = new Date().getMonth() + 1;
+		move_day1(year,month);
+		hide_days(year,month);
+		move_day30(year,month);
+
+		conYear.onchange = conMonth.onchange = function(){
+		    var year = conYear.value;
+		    var month = conMonth.value;
+		    if(year<1900 || year >2100 ){
+		        year = conYear.value=new Date().getFullYear();
+		    }
+		    if(month<1 || month > 12){
+		        month = conMonth.value=new Date().getMonth() + 1;
+		    }
+		    move_day1(year,month);
+		    hide_days(year,month);
+		    move_day30(year,month);
+		}
+	</script>
+</body>
+</html>

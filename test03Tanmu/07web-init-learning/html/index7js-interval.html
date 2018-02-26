@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="keywords" content="HTML, CSS, XML" />
+	<!-- 描述 -->
+	<meta name="description" content="Free Web tutorials on HTML, CSS, JavaScript 不超过150个字符">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+	<!-- 以下代码告诉IE浏览器，IE8/9及以后的版本都会以最高版本IE来渲染页面。   -->
+    <!-- GCF(Google Chrome Frame谷歌内嵌浏览器框架GCF)，则使用GCF来渲染页面，如果没有安装，则使用最高版本的IE内核进行渲染 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>js-interval</title>
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="normalize/normalize.css">
+	<link rel="stylesheet" type="text/css" href="iconfont/iconfont.css">
+</head>
+<body>
+	<div class="container">
+		<div id="myDiv"></div>
+	</div>
+
+	<div id="myDiv2">
+	    <label for="set"><input type="number" id="set" step="1" value="0">秒</label>
+	    <button id="btn">确定</button>
+	    <button id="reset">重置</button>    
+	</div>
+
+	<script>
+		//\d-[0-9]
+		console.log(new Date().toString())
+		myDiv.innerHTML = /\d\d:\d\d:\d\d/.exec(new Date().toString())[0];
+		setInterval(function(){
+		    myDiv.innerHTML = /\d\d:\d\d:\d\d/.exec(new Date().toString())[0];    
+		},500);
+
+		
+		var timer;
+		reset.onclick = function(){
+		    history.go();
+		}
+		btn.onclick = function(){
+		    if(timer) return;
+		    set.setAttribute('disabled','disabled');
+		    timer = setInterval(function(){
+		        if(Number(set.value) === 0){
+		            clearInterval(timer);
+		            timer = 0;
+		            set.removeAttribute('disabled');
+		            return;
+		        }
+		        set.value = Number(set.value) - 1;
+		    },1000);
+		}    
+
+	</script>
+</body>
+</html>

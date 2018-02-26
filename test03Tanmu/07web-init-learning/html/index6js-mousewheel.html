@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="keywords" content="HTML, CSS, XML" />
+	<!-- 描述 -->
+	<meta name="description" content="Free Web tutorials on HTML, CSS, JavaScript 不超过150个字符">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+	<!-- 以下代码告诉IE浏览器，IE8/9及以后的版本都会以最高版本IE来渲染页面。   -->
+    <!-- GCF(Google Chrome Frame谷歌内嵌浏览器框架GCF)，则使用GCF来渲染页面，如果没有安装，则使用最高版本的IE内核进行渲染 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<title>js-mousewheel</title>
+	<link rel="shortcut icon" href="images/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="normalize/normalize.css">
+	<link rel="stylesheet" type="text/css" href="iconfont/iconfont.css">
+</head>
+<body style="height: 2000px">
+	<div class="container"></div>
+	<div id="box" style="height:100px;width:200px;background:pink;"></div>
+	<div class="box-sec" style="width: 100px; height: 100px; background: purple;  margin: 0 auto">Google</div>
+	<div class="box-fire" style="width: 100px; height: 100px; background: purple;  margin: 200px auto">firefox</div>
+	
+	<p style="position: fixed">滚动滚轮将显示滚动值</p>
+	<div id="test" style="position: fixed"></div>
+
+	<script>
+		box.onmousewheel=function(e){
+		    e = e || event;
+		    box.innerHTML = e.wheelDelta;
+		    if(e.wheelDelta >0){
+		        box.style.backgroundColor = 'lightblue';
+		    }else{
+		        box.style.backgroundColor = 'lightgreen';
+		    }
+		}
+
+
+		//google
+		let w = 100, h = 100;
+		const boxSec = document.querySelector('.box-sec')
+		boxSec.onmousewheel = function(evt){
+			let e = evt || window.event
+			boxSec.innerHTML = e.wheelDelta
+
+			if(e.wheelDelta > 0){
+				boxSec.style.width = ++w + 'px'
+				boxSec.style.height = ++h + 'px'
+
+			}else{
+				if(w == 30 || h == 30){
+					return false;
+				}
+				boxSec.style.width = --w + 'px'
+				boxSec.style.height = --h + 'px'
+			}
+		}
+
+		//firefox--firefox浏览器不支持mousewheel事件，它支持DOMMouseScroll事件
+		const boxFire = document.querySelector('.box-fire')
+
+		boxFire.addEventListener('DOMMouseScroll', function(evt){
+			let e = evt || window.event
+			boxFire.innerHTML = e.detail;
+			if(e.detail > 0){
+				boxFire.style.width = ++w + 'px'
+				boxFire.style.height = ++h + 'px'
+			}else{
+				if(w == 30 || h == 30){
+					return false;
+				}
+				boxFire.style.width = --w + 'px'
+				boxFire.style.height = --h + 'px' 
+			}
+		})
+
+		//兼容
+		var wheel = function(e){
+		    e = e || event;
+		    if(e.wheelDelta){
+		        test.innerHTML = e.wheelDelta;
+		    }else{
+		        test.innerHTML = -e.detail * 40;
+		    }
+		}
+		document.body.onmousewheel = wheel;
+		document.body.addEventListener('DOMMouseScroll',wheel,false); 
+
+
+		
+
+		
+
+	</script>
+</body>
+</html>
