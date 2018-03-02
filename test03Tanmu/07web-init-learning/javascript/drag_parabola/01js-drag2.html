@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 以上代码告诉IE浏览器，IE8/9及以后的版本都会以最高版本IE来渲染页面 -->
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>drag</title>
+    <link rel="shortcut icon " type="images/x-icon" href="images/mm.jpg">
+    
+    <style>
+        .img-box{
+            width: 100px;
+            height: 100px;
+            background: url(images/www.jpg) no-repeat center;
+            background-size: 100% 100%;
+            border-radius: 50%;
+            box-shadow: 0 0 10px purple;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="img-box">
+            
+        </div>
+    </div>
+
+    <script>
+        window.onload = function(){
+
+            const imgBox = document.querySelector('.img-box')
+            let timer = 0
+            imgBox.onmousedown  = function(evt){
+                if(timer > 0){
+                    window.clearInterval(timer)
+                    timer = 0
+                }
+                
+                let e = evt || window.event
+                let disX = e.clientX - imgBox.offsetLeft
+                let disY = e.clientY - imgBox.offsetTop
+
+                document.onmousemove = function(evt){
+                    
+                    let e = evt || window.event
+                    let left = e.clientX - disX
+                    let top = e.clientY - disY
+                    
+                    let leftMax = document.documentElement.clientWidth - imgBox.clientWidth
+                    let topMax = document.documentElement.clientHeight - imgBox.clientHeight
+                    if(left <= 0){
+                        left = 0
+                    }else if(left >= leftMax){
+                        left = leftMax
+                    }
+
+                    if(top <= 0){
+                        top = 0
+                    }else if(top >= topMax){
+                        top = topMax
+                    }
+
+                    imgBox.style.left = left + 'px'
+                    imgBox.style.top = top + 'px'
+                }
+
+                document.onmouseup = function(evt){
+                    document.onmousemove = null
+                    if(timer > 0){
+                        clearInterval(timer)
+                        timer = 0
+                    }
+                    // console.log(timer)
+
+                    let e = evt || widnow.event
+                    let left2 = e.clientX - disX
+                    let top2 = e.clientY - disY
+
+                    let windowWidth = document.documentElement.clientWidth 
+                    let windowHeight = document.documentElement.clientHeight
+                    let leftMax2 = windowWidth - imgBox.clientWidth
+                    let topMax2 = windowHeight - imgBox.clientHeight
+
+                    if(left2 <= 0){
+                        left2 = 0
+                    }else if(left2 >= leftMax2){
+                        left2 = leftMax2
+                    }
+
+                    if(top2 <= 0){
+                        top2 = 0
+                    }else if(top2 >= topMax2){
+                        top2 = topMax2
+                    }
+                    
+                    //初速度
+                    let xSpeed = 10
+                    let ySpeed = -20
+                    //加速度
+                    let xAddSpeed = -0.05
+                    let yAddSpeed = 2
+
+                    imgBox.style.left = left2 + 'px'
+                    imgBox.style.top = top2 + 'px'
+                    timer =  setInterval(function(){
+                       
+
+                        if(imgBox.offsetTop >= windowHeight - imgBox.clientHeight){
+                            imgBox.style.top = windowHeight - imgBox.clientHeight + 'px'
+                            
+                            return false;
+                        }
+
+                        imgBox.style.top = ++top2 + 'px'
+                    },30)
+                }
+            }
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>tanqiu3</title>
+    <style>
+        .box{
+            width: 100px;
+            height: 100px;
+            background: url(images/xxx.png) no-repeat ;
+            background-size: 100% 100%;
+            border-radius: 50%;
+            box-shadow: 0 0 10px purple;
+            position: absolute;
+            top: -120px; 
+            left: 10px;
+            cursor: move;
+            opacity: 0.1;
+            transform: rotate(0deg);
+            transform-origin: 50% 50%;
+        }
+        .box2{
+            width: 100px;
+            height: 100px;
+            background: url(images/xxx.png) no-repeat ;
+            background-size: 100% 100%;
+            border-radius: 60%;
+            box-shadow: 0 0 10px purple;
+            position: absolute;
+            left: 0;
+            top:0;
+            transform: rotateY(0deg)
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+
+        </div>
+        <div class="box2">
+            
+        </div>
+    </div>
+
+    <script>
+        
+        const box = document.querySelector('.box')
+        const box2 = document.querySelector('.box2')
+        let windowWidth = document.documentElement.clientWidth || document.body.clientWidth
+        let windowHeight = document.documentElement.clientHeight || document.body.clientHeight
+        //初速度
+        let xSpeed = 10
+        let ySpeed = 0
+        //加速度
+        let xAddSpeed = -0.05
+        let yAddSpeed = 2
+        
+        let timer2 = 0, timer = 0
+        let count = 0
+        function interFun(){
+            ++count;
+            xSpeed += xAddSpeed
+            ySpeed += yAddSpeed
+            
+
+            box.style.top = box.offsetTop + ySpeed + 'px'
+            if(count >= 360){
+                count = 0
+            }
+            box2.style.transform = `rotate(${count}deg)`
+            box.style.transform = `rotateY(${count}deg)`
+            //luodi
+            if(box.offsetTop >= windowHeight - box.offsetHeight){
+                // count = 0
+                box.style.top = windowHeight - box.offsetHeight + 'px'
+                ySpeed *= -0.8
+
+                box.style.opacity = 1
+                box.style.transform = `rotateY(${count}deg)`
+                return false;
+            }
+        }
+        
+        timer2 = setInterval("interFun()", 30)
+        
+
+        //drag
+        box.onmousedown = function(evt){
+            
+            
+            clearInterval(timer2)
+            let e = evt || event
+            let disX = e.clientX - box.offsetLeft
+            let disY = e.clientY - box.offsetTop
+
+            console.log(timer2)
+            
+
+            document.onmousemove = function(evt){
+                clearInterval(timer)
+                let e = evt || event
+                
+                let left = e.clientX  - disX
+                let top = e.clientY - disY
+                let leftMax = windowWidth - box.clientWidth
+                let topMax = windowHeight - box.clientHeight
+
+                if(left <= 0){
+                    left  = 0
+                }else if(left >= leftMax){
+                    left = leftMax
+                }
+
+                if(top <= 0){
+                    top = 0
+                }else if(top >= topMax){
+                    top = topMax
+                }
+                
+
+                box.style.left = left + 'px'
+                box.style.top = top + 'px'
+            }
+            
+            document.onmouseup = function(evt){
+                document.onmousemove = null
+
+                    //deg
+                    let deg = 0
+
+                    if(timer > 0){
+                        clearInterval(timer)
+                        timer = 0
+                    }
+
+                    let e = evt || widnow.event
+                    let left2 = e.clientX - disX
+                    let top2 = e.clientY - disY
+
+                    // let windowWidth = document.documentElement.clientWidth 
+                    // let windowHeight = document.documentElement.clientHeight
+                    let leftMax2 = windowWidth - box.clientWidth
+                    let topMax2 = windowHeight - box.clientHeight
+
+                    if(left2 <= 0){
+                        left2 = 0
+                    }else if(left2 >= leftMax2){
+                        left2 = leftMax2
+                    }
+
+                    if(top2 <= 0){
+                        top2 = 0
+                    }else if(top2 >= topMax2){
+                        top2 = topMax2
+                    }
+                    
+                    //初速度
+                    let xSpeed = 10
+                    let ySpeed = 0
+                    //加速度
+                    let xAddSpeed = -0.05
+                    let yAddSpeed = 2
+                    
+                    
+                    box.style.left = left2 + 'px'
+                    box.style.top = top2 + 'px'
+                    timer =  setInterval(function(){
+                        ++deg
+                        // xSpeed += xAddSpeed
+                        ySpeed += yAddSpeed
+
+                        // rotate.style.transform = 'rotate('+ audio.currentTime/audio.duration*360 + 'deg)';
+
+                        // box.style.left = box.offsetLeft + xSpeed + 'px'
+                        box.style.top = box.offsetTop + ySpeed + 'px'
+
+                        if(deg >= 360){
+                            deg = 0
+                        }
+                        box.style.transform = `rotate(${deg}deg)`
+
+                        if(box.offsetTop >= windowHeight - box.offsetHeight){
+                            deg = 0
+                            box.style.top = windowHeight - box.offsetHeight + 'px'
+                            ySpeed *= -0.8
+                            
+                            box.style.transform = `rotate(${deg}deg)`
+                            return false;
+                        }
+                        
+                    },30)
+            }
+        }
+
+
+    </script>
+</body>
+</html>

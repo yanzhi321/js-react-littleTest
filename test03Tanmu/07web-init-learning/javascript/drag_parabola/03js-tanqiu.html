@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale = 1, shrink-to-fit = no">
+	<title>tanqiu</title>
+	<style>
+		
+          *{
+          	margin: 0;
+          	padding: 0;
+          }
+          ul{
+          	list-style: none;
+          }
+          a{
+          	text-decoration: none
+          }
+
+          html{
+          	font-size: 50px;
+          	height: 100%;
+          	overflow-x: hidden;
+          }
+          body{
+          	font-size: .28em;
+          	line-height: 1;
+          	height: 100%;
+          }
+
+          .ball{
+          	width: 1rem;
+          	height: 1rem;
+          	border-radius: 50%;
+          	background: purple;
+          	position: absolute;
+          	top: 0;
+          	left: 0;
+
+          }
+
+	</style>
+</head>
+<body>
+	<div class="ball"></div>
+
+	<script>
+		
+         onload = function(){
+         	//document && body --node
+         	let doc = document.documentElement;
+         	let body = document.body;
+
+         	//console.log(doc)
+         	//console.log(body)
+
+         	//ball-
+            let oBall = document.querySelector('.ball')
+            console.log(oBall.clientWidth)//200px
+            //console.log(oBall.offsetWidth)//200
+
+            let leftNum = 5;//小球每次向右运动的值
+            let topNum = 5;//向下
+            //let leftNum = Math.ceil(Math.random()*1000);
+            //let topNum = Math.ceil(Math.random()*50);
+
+
+            let leftMax = document.documentElement.clientWidth - oBall.clientWidth; ////浏览器窗口宽度减去小球的宽度等于小球能运动到的最大左边位置，下一行代码同理。
+            //console.log(leftMax)
+            let topMax = document.documentElement.clientHeight - oBall.clientHeight;
+            //console.log(topMax)
+
+            //window.onresize
+            window.onresize = function(){
+            	//当浏览器窗口发生变化时，实时获取浏览器窗口的宽高
+            	leftMax = document.documentElement.clientWidth - oBall.clientWidth;
+            	topMax = document.documentElement.clientHeight - oBall.clientHeight
+
+            }
+
+            console.log(oBall.offsetLeft)//0
+            //setInterval
+           	const interFun = () =>{
+            	// //小球每次运动完之后，距离浏览器左边边框的距离：上一次距离边框的距离加上这次运动的距离，下一行代码同理
+            	let left = oBall.offsetLeft + leftNum,
+            		top = oBall.offsetTop + topNum;
+            	
+            	//判断边界
+            	//判断当小球向左移动的位置大于之前限定的最大距离或者小于0时，也就是超出浏览器窗口的左右边框时，
+            	//使他运动的方向取反leftNum = -leftNum，下面Top的判断同理。
+            	//randomRgba(oBall)
+            	if(left >= leftMax){
+            		left = leftMax;
+            		leftNum = -leftNum;
+            		randomColor(oBall)
+
+            	}else if(left <= 0){
+            		left = 0;
+            		leftNum = -leftNum;
+            		randomColor(oBall)
+            	}
+
+            	if(top >= topMax){
+            		top = topMax;
+            		topNum = -topNum
+            		randomColor(oBall)
+
+
+            	}else if(top <= 0) {
+            		top = 0;
+            		topNum = -topNum;
+            		randomColor(oBall)
+
+            	}
+
+            	//left && top
+            	oBall.style.left = left + 'px'
+            	oBall.style.top = top + 'px'
+
+
+            }
+
+            //timer定时器
+            let timer = setInterval(interFun, 10)
+
+            //randomRgba
+            const randomRgba = (ele) => {
+            	let r = Math.ceil(Math.random()*225),
+            		g = Math.ceil(Math.random()*225),
+            		b = Math.ceil(Math.random()*225),
+            		a = Math.random();
+            	ele.style.background = `rgba(${r},${g}, ${b}, ${a})`
+            }
+
+            //randomColor
+            const randomColor = (ele) => {
+
+            	let arr = [0,1,2,3,4,5,6,7,8,9,'a', 'b', 'c', 'd', 'e', 'f']
+            	let  str = ''
+            	for(let i = 0; i<6; i++){
+            		let n = Math.ceil(Math.random()*15)
+            		str += arr[n]
+            	}
+            	return ele.style.background = '#'+str
+            }
+            
+         }
+		 
+
+		 //373627
+	</script>
+
+</body>
+</html>

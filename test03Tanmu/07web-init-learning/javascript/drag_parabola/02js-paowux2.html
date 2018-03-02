@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>paowuxian</title>
+    <style>
+        .box{
+            width: 50px;
+            height: 50px;
+            background: lightcoral;
+            border-radius: 50%;
+            position: absolute;
+        }
+        .list li{
+            width: 50px;
+            height: 50px;
+            background: rgb(128, 195, 240);
+            border-radius: 50%;
+            position: absolute;
+            list-style: none;
+            text-align: center
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+
+        </div>
+        
+
+        <ul class="list">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+        </ul>
+    </div>
+
+    <script>
+        
+        const box = document.querySelector('.box')
+
+        let windowHeight = document.documentElement.clientHeight || document.body.clientHeight
+        let windowWidth = document.documentElement.clientWidth || document.body.clientWidth
+
+        let leftMax = windowWidth - box.clientWidth
+        let topMax = windowHeight - box.clientHeight
+         //初速度
+        let xSpeed2 = 10
+        let ySpeed2 = -20
+        //加速度
+        let xAddSpeed2 = -0.05
+        let yAddSpeed2 = 2
+        let timer2 = setInterval(function(){
+            xSpeed2 += xAddSpeed2
+            ySpeed2 += yAddSpeed2
+
+            box.style.left = box.offsetLeft + xSpeed2 + 'px'
+            box.style.top = box.offsetTop + ySpeed2 + 'px'
+
+            //落地
+            if(box.offsetTop >= windowHeight - box.offsetHeight ){
+                box.style.top  = windowHeight - box.offsetHeight + 'px'
+               
+
+                ySpeed2 *= -0.8
+                if(Math.abs(xSpeed2) < 1){
+                    xAddSpeed2 = 0
+                }
+                
+                if(box.offsetLeft <= 0){
+                    box.style.left = 0  + 'px'
+                }
+                //stop
+                if(Math.abs(xSpeed2) < 1 && Math.abs(ySpeed2) < 1){
+                    clearInterval(timer2)
+                }
+                
+            }
+
+        }, 50)
+        
+        //listArr
+        const listArr = document.querySelector('.list')
+        console.log(listArr.children)
+        //Array.from(类数组)
+        let liArr = Array.from(listArr.children)
+        liArr.map( (con, i) => {
+            parabolaFun(con, i+1)
+        })
+
+        //parabolaFun
+        function parabolaFun(ele, addY){
+            let windowHeight = document.documentElement.clientHeight || document.body.clientHeight
+            let windowWidth = document.documentElement.clientWidth || document.body.clientWidth
+            //初速度
+            let xSpeed = 10
+            let ySpeed = -20
+            //加速度
+            let xAddSpeed = -0.05
+            let yAddSpeed = addY
+
+            let timer = setInterval(function(){
+                xSpeed += xAddSpeed
+                ySpeed += yAddSpeed
+
+                ele.style.left = ele.offsetLeft + xSpeed + 'px'
+                ele.style.top = ele.offsetTop + ySpeed + 'px'
+                
+                //落地
+                if(ele.offsetTop >= windowHeight - ele.offsetHeight){
+                    ele.style.top = windowHeight - ele.offsetHeight + 'px'
+                    
+                    //弹回
+                    ySpeed *= -0.8
+                    //stop
+                    if(Math.abs(xSpeed) < 1){
+                        xAddSpeed = 0
+                    }
+
+                    if(ele.offsetLeft <= 0){
+                        ele.style.left = 0 + 'px'
+                    }else if(ele.offsetLeft >= windowWidth - ele.offsetWidth){
+                        ele.style.left = windowWidth - ele.offsetWidth + 'px'
+                    }
+                    
+                    //clearInterval
+                    if(Math.abs(xSpeed) < 1 && Math.abs(ySpeed) < 1){
+                        clearInterval(timer)
+                    }
+                }
+            }, 30)
+        }
+
+    </script>
+</body>
+</html>

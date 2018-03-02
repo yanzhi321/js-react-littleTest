@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        .rot{
+            width: 100px;
+            height: 100px;
+            background: url(images/www.jpg) no-repeat center;
+            background-size: 100% 100%;
+            border-radius: 50%;
+            box-shadow: 0 0 10px purple;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            transform: rotate(0deg)
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="rot">
+
+        </div>
+        <button class="btn">click me</button>
+    </div>
+
+    <script>
+        const rot = document.querySelector('.rot')
+        const btn = document.querySelector('.btn')
+        let angle = 0, timer = 0 
+        btn.onclick = function(){
+
+            if(timer > 0){
+                clearInterval(timer)
+                timer = 0;
+            }
+
+            timer = setInterval(function(){
+                if(angle >= 360){
+                    angle = 0
+                }
+                ++angle
+                console.log(angle, timer)
+                rot.style.transform = `rotate(${angle}deg)`
+            }, 30)
+        }
+        
+    </script>
+</body>
+</html>

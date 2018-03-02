@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>抛物线</title>
+    <style>
+        .box, .box2{
+            width: 50px;
+            height: 50px;
+            background: lightcoral;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">
+            1
+        </div>
+        <div class="box2">
+            2
+        </div>
+    </div>
+
+    <script>
+        
+        const box = document.querySelector('.box')
+
+        let windowHeight = document.documentElement.clientHeight || document.body.clientHeight
+        let windowWidth = document.documentElement.clientWidth || document.body.clientWidth
+       
+        //初速度
+        let xSpeed = 10
+        let ySpeed = -20
+        
+        //加速度
+        let xAddSpeed = -0.05
+        let yAddSpeed = 2
+
+        let timer = setInterval(function(){
+            console.log(timer)
+           
+
+            xSpeed += xAddSpeed
+            ySpeed += yAddSpeed
+
+            box.style.left = box.offsetLeft + xSpeed + 'px'
+            box.style.top = box.offsetTop + ySpeed + 'px'
+
+            if(box.offsetTop >= windowHeight - box.offsetHeight){
+                box.style.top = windowHeight - box.offsetHeight + 'px'
+                
+                ySpeed *= -0.8
+                   
+                //xSpeed
+                if(Math.abs(xSpeed) < 1){
+                    xAddSpeed = 0
+                }
+
+                //stop
+                if(Math.abs(xSpeed) < 1  && Math.abs(ySpeed) < 1){
+                    clearInterval(timer)
+                }
+
+            }
+
+        }, 30)
+
+        const box2 = document.querySelector('.box2')
+
+        //初速度
+        let xSpeed2 = 10
+        let ySpeed2 = -20
+        //加速度
+        let xAddSpeed2 = -0.05
+        let yAddSpeed2 = 2
+        let timer2 = setInterval(function(){
+            xSpeed2 += xAddSpeed2
+            ySpeed2 += yAddSpeed2
+
+            box2.style.left = box2.offsetLeft + xSpeed2 + 'px'
+            box2.style.top = box2.offsetTop + ySpeed2 + 'px'
+
+            //落地
+            if(box2.offsetTop >= windowHeight - box2.offsetHeight ){
+                box2.style.top  = windowHeight - box2.offsetHeight + 'px'
+                
+                console.log(xSpeed2)
+
+                ySpeed2 *= -0.5
+                
+                if(Math.abs(xSpeed2) < 1){
+                    xAddSpeed2 = 0
+                }
+
+                //stop
+                if(Math.abs(xSpeed2) < 1 && Math.abs(ySpeed2) < 1){
+                    console.log(xSpeed2)
+                    clearInterval(timer2)
+
+                }
+
+            }
+        }, 50)
+    </script>
+</body>
+</html>
