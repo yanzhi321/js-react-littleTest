@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>chat test</title>
+
+    <style>
+        .chat-window{
+            width: 230px;
+            height: 500px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            overflow: auto;
+        }
+        /* .chat-window > div{
+            width: 180px;
+            height: 100%;
+            margin: 3px;
+            float: left;
+        }
+        .left{
+            border: 1px solid lightblue;
+        }
+        .right{
+            border: 1px solid purple;
+        } */
+
+        .left-div{
+            width: 100px;
+            border: 1px solid lightblue;
+            float: left;
+            margin: 10px;
+            word-wrap: break-word;
+        }
+        .right-div{
+            width: 100px;
+            height: 30px;
+            border: 1px solid purple;
+            float: right;
+            margin: 10px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="chat-window">
+            <!-- <div class="left"></div>
+            <div class="right"></div> -->
+        </div>
+        
+        <div class="btn">
+            <div class="left-con">
+                <label for="left-label">left label</label>
+                <input type="text" class="left-msg" id="left-label">
+                <button class="left-btn">another</button>
+            </div>
+            <div class="right-con">
+                <label for="right-label">label right</label>
+                <input type="text" class="right-msg" id="right-label">
+                <button class="right-btn">mySelf</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        
+        const chatWin = document.querySelector('.chat-window')
+        const left = document.querySelector('.left')
+        const right = document.querySelector('.right')
+        const leftBtn = document.querySelector('.left-btn')
+        const rightBtn = document.querySelector('.right-btn')
+        
+        let str1 = `<div style="width: 100px; height: 30px; border: 1px solid #ccc">left</div>`
+        const leftMsg = document.querySelector('.left-msg')
+        const rightMsg = document.querySelector('.right-msg')
+        console.log(leftMsg.value)
+        leftMsg.onchange = function(e){
+            console.log(this.value)
+            console.log(e.target.value)
+        }
+        
+        leftBtn.onclick = function(){
+            let div = document.createElement('div')
+            div.className = 'left-div'
+            let textNode = document.createTextNode(leftMsg.value)
+            div.appendChild(textNode)
+            chatWin.appendChild(div)
+        }
+
+        rightBtn.onclick = function(){
+            let div2 = document.createElement('div')
+            div2.className = 'right-div'
+            let textNode2 = document.createTextNode(rightMsg.value)
+            div2.appendChild(textNode2)
+            chatWin.appendChild(div2)
+        }
+
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>地理编码</title>
+    <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=8428ed5fa6efce876e45150cec0bd13e&plugin=AMap.Geocoder"></script>
+      
+</head>
+<body>
+<button id="btngo" onclick="geocoder()">带我去</button>
+<script type="text/javascript">
+    var map = new AMap.Map("container", {
+        resizeEnable: false
+    });
+    function geocoder() {
+        var geocoder = new AMap.Geocoder({
+            city: "", //城市，默认：“全国”
+            radius: 1000 //范围，默认：500
+        });
+        //地理编码,返回地理编码结果
+        geocoder.getLocation("武汉市洪山区光谷广场", function(status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+                geocoder_CallBack(result);
+            }
+        });
+    }
+    //地理编码返回结果展示
+    function geocoder_CallBack(data) {
+        //地理编码结果数组
+        var geocode = data.geocodes;
+        for (var i = 0; i < geocode.length; i++) {
+            window.location.href ="http://m.amap.com/navi/?dest="+geocode[i].location.getLng()+","+geocode[i].location.getLat()+"&destName=到这里去&key=8428ed5fa6efce876e45150cec0bd13e";
+        }
+    } 
+</script>
+</body>
+</html>
