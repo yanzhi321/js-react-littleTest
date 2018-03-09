@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>test</title>
+</head>
+<body>
+	<h1><%= name %></h1>
+	<div class="link">
+		<ul class="linkList">
+			<li>
+				<a href="<% host %>/admin">send to admin</a>
+			</li>
+			<li>
+				<a href="<% host %>/register">send to register of user</a>
+			</li>
+		</ul>
+	</div>
+
+
+	<div id="container">
+		
+		 <table class="table" border="1">
+        	<caption>typeNow</caption>
+            <thead>
+	            <tr>
+	                <th>ID</th>
+	                <th>RT_type</th>
+	                <th>canuse</th>
+	                <th>total</th>
+	            </tr>
+            </thead>
+            <tbody>
+				
+            </tbody>
+        </table>
+
+	</div>
+
+	<script>
+    	for(var i = 0; i<5; i++){
+    		setTimeout( () => {
+    			console.log(i)
+    		}, 300)
+    	}    
+
+    	setTimeout( () => {
+    		for(var i = 0; i<5; i++){
+    			console.log(i)
+    		}
+    	}, 1000)
+	</script>
+</body>
+</html>

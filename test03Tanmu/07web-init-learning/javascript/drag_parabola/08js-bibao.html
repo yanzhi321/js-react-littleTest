@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>bibao</title>
+</head>
+<body>
+    <div class="container">
+
+    </div>
+
+    <script>
+        
+        function makeAdder(a) {
+            return function(b) {
+                return a + b;
+            }
+        }
+        var x = makeAdder(5);
+        var y = makeAdder(20);
+        x(6); // ?
+        y(7); // ?
+
+        let arr = new Array(9).fill(1)
+        console.log(arr)
+
+        //slice浅拷贝，不改变原始数据
+        let arr2 = [1, 2, 3, 4]
+        let resArr = arr2.slice()
+        console.log(resArr)
+        
+        //object.assign() 深拷贝，替换修改数据， 不改变原始数据，
+        var player = {score: 1, name: 'Jeff'};
+        var newPlayer = Object.assign({}, player, {score: 2});
+        console.log(newPlayer, player)
+        
+        //date,每月的第一天是星期几
+        let date = new Date()
+        console.log(Date.now())
+        console.log(date.getFullYear(), date.getMonth()+1, date.getDate(), date.getDay())
+        let date2 = new Date(date.getFullYear(), date.getMonth(), 1).getDay()
+        console.log(date2)
+
+    </script>
+</body>
+</html>

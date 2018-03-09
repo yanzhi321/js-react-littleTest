@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>data</title>
+	<style type="text/css" media="screen">
+		#container{
+			margin: 30px;
+		}
+	</style>
+</head>
+<body>
+	<h1><%= listAll.length %></h1>
+	<button type="button" class="btn">start</button>
+
+	<div id="container">
+		
+        <table class="table" border="1">
+        	<caption>typeNow</caption>
+            <thead>
+	            <tr>
+	                <th>ID</th>
+	                <th>RT_type</th>
+	                <th>canuse</th>
+	                <th>total</th>
+	            </tr>
+            </thead>
+            <tbody>
+
+
+	            <%for(var i=0;i<list.length;i++) {%>
+
+	                <tr>
+	                    <td><%= i+1 %></td>
+	                    <td class="nowRt"><%= list[i].RT_type %></td>
+	                    <td class="nowCan"><%= list[i].canuse %></td>
+	                    <td><%= list[i].total %></td>
+	                </tr>
+
+	            <%}%>
+
+            </tbody>
+        </table>
+		
+		<table class="table" border="1">
+        	<caption>typeAll</caption>
+
+            <thead>
+	            <tr>
+	                <th>ID</th>
+	                <th>RT_type</th>
+	                <th>canuse</th>
+	                <th>total</th>
+	            </tr>
+            </thead>
+            <tbody>
+
+	            <%for(var i=0;i<listAll.length;i++) {%>
+
+	                <tr>
+	                    <td><%= i+1 %></td>
+	                    <td class="allRt"><%= listAll[i].RT_type %></td>
+	                    <td class="allCan"><%= listAll[i].canuse %></td>
+	                    <td><%= listAll[i].total %></td>
+	                </tr>
+
+	            <%}%>
+
+            </tbody>
+        </table>
+
+
+	</div>
+	<script src="./browserMqtt.js"></script>
+	<script>
+		
+		var mqtt = require('mqtt')
+		var client  = mqtt.connect('mqtt://116.62.169.175')
+		
+
+		const allCan = document.querySelectorAll('.allCan')
+		const nowCan = document.querySelectorAll('.nowCan')
+
+		const nowRt  = document.querySelectorAll('.nowRt')
+		const allRt = document.querySelectorAll('.allRt')
+
+		// for(let i = 0; i<allCan.length; i++){
+		// 	allCan[i].onclick = function(){
+		// 		console.log(allCan[i].innerText)
+		// 		if(allCan[i].innerText == 'false'){
+		// 			allCan[i].innerText = 'true'
+		// 		}else if(allCan[i].innerText == 'true'){
+		// 			allCan[i].innerText = 'false'
+		// 		}
+				
+		// 	}
+		// }
+
+		// {
+		// 	type: 'ssh',
+		// 	val: 'true'
+		// }
+
+
+		function changeState(selector, selectorType){
+			for(let i = 0; i<selector.length; i++){
+				let obj = {}
+				selector[i].onclick = function(){
+					if(selector[i].innerText == 'false'){
+						selector[i].innerText = 'true'
+					}else if(selector[i].innerText == 'true'){
+						selector[i].innerText = 'false'
+					}
+					obj.val = selector[i]
+					obj.type = selectorType[i]
+					console.log(obj)
+					//client.publish('presence',  JSON.stringify(obj) )
+				}
+			}
+		}
+
+		changeState(nowCan, rt)
+		changeState(allCan)
+
+
+
+		//btn
+		const btn = document.querySelector('btn')
+		btn.onclick = function(){
+			location.reload();
+		}
+
+
+
+	</script>
+
+</body>
+</html>

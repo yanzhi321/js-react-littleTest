@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>promise </title>
+</head>
+<body>
+    <div class="container">
+
+    </div>
+
+    <!-- <script src="https://www.promisejs.org/polyfills/promise-6.1.0.js"></script> -->
+    <script>
+        
+        // 在JavaScript的世界中，所有代码都是单线程执行的。
+        //Promise是表示异步操作最终完成或失败的对象
+        'use strict';
+
+        var promise1 = Promise.resolve(3);
+        var promise2 = 42;
+        var promise3 = new Promise(function(resolve, reject) {
+            setTimeout(resolve, 100, 'foo');
+        });
+
+        Promise.all([promise1, promise2, promise3]).then(function(values) {
+            console.log(values);
+        });
+        // expected output: Array [3, 42, "foo"]
+        let url = 'http://www.phonegap100.com/appapi.php?a=getPortalArticle&aid=121'
+        myAsyncFunction(url)
+        
+        function myAsyncFunction(url) {
+            return new Promise((resolve, reject) => {
+                const xhr = new XMLHttpRequest();
+                xhr.open("GET", url);
+                xhr.onload = () => resolve(
+                    console.log(JSON.parse(xhr.responseText))
+                );
+                xhr.onerror = () => reject(xhr.statusText);
+                xhr.send();
+            });
+        }
+
+        //resolve && .then
+        let myFirstPromise = new Promise((resolve, reject) => {
+            setTimeout(function(){
+                resolve('success')
+            }, 250)
+        })
+        //.then
+        myFirstPromise.then( (successMessage) => {
+            console.log('Yay! ' + successMessage)
+        })
+        
+        //javascript https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/A_re-introduction_to_JavaScript#%E9%97%AD%E5%8C%85
+        //react-zh  https://react.bootcss.com/tutorial/tutorial.html
+    </script>
+</body>
+</html>
