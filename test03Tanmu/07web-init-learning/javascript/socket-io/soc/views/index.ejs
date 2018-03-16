@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>INDEX</title>
+
+    <style>
+
+        body, p, ul{
+            margin: 0;
+            padding:0
+        }
+        ul{
+            list-style: none
+        }
+
+        .container{
+            margin: 30px;
+        }
+        .msg-list{
+            width: 300px;
+            height: 500px;
+            border: 1px solid #ccc;
+        }
+        
+        .liNode {
+            width: 140px;
+            border: 1px solid #ccc;
+            margin: 5px 10px;
+        }
+        .imgHeader{
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            box-shadow: 0 0 10px purple;
+            float: left;
+        }
+
+        .divText{
+            width: 80px;
+            min-height: 30px;
+            display: inline-block;
+            background: cadetblue;
+            border-radius: 5px;
+            margin-left: 5px;
+            padding: 3px;
+            /* white-space: wrap;
+            word-break: break-all */
+            word-wrap: break-word;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>hhhh</h2>
+        <div class="show-msg">
+            
+            <div class="msg-list">
+
+            </div>
+            <form action="#" class="form-node">
+                <input type="text" class="send-msg">
+                <button class="btn">click</button>
+            </form>
+            
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        
+        const msgList = document.querySelector('.msg-list')
+        const btn = document.querySelector('.btn')
+        const sendMsg = document.querySelector('.send-msg')
+        const formNode = document.querySelector('.form-node')
+        
+        // link servive
+        let socket = io.connect('http://192.168.30.210:8001');
+        //socket.on 监听服务端消息
+        // socket.on('news', function(data) {
+        //     //socket.emit 向服务端发送消息
+        //     socket.emit('my other event', {
+        //         my: 'data'
+        //     })
+
+        //     console.log('service', data)
+        // })
+
+        formNode.onsubmit = function(){
+            console.log(sendMsg.value)
+            let msgVal = sendMsg.value
+            //emit
+            socket.emit('news', {
+                name: msgVal
+            })
+
+            sendMsg.value = ''
+            return false;
+        }
+            
+        socket.on('service news', function(data) {
+            console.log('servive', data)
+            let dataName = data.name
+            
+            let divLeft = document.createElement('div')
+            let img = document.createElement('img')
+
+            divLeft.className = "liNode"
+            img.src = '/images/peo3.jpg'
+            img.className = "imgHeader"
+
+            let divInner = document.createElement('div')
+            divInner.className = "divText"
+
+            let textNode = document.createTextNode(dataName)
+            divInner.appendChild(textNode)
+
+            divLeft.appendChild(img)
+            divLeft.appendChild(divInner)
+            
+            divLeft.style.float = 'left'
+            msgList.appendChild(divLeft)
+            console.log(msgList)
+
+            let str = 'http://192.168.30.210:8001/images/peo3.jpg'
+            let sound = 'http://192.168.30.210:8001/audio/horse.mp3'
+            notice(dataName, str, sound)
+
+        })
+        
+        
+        //notice
+        Notification.requestPermission(function(permission) {});
+      
+        function notice(msg, iconPath, audio) {
+            let _notification = new Notification(`消息通知`,{
+                body:`${msg}`,
+                icon: iconPath,
+                sound: audio
+            });
+
+            setTimeout(function(){
+                _notification.close(); //设置5秒后自动关闭通知框
+            },5000);
+            
+        }
+
+
+        
+
+    </script>
+</body>
+</html>

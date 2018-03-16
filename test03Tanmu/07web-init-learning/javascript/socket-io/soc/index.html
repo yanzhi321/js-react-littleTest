@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>INDEX</title>
+
+    <style>
+        .msg-list{
+            width: 300px;
+            height: 500px;
+            border: 1px solid #ccc;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>hhhh</h2>
+        <div class="show-msg">
+            
+            <ul class="msg-list">
+
+            </ul>
+            <form action="#" class="form-node">
+                <input type="text" class="send-msg">
+                <button class="btn">click</button>
+            </form>
+            
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        
+        const msgList = document.querySelector('.msg-list')
+        const btn = document.querySelector('.btn')
+        const sendMsg = document.querySelector('.send-msg')
+        const formNode = document.querySelector('.form-node')
+        
+        // link servive
+        let socket = io.connect('http://localhost:8001');
+        //socket.on 监听服务端消息
+        // socket.on('news', function(data) {
+        //     //socket.emit 向服务端发送消息
+        //     socket.emit('my other event', {
+        //         my: 'data'
+        //     })
+
+        //     console.log('service', data)
+        // })
+
+        formNode.onsubmit = function(){
+            console.log(sendMsg.value)
+            let msgVal = sendMsg.value
+            //emit
+            socket.emit('news', {
+                name: msgVal
+            })
+
+            sendMsg.value = ''
+            return false;
+        }
+            
+        socket.on('service news', function(data) {
+            console.log('servive', data)
+            let dataName = data.name
+            
+            let li = document.createElement('li')
+            let img = document.createElement('img')
+            img.src = 'images/pe02.jpg'
+            let p = document.createElement('p')
+            let textNode = document.createTextNode(dataName)
+            p.appendChild(textNode)
+
+            li.appendChild(img)
+            li.appendChild(p)
+
+            msgList.appendChild(li)
+            
+            let str = 'http://localhost:8080/images/pe02.jpg'
+
+            notice(dataName, str)
+
+        })
+
+        Notification.requestPermission(function(permission) {});
+      
+        function notice(msg) {
+            let _notification = new Notification(`消息通知`,{
+                body:`${msg}`,
+                icon:str
+            });
+
+            setTimeout(function(){
+                _notification.close(); //设置5秒后自动关闭通知框
+            },5000);
+            
+        }
+
+    </script>
+</body>
+</html>
