@@ -1,0 +1,166 @@
+ul,body,p{
+    margin: 0;
+    padding: 0;
+}
+ul{
+    list-style: none;
+}
+
+html{
+    height: 100%
+}
+body{
+    height: 100%;
+}
+.container{
+    width: 100%;
+    height: 100%;
+    background: #ccc;
+    overflow: hidden;
+    
+}
+
+.login-con{
+    width: 100%;
+    height: 200px;
+    margin: 30px auto;
+}
+.login-con h3{
+    width: 40%;
+    margin: 0 auto;
+}
+.login-box{
+    width: 40%;
+    margin: 0 auto;
+}
+.login-list li{
+    margin: 10px 0;
+}
+
+.chat-box{
+    /* display: none; */
+    overflow-y: auto;
+    margin-bottom: 40px;
+}
+
+.title-con{
+    margin: 10px auto;
+}
+
+.chat-con{
+    width: 100%;
+    padding-left: 40%;
+    height: 120px;
+    /* border: 1px solid #fff; */
+    box-sizing: border-box;
+    float: right;
+    margin: 10px 0;
+   
+}
+
+.inner-msg-all{
+    height: 120px;
+}
+.inner-msg-all {
+    float: right;
+    position: relative;
+}
+.inner-msg-all > div {
+    position: absolute;
+}
+.inner-msg-r{
+    max-width: 100px;
+    max-height: 100px;
+    right: 70px;
+    background: lightpink;
+    border-radius: 10px;
+    margin: 3px;
+    padding: 5px;
+    word-wrap: break-word;
+    overflow-y: auto ;
+}
+.header-img-r {
+   margin-top: 3px;
+   right: 0;
+   width: 30px;
+   height: 30px;
+}
+.inner-msg-all .inner-name-r {
+    margin-top: 5px;
+    padding: 3px;
+    right: 35px;
+    max-width: 30px;
+    background: lightsalmon;
+    border-radius: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+.chat-con-ano{
+    width: 100%;
+    height: 120px;
+    padding-right: 40%;
+    /* border: 1px solid paleturquoise; */
+    box-sizing: border-box;
+    float: left;
+    margin: 10px 0;
+}
+.inner-msg-ano{
+    float: left;
+    position: relative;
+}
+.inner-msg-ano > div {
+    position: absolute;
+}
+.header-img-l{
+   margin-top: 3px;
+   left: 0;
+   width: 30px;
+   height: 30px;
+}
+.inner-name-l {
+    margin-top: 5px;
+    padding: 3px;
+    left: 35px;
+    max-width: 30px;
+    background: lightsalmon;
+    border-radius: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.inner-msg-l {
+    max-width: 100px;
+    min-height: 30px;
+    left: 70px;
+    background: lightpink;
+    border-radius: 10px;
+    margin: 3px;
+    padding: 5px;
+    word-wrap: break-word;
+    overflow-y: auto;
+}
+
+.chat-con-init{
+    height: 500px;
+    overflow-y: auto;
+    margin-bottom: 50px;
+}
+
+.chat-insert{
+    width: 200px;
+    height: 30px;
+    position: absolute;
+    border: 1px solid #fff;
+    bottom: 20px;
+    left: 40px;
+}
+.input-msg{
+    width: 130px;
+    height: 20px;
+}
+
+.title-con{
+    width: 100%;
+    height: 50px;
+}

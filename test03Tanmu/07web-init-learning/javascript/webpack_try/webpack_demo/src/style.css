@@ -1,0 +1,14 @@
+@font-face {
+    font-family: 'MyFont';
+    src:  url('./actionj.ttf');
+    font-weight: 600;
+    font-style: normal;
+}
+
+
+.hello {
+    font-family: 'MyFont';
+    color: red;
+    /* background: url('./f1.jpg'); */
+    
+}

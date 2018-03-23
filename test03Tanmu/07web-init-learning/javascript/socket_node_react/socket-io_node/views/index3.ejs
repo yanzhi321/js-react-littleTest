@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>index3</title>
+
+    <style>
+        
+        .box{
+            width: 50px;
+            height: 50px;
+            background: lightcoral;
+            border-radius: 50%;
+            position: absolute;
+            left: 10px;
+            top: 10px;
+            cursor: move;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="con-input">
+            <input type="text" placeholder="socket" class="input-box">
+            <input type="text" placeholder="io" class="input-receive">
+        </div>
+        <div class="con-box">
+            <div class="box">
+
+            </div>
+        </div>
+    </div>
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script>
+        
+        const url = 'http://localhost:8003'
+        let socket = io.connect(url) 
+
+        const inputBox = document.querySelector('.input-box')
+        const inputReceive = document.querySelector('.input-receive')
+        inputBox.onchange = function(evt) {
+            let e = evt || window.event
+            console.log(e.target.value)
+
+            socket.emit('input change', {
+                value: e.target.value
+            })
+        }
+        socket.on('input send', function(data) {
+            console.log(data)
+            console.log(inputBox.value, data.value)
+            inputBox.value = data.value
+            inputReceive.value = data.value
+        })
+        
+        //drag
+        const box = document.querySelector('.box')
+        box.onmousedown = function(evt) {
+            let e = evt || event;
+            e.preventDefault()
+            let disX = e.clientX - box.offsetLeft
+            let disY = e.clientY - box.offsetTop
+
+            //socket
+            socket.emit('box fir', {
+                disX: disX,
+                disY: disY
+            })
+
+            socket.on('fir send', function(data) {
+                // console.log(data)
+                disX = data.disX
+                disY = data.disY
+            })
+
+            document.onmousemove = function(evt) {
+                let e = evt || event
+                let left = e.clientX - disX
+                let top = e.clientY - disY
+                
+                // let leftMax = document.documentElement.clientWidth - box.clientWidth
+                // let topMax = document.documentElement.clientHeight - box.clientHeight
+
+
+                // if(left <= 0){
+                //     left = 0
+                // }else if(left >= leftMax){
+                //     left = leftMax
+                // }
+
+                // if(top <= 0){
+                //     top = 0
+                // }else if(top >= topMax){
+                //     top = topMax
+                // }
+                
+                socket.emit('box sec', {
+                    left: e.clientX - disX,
+                    top: e.clientY - disY
+                })
+
+                socket.on('sec send', function(data) {
+                    console.log(data)
+                    // left = data.left
+                    // top = data.top
+                    let leftMax = document.documentElement.clientWidth - box.clientWidth
+                    let topMax = document.documentElement.clientHeight - box.clientHeight
+
+
+                    if(data.left <= 0){
+                        data.left = 0
+                    }else if(data.left >= leftMax){
+                        data.left = leftMax
+                    }
+
+                    if(data.top <= 0){
+                        data.top = 0
+                    }else if(data.top >= topMax){
+                        data.top = topMax
+                    }
+
+
+                    box.style.left = data.left + 'px'
+                    box.style.top = data.top + 'px'
+
+                })
+
+                // box.style.left = left + 'px'
+                // box.style.top = top + 'px'
+
+            }
+
+            document.onmouseup = function(evt) {
+
+                socket.emit('box third', {
+                    move: null
+                })
+
+                socket.on('third send', function(data){
+                    let move = data.move
+                    console.log(data.move)
+                    document.onmousemove = null
+                    document.onmousedown = null
+                })
+
+                // document.onmousemove = null
+            }
+        }
+
+
+    </script>
+</body>
+</html>

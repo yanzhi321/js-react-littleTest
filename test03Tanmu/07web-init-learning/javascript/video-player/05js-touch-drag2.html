@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>touch-drag</title>
+    <style>
+        html{
+            font-size: 16px;
+        }
+        .con{
+            width: 3.125rem;
+            /* width: 50px;
+            height: 50px; */
+            height: 3.125rem;
+            border-radius: 50%;
+            background:lightcoral;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="contaienr">
+        <div class="con">
+
+        </div>
+    </div>
+
+    <script>
+        
+        const con = document.querySelector('.con')
+        
+        const a = navigator.userAgent
+        // if(a.indexOf("Android") !== -1  || a.indexOf("iPhone") !== -1  || a.indexOf("iPad") !== -1){
+        //     console.log('this is iPhone & Android & iPad', a)
+        //     dragTouch(con)
+        // }else if(a.indexOf("browser")){
+        //     console.log(a)
+        //     dragPc(con)
+        // }
+
+        dragPc(con)
+        //pc drag
+        function dragPc(ele) {
+            ele.onmousedown = function(evt) {
+                let e = evt || window.event
+                let disX = e.clientX - ele.offsetLeft
+                let disY = e.clientY - ele.offsetTop
+
+                document.onmousemove = function(evt) {
+                    let e = evt || window.event
+                    let left = e.clientX - disX
+                    let top = e.clientY - disY
+                    
+                    let leftMax = document.documentElement.clientWidth - ele.clientWidth
+                    let topMax = document.documentElement.clientHeight - ele.clientHeight
+
+                    if(left <= 0){
+                        left = 0
+                    }else if(left >= leftMax) {
+                        left = leftMax
+                    }
+
+                    if(top <= 0){
+                        top = 0
+                    }else if(top >= topMax) {
+                        top = topMax
+                    }
+
+                    ele.style.left = left + 'px'
+                    ele.style.top = top + 'px'
+
+                }
+
+                document.onmouseup = function(e) {
+                    document.onmousemove = null
+                }
+            }
+        }
+        
+
+        dragTouch(con)
+        //touch drag
+        function dragTouch(ele) {
+            ele.ontouchstart = function(evt) {
+                let e = evt || window.event
+                let startX = e.changedTouches[0].clientX - ele.offsetLeft
+                let startY = e.changedTouches[0].clientY - ele.offsetTop
+
+                document.ontouchmove = function(evt) {
+                    let e = evt || window.event
+                    let left = e.changedTouches[0].clientX - startX
+                    let top = e.changedTouches[0].clientY - startY
+
+                    // let leftMax = window.innerWidth - con.offsetWidth
+                    // let topMax = window.innerHeight - con.offsetHeight
+                    let leftMax = document.documentElement.clientWidth - con.clientWidth
+                    let topMax = document.documentElement.clientHeight - con.clientHeight
+
+                    if(left <= 0) {
+                        left = 0
+                    }else if(left >= leftMax) {
+                        left = leftMax
+                    }
+
+                    if(top <= 0) {
+                        top = 0
+                    }else if(top >= topMax) {
+                        top = topMax
+                    }
+
+                    ele.style.left = left + 'px'
+                    ele.style.top = top + 'px'
+
+                }
+
+                document.ontouchend = function(evt) {
+                    document.ontouchmove = null
+                }
+
+            }
+        }
+        
+    </script>
+</body>
+</html>

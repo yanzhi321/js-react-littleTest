@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>data of index3</title>
+        <link rel="stylesheet" href="css/basic.css">
+    </head>
+    
+<body>
+	<div id="container">
+		<h2>index2_show</h2>
+		<ul class="dataList">
+			<li class="rev-name"><%= name %></li>
+			<li class="rev-path"><%= path %></li>
+            <li><img src="<%= host %><%= path %>" alt=""></li>
+            <li>
+                <label for="login-btn">登&nbsp;&nbsp;&nbsp;录</label>
+                <input type="submit" value="登录" class="sub" >
+            </li>
+			
+        </ul>
+
+        
+        
+        <div class="chat-box" style="display: block">
+            <div class="title-con">
+                
+            </div>
+            <div class="chat-con-init">
+                <!-- <div class="chat-con">
+                    <div class="inner-msg-all">
+                        <div class="inner-msg-r">
+                            this is myself 
+                        </div>
+                        <div class="inner-name-r">
+                            zhangsan
+                        </div>
+                        <div class="header-img-r">
+                            <img src="/images/add.png" alt="header" width="20" height="20">
+                        </div>
+                    </div>
+                </div> -->
+                
+                
+
+                <!-- <div class="chat-con-ano">
+                    <div class="inner-msg-ano">
+
+                        <div class="header-img-l">
+                            <img src="/images/add.png" alt="header" width="20" height="20">
+                        </div>
+                        <div class="inner-name-l">
+                            lisi
+                        </div>
+                        <div class="inner-msg-l">
+                            this issfsdfsdf
+                        </div>
+                    </div>
+                </div> -->
+            </div>
+
+            <div class="chat-insert">
+                <input type="text" placeholder="say something" class="input-msg">
+                <input type="submit" value="send" class="send-msg">
+            </div>
+        </div>
+    </div>
+    
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        
+        const url = 'http://localhost:8002'
+        let socket = io.connect(url) 
+
+         //chat-box
+        const chatBox = document.querySelector('.chat-box')
+        const titleCon = document.querySelector('.title-con')
+        const chatInsert = document.querySelector('.chat-insert')
+        
+        const sub = document.querySelector('.sub')
+        const revName = document.querySelector('.rev-name')
+        const revPath = document.querySelector('.rev-path')
+        const dataList = document.querySelector('.dataList')
+
+        console.log(revPath)
+        let arrPath = []
+       
+
+        //username
+        let _username = null
+
+        //setUsername
+        let setUsername = function () {
+            _username = revName.innerText //trim() 去除首尾空格
+            console.log(_username)
+            //if  socket.emit向服务端发送login事件，
+            if(_username) {
+                socket.emit('login', {
+                    username: _username
+                })
+                console.log(_username)
+                return;
+            }
+        }
+
+        // 前端事件
+        sub.onclick = function() {
+            setUsername()
+            arrPath.push(revPath)
+            console.log(arrPath)
+        }
+        
+
+        //显示聊天界面
+        let beginChat = function () {
+            
+            let p = document.createElement('p')
+            p.style.background = 'lightcyan'
+            let userTxt = document.createTextNode(`Welcome you : ${_username}`)
+            p.appendChild(userTxt)
+            //显示页面， welcome
+            let str = `<p>欢迎你${_username}</p>`
+            titleCon.appendChild(p)
+
+            dataList.style.display = 'none'
+        }
+        
+        //loginSuccess
+        socket.on('loginSuccess', function(data) {
+            if(data.username === _username) {
+                beginChat()
+            }else {
+                alert('failed')
+            }
+        })
+        
+        //聊天一定是客户端触发的，所以发送信息是客户端触发，服务器监听。
+        //sendmessage
+        const inputMsg = document.querySelector('.input-msg')
+        let sendMessage = function () {
+            let _message = inputMsg.value
+            if(_message) {
+                socket.emit('sendMessage', {
+                    username: _username,
+                    message: _message
+                })
+            }
+        }
+
+        //sendMsg 触发
+        const sendMsg = document.querySelector('.send-msg')
+        console.log(sendMsg.value)
+        sendMsg.onclick = function() {
+            sendMessage()
+            inputMsg.value = ''
+            
+        }
+        inputMsg.onkeydown = function(evt) {
+            let e = evt || event
+            if(e.keyCode == '13'){
+                console.log("ddddddddd")
+                sendMessage()
+                inputMsg.value = ''
+            }
+
+        }
+
+        
+        
+        //chat-con-init
+        const chatConInit = document.querySelector('.chat-con-init')
+
+        
+        //recieveMessage
+        socket.on('receiveMessage', function(data) {
+            showMessage(data)
+        })
+        let arrMsg = []
+        //showMessage
+        let showMessage = function (data) {
+
+            //判断这个消息是不是自己发出的，
+            if(data.username === _username) {
+                // let str = `<p style='background: lightskyblue'><span>${data.username} : </span> ${data.message}</p>`
+                // chatCon.style.width = '100%'
+                // chatCon.style.margin =  10 + 'px' 
+                let str = `<div class="inner-msg-all">
+                    <div class="inner-msg-r">
+                        ${data.message}
+                    </div>
+                    <div class="inner-name-r">
+                        ${data.username}
+                    </div>
+                    <div class="header-img-r">
+                        <img src="/images/add.png" alt="header" width="20" height="20">
+                    </div>
+                </div> `
+                
+                console.log(arrPath)
+
+                const chatCon = document.createElement('div')
+                chatCon.className = 'chat-con'
+
+                let div1 = document.createElement('div')
+                div1.className = 'inner-msg-all'
+                let div2 = document.createElement('div')
+                div2.className = 'inner-msg-r'
+                div2.innerText = data.message
+
+                let div3 = document.createElement('div')
+                div3.className = 'inner-name-r'
+                div3.innerText = data.username
+                let div4 = document.createElement('div')
+                div4.className = 'header-img-r'
+
+                let img = document.createElement('img')
+                // img.src = '/images/add.png'
+                img.src = `${revPath.innerText}`
+                img.width = '20'
+                img.height = '20'
+                
+                div4.appendChild(img)
+                div1.appendChild(div2)
+                div1.appendChild(div3)
+                div1.appendChild(div4)
+                chatCon.appendChild(div1)
+
+                chatConInit.appendChild(chatCon)
+
+            }else {
+                // let str = `<p style='background: lightpink'><span>${data.username} : </span> ${data.message}</p>`
+                let str =  `<div class="inner-msg-ano">
+                                <div class="header-img-l">
+                                    <img src="/images/avator.png" alt="header" width="20" height="20">
+                                </div>
+                                <div class="inner-name-l">
+                                    ${data.username}
+                                </div>
+                                <div class="inner-msg-l">
+                                    ${data.message}
+                                </div>
+                            </div>`
+                            
+                const chatConAno = document.createElement('div')
+                chatConAno.className = 'chat-con-ano'
+
+                let div1 = document.createElement('div')
+                div1.className = 'inner-msg-ano'
+                let div2 = document.createElement('div')
+                div2.className = 'header-img-l'
+                let div3 = document.createElement('div')
+                div3.className = 'inner-name-l'
+                div3.innerText = data.username
+                let div4 = document.createElement('div')
+                div4.className = 'inner-msg-l'
+                div4.innerText = data.message
+
+                let img = document.createElement('img')
+                img.src = `${revPath.innerText}`
+                img.width = '20'
+                img.height = '20'
+
+                div2.appendChild(img)
+                div1.appendChild(div2)
+                div1.appendChild(div3)
+                div1.appendChild(div4)
+                chatConAno.appendChild(div1)
+
+                chatConInit.appendChild(chatConAno)
+
+            }
+        }
+
+        
+
+
+    </script>
+</body>
+</html>

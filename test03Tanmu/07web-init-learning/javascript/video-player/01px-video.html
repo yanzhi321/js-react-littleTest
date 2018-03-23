@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>px-video</title>
+    <link rel="stylesheet" href="css/px-video.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="px-video-container" id="myvid">
+            <div class="px-video-img-captions-container">
+                <div class="px-video-captions hide" aria-hidden="true"></div>
+                <video width="640" height="360" poster="media/poster_PayPal_Austin2.jpg" controls>
+                    <source src="https://www.paypalobjects.com/webstatic/mktg/videos/PayPal_AustinSMB_baseline.mp4" type="video/mp4" />
+                    <source src="https://www.paypalobjects.com/webstatic/mktg/videos/PayPal_AustinSMB_baseline.webm" type="video/webm" />
+                    <track kind="captions" label="English captions" src="media/foo.vtt" srclang="en" default />
+                    <div>
+                        <a href="foo.mp4">
+                            <img src="media/poster_PayPal_Austin2.jpg" width="640" height="360" alt="download video" />
+                        </a>
+                    </div>
+                </video>
+            </div>
+            <div class="px-video-controls"></div>
+        </div>
+
+    </div>
+
+    <script src="js/strings.js"></script>
+    <script src="js/px-video.js"></script>
+
+    <script>
+        // Initialize
+        new InitPxVideo({
+            "videoId": "myvid",
+            "captionsOnDefault": true,
+            "seekInterval": 20,
+            "videoTitle": "clips of stand-up comedy",
+            "debug": true
+        });
+    </script>
+</body>
+
+</html>

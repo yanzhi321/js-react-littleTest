@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>touch</title>
+    <style>
+        html {
+            font-size:16px
+        }
+        .con{
+            width: 50px;
+            height: 50px;
+            background: lightblue;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div class="con">
+            
+        </div>
+    </div>
+
+    <script>
+        
+        // http://www.zhangyunling.com/223.html
+        const con = document.querySelector('.con')
+        //start
+        function start(e) {
+           
+            startX = e.changedTouches[0].pageX - con.offsetLeft
+            startY = e.changedTouches[0].pageY - con.offsetTop
+            
+        }
+
+        function move(e) {
+            e.preventDefault()
+            let moveX = e.changedTouches[0].pageX - startX
+            let moveY = e.changedTouches[0].pageY - startY
+            
+            // console.log(con.offsetWidth, con.clientWidth)
+            // let leftMax = window.innerWidth - con.offsetWidth
+            // let topMax = window.innerHeight - con.offsetHeight
+
+            let leftMax = document.documentElement.clientWidth - con.clientWidth
+            let topMax = document.documentElement.clientHeight - con.clientHeight
+
+            if(moveX <= 0) {
+                moveX = 0
+            }else if(moveX >= leftMax) {
+                moveX = leftMax
+            }
+
+            if(moveY <= 0){
+                moveY = 0
+            }else if(moveY >= topMax) {
+                moveY = topMax
+            }
+
+            con.style.left = moveX +  'px'
+            con.style.top = moveY  + 'px'
+            // console.log(moveX, moveY)
+        }
+
+        function end(e) {
+            window.removeEventListener('touchmove', move)
+        }
+        
+        con.addEventListener('touchstart', start)
+        con.addEventListener('touchmove', move)
+        con.addEventListener('touchend', end)
+
+
+        con.ontouchstart = function(e) {
+            console.log(e, 'touch')
+            console.log(navigator,navigator.userAgent)
+        }
+        
+        //use navigator to judge browser or ios & android,
+        const a = navigator.userAgent
+        if(a.indexOf("Android") !== -1 || a.indexOf("iPhone") !== -1 || a.indexOf("iPad") !== -1 ){
+				
+            console.log('this is ios & Android & iPad', a)
+           
+        }else if(a.indexOf('browser')) {
+            console.log(window)
+        }
+
+        
+
+        
+    </script>
+</body>
+</html>

