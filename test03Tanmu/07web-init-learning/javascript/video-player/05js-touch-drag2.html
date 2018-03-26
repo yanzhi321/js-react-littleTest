@@ -34,15 +34,15 @@
         const con = document.querySelector('.con')
         
         const a = navigator.userAgent
-        // if(a.indexOf("Android") !== -1  || a.indexOf("iPhone") !== -1  || a.indexOf("iPad") !== -1){
-        //     console.log('this is iPhone & Android & iPad', a)
-        //     dragTouch(con)
-        // }else if(a.indexOf("browser")){
-        //     console.log(a)
-        //     dragPc(con)
-        // }
+        if(a.indexOf("Android") !== -1  || a.indexOf("iPhone") !== -1  || a.indexOf("iPad") !== -1){
+            console.log('this is iPhone & Android & iPad', a)
+            dragTouch(con)
+        }else if(a.indexOf("browser")){
+            console.log(a)
+            dragPc(con)
+        }
 
-        dragPc(con)
+        // dragPc(con)
         //pc drag
         function dragPc(ele) {
             ele.onmousedown = function(evt) {
@@ -82,7 +82,7 @@
         }
         
 
-        dragTouch(con)
+        // dragTouch(con)
         //touch drag
         function dragTouch(ele) {
             ele.ontouchstart = function(evt) {
