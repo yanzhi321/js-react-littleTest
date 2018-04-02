@@ -31,7 +31,7 @@
         </div>
     </div>
 
-    <script src="/socket.io/socket.io.js"></script>
+    <script src="public/js/socket.js"></script>
     <script>
         
         const msgList = document.querySelector('.msg-list')
@@ -40,7 +40,7 @@
         const formNode = document.querySelector('.form-node')
         
         // link servive
-        let socket = io.connect('http://localhost:8001');
+        let socket = io('http://localhost:8001');
         //socket.on 监听服务端消息
         // socket.on('news', function(data) {
         //     //socket.emit 向服务端发送消息
@@ -69,7 +69,7 @@
             
             let li = document.createElement('li')
             let img = document.createElement('img')
-            img.src = 'images/pe02.jpg'
+            img.src = 'public/images/pe02.jpg'
             let p = document.createElement('p')
             let textNode = document.createTextNode(dataName)
             p.appendChild(textNode)
@@ -79,7 +79,7 @@
 
             msgList.appendChild(li)
             
-            let str = 'http://localhost:8080/images/pe02.jpg'
+            let str = 'http://localhost:8001/images/pe02.jpg'
 
             notice(dataName, str)
 
@@ -87,10 +87,10 @@
 
         Notification.requestPermission(function(permission) {});
       
-        function notice(msg) {
+        function notice(msg, path) {
             let _notification = new Notification(`消息通知`,{
                 body:`${msg}`,
-                icon:str
+                icon:path
             });
 
             setTimeout(function(){

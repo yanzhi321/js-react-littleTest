@@ -8,7 +8,7 @@ var server = require('http').Server(app);
 var io = require('socket.io')(server);
 
 const port = process.env.port || 8001
-server.listen(8001, 'localhost', function(){
+server.listen(port, function(){
     console.log('port is listening at ' + port )
 });
 

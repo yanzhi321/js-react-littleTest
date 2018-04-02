@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>innerHTML_textContent</title>
+</head>
+<body>
+    <div id="container">
+
+    </div>
+
+    <script>
+        
+        const con = document.querySelector('#container')
+        let div = document.createElement('div')
+        let p = document.createElement('p')
+        let txt = document.createTextNode('dddddddd')
+        p.textContent = `<h2>hhhwa</h2>`
+        p.innerText = `<h2>innerText</h2>`
+        p.innerHTML = `<h2>innerHTML</h2>`
+        con.appendChild(p)
+    </script>
+</body>
+</html>
