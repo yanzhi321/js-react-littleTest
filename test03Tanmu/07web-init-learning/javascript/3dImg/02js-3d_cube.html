@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>3d cube</title>
+    <style>
+    
+        .cube {
+            width: 200px;
+            height: 200px;
+            padding: 50px;
+            margin: 100px auto;
+            border: 1px solid #ccc;
+            position: relative;
+            transform-style: preserve-3d;
+            /* transform: rotateY(-30deg) rotateX(57deg); */
+            animation: rotate 4s linear both infinite
+        }
+
+        .cube > div {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #fff;
+            text-align: center;
+            line-height: 200px;
+            position: absolute;
+            opacity: .6;
+        }
+
+        .front {
+            background: pink;
+            transform: translateZ(100px)
+        }
+        .back {
+            background: orange;
+            transform: translateZ(-100px)
+        }
+        .top {
+            background: cyan;
+            transform: rotateX(90deg) translateZ(100px)
+        }
+        .bottom {
+            background: lightseagreen;
+            transform: rotateX(-90deg) translateZ(100px)
+        }
+        .left {
+            background: blue;
+            transform: rotateY(-90deg) translateZ(100px)
+        }
+        .right {
+            background: purple;
+            transform: rotateY(90deg) translateZ(100px)
+        }
+        
+        @keyframes rotate{
+            
+            40%{
+                transform: rotateX(360deg) translateX(20px)
+            }
+            80%{
+                transform: rotateZ(360deg) translateZ(20px)
+            }
+            
+            
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="cube">
+            <div class="front">front</div>
+            <div class="back">back</div>
+            <div class="top">top</div>
+            <div class="bottom">bottom</div>
+            <div class="left">left</div>
+            <div class="right"></div>
+        </div>
+    </div>
+</body>
+</html>

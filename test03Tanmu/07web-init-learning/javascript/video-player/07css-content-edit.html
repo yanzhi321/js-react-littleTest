@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>contentEditable</title>
+    <style>
+        html {
+            font-size: 50px;
+            height: 100%;
+            min-width: 320px;
+            overflow-x: hidden
+        }
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: .28em;
+            line-height: 1;
+            color: #333;
+            margin: 0
+        }
+
+        /* .box {
+            width: 5rem;
+            min-height: 0.5rem;
+            padding: 0.1rem;
+            margin: 1rem;
+            border-radius: 0.2rem;
+            box-sizing: border-box;
+            background: #ccc;
+        } */
+        .box {
+            margin: 2rem;
+        }
+        
+        .inner {
+            width: 2rem;
+            min-height: 0.8rem;
+        }
+        
+        [contenteditable=true] {
+            display: inline-block;
+            width: 5rem;
+            min-height: 0.5rem;
+            padding: 0.1rem;
+            border-radius: 0.2rem;
+            box-sizing: border-box;
+            background: #ccc;
+            vertical-align: middle;
+            min-height: (3em * line-height);/*1个input的高度*/
+            /* 这里写一个输入框应该有的样式 */
+            border:1px solid #ccc;
+            background:#ccc;
+            font-size: 0.3rem;
+            line-height: 0.4rem;
+            box-shadow: 0 0 1px lightcoral inset;	   
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box" contenteditable="true">
+            
+        </div>
+        <div class="inner">
+
+        </div>
+
+        <div class="emoil-box">
+            <ul class="emoil-list">
+
+            </ul>
+        </div>
+
+        <button class="check">check</button>
+    </div>
+
+    <script>
+        
+        const inner = document.querySelector('.inner')
+        inner.contentEditable = true
+        
+        const check = document.querySelector('.check')
+
+        let img = new Image()
+        img.src = 'images/3.jpg'
+        img.width = '15'
+        img.height = '15'
+        img.style.verticalAlign = 'middle'
+        inner.appendChild(img)
+        
+
+        let div = document.createElement('div')
+        
+        check.onclick = function() {
+            div.innerHTML = inner.innerHTML
+            console.log(div)
+            document.body.appendChild(div)
+            console.log(inner.innerHTML)
+        }
+        
+
+    </script>
+</body>
+</html>

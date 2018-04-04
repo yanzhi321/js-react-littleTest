@@ -1,0 +1,55 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<script>
+			onload = function(){
+				var imgNode = document.getElementsByTagName('img')[0];
+				/*var index = 0;
+				onmousedown= function(){
+						imgNode.src = 'img/images4/'+ ++index +'.jpg';
+				}*/
+
+				onmousedown = function(evt){
+					var e = evt || event;
+					//阻止浏览器默认行为
+					e.preventDefault();
+					//记录初始位置
+					var startX = e.clientX;
+					//用于标记图片下标
+					var index = 0;
+					var lastIndex = 0;
+					
+					onmousemove = function(evt){
+						var e = evt || event;
+						//点击后移动的位置
+						var distance = e.clientX - startX;
+
+						console.log(startX, distance)
+
+						//这公式
+						index = (77 * 10000000000 + parseInt(distance/1) + lastIndex) % 77;
+						imgNode.src = 'images/'+ index +'.jpg';
+
+						console.log(index)
+						
+					}
+					onmouseup = function(){
+						//记录最后一个
+						lastIndex = index;
+						onmousemove = null;
+						onmouseup = null;
+					}
+				}
+			}
+
+
+
+		</script>
+	</head>
+	<body>
+		<img src = "images/0.jpg" />
+	</body>
+</html>

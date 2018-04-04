@@ -1,0 +1,35 @@
+
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title></title>
+	<script type="text/javascript">
+		onload = function(){
+			var box = document.getElementById("box");
+			var img = document.getElementById("pic")
+			var i = 0;
+			var timer = null;
+			img.onmousemove = function(){
+				if(timer != null){return;}
+				timer = setInterval(function(){
+					img.setAttribute("src","images/" + i +".jpg");
+					i++;
+					if(i>76){
+						i=0;
+					}
+				},100)
+			}
+			img.onmouseout = function(){
+				clearInterval(timer);
+				timer = null;
+			}
+		}	
+	</script>
+</head>
+<body>
+	<div id="box">
+		<img src="images/0.jpg" id="pic" style="margin:5% 24%;">
+	</div>
+</body>
+</html>

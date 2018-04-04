@@ -1,0 +1,49 @@
+
+<!doctype html>
+<html>
+<head>
+	<meta charset="UTF-8" />
+	<title></title>
+	
+</head>
+<body>
+	<div id="box">
+		<img src="images/0.jpg" id="pic" style="margin:5% 24%;">
+	</div>
+
+	<script type="text/javascript">
+		onload = function(){
+			var box = document.getElementById("box");
+			var img = document.getElementById("pic")
+
+			let timer  = 0
+			let i = 0
+
+			box.onmouseenter = function(evt) {
+				console.log(timer)
+				if(timer > 0) {
+					return false;
+				}
+
+				console.log(timer)
+				let e = evt || event
+				timer = setInterval(function() {
+					++i;
+
+					if(i >= 77) {
+						i = 0
+					}
+
+					img.src = `images/${i}.jpg`
+				}, 30)
+			}
+			
+			box.mouseleave = function() {
+				clearInterval(timer)
+				timer = 0
+			}
+
+		}	
+	</script>
+</body>
+</html>
