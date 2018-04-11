@@ -1,0 +1,142 @@
+<!DOCTYPE html>  
+<html lang="en">  
+<head>  
+    <meta charset="UTF-8">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>chat socket</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>  
+<body>  
+    <div class="container">
+        <!-- <form action="" method="post"  > -->
+            <div id="loginbox" class="login-wrap">
+                <div class="title">登录</div>
+
+                <div class="user-ipt">
+                    <div class="ipt-wrap">
+                        <span class="text-ipt">用户名：</span>
+                        <input id="name" class="name-ipt" type="text" />
+                    </div>
+                    <div class="ipt-wrap">
+                        <span class="text-ipt">密码：</span>
+                        <input id="password" class="password-ipt" type="password" />
+                    </div>
+
+                    <div class="header-img">
+                        <ul class="img-list">
+                            <li><a href="#"><img src="../images/1.jpg" alt="" width="20" height="20"></a></li>
+                            <li><a href="#"><img src="../images/2.jpg" alt="" width="20" height="20"></a></li>
+                            <li><a href="#"><img src="../images/3.jpg" alt="" width="20" height="20"></a></li>
+                            <li><a href="#"><img src="../images/mm.jpg" alt="" width="20" height="20"></a></li>
+                        </ul>
+                    </div>
+                    <div class="header" >
+                        
+                        <!-- <input type="file" name="image" id="file" onchange="showPreview(this)" class="files" /> -->
+                        
+                    </div>
+                    <div class="preview"></div>
+                    
+
+                </div>
+
+                <button id="submit" class="login-button">登录</button>
+            </div>
+        <!-- </form> -->
+        <div id="chatbox" class="chat-wrap" style="display: none">
+            <div id="content" class="chat-content">
+                <div class="title-con">
+
+                </div>
+                <div class="tip-con">
+                    
+                </div>
+                <div class="tip-all">
+
+                </div>
+                <!-- 聊天内容 -->
+            </div>
+            <div class="send-wrap">
+                <textarea rows="3" cols="20" id="chatmessage" class="message-ipt" type="textarea" placeholder="请输入要发送的信息内容"></textarea>
+            </div>
+            
+            <div class="send-emoil-con">
+                <div class="emoil-box">
+                    <ul class="emoil-list">
+        
+                    </ul>
+                </div>
+
+                <div class="choose-img-con">
+                    <input type="file" class="choose-img" onchange="showPreview(this)" />
+                </div>
+                <button class="check">emoil</button>
+                <button class="send-msg">send</button>
+                <div class="send-emoil" contenteditable="true"></div>
+
+                <div class="receive">
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- <script src="/js/jquery-3.2.1.min.js"></script>  
+    <script src="/js/main.js"></script>   -->
+    
+    <script src="/socket.io/socket.io.js"></script> 
+    <script src="/js/chat.js"></script>
+
+    <script>
+        
+        
+        // const header = document.querySelector('.header')
+        // const preview = document.querySelector('.preview')
+        // function showPreview(source) {  
+	    //     let file = source.files[0];  
+	    //     if (window.FileReader) {  
+	    //         let fr = new FileReader();  
+	    //         fr.onloadend = function(e) {  
+	    //         	let str = `<img src="${e.target.result}" alt="" width="50" height="50">`
+        //             preview.innerHTML = str 
+        //             console.log(e.target.result)
+	    //         };  
+	    //         if (file){
+	    //         	fr.readAsDataURL(file)
+	    //         } else{
+	    //         	preview.innerHTML = ''
+	    //         }
+	    //     }  
+        // } 
+
+
+        // const receive = document.querySelector('.receive')
+        
+        // function showPreview(source) {
+
+        //     let file = source.files[0]
+        //     if(window.FileReader) {
+        //         let fr = new FileReader()
+        //         fr.onloadend = function(e) {
+        //             let str = `<img src="${e.target.result}" alt="" width="24" height="24"  />`
+        //             console.log(socket)
+        //             socket.emit()
+        //             console.log(e.target.result)
+        //             receive.innerHTML = str
+        //         };
+
+        //         if(file) {
+        //             fr.readAsDataURL(file)
+        //         }else {
+
+        //         }
+        //     }
+        // }
+        
+
+    </script>
+
+</body>  
+</html>  
