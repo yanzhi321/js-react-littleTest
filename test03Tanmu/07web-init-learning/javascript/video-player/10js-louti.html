@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>js stairs</title>
+
+    <style>
+
+        html, body{
+            margin: 0;
+            width:100%;
+            height: 100%;
+        }
+
+        ul {
+            margin: 0;
+            padding:0;
+            list-style: none;
+        }
+
+        
+        .container {
+            width: 100%;
+            height: 100%;
+            background: pink;
+        }
+        .stairs{
+            width: 100px;
+            height: 300px;
+            position: fixed;
+            top: 50%;
+            transform: translateY(-150px);
+            right: 0;
+        }
+
+        .stairs-list {
+            width: 100px;
+        }
+        
+        .stairs-list li {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #ccc;
+            background: lightcyan;
+            margin: 5px;
+            text-align: center;
+            line-height: 50px;
+        }
+
+        .stairs-list li:hover {
+            background: lightcoral;
+            cursor: pointer;
+        }
+
+        .bg {
+            height: 100%;
+        }
+
+        .bg-list {
+            width: 100%;
+            height: 100%
+        }
+        .bg-list li{
+            height: 100%;
+            background: #ccc;
+            font-size: 30px;
+            color: purple;
+            border: 1px solid lightgreen;
+            box-sizing: border-box;
+            text-align: center;
+            line-height: 3
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <div class="bg">
+            <ul class="bg-list">
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+            </ul>
+        </div>
+        <div class="stairs">
+            <ul class="stairs-list">
+                <li>1</li>
+                <li>2</li>
+                <li>3</li>
+                <li>4</li>
+                <li>5</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        
+        const stairsList = document.querySelector('.stairs-list')
+        const stairsListArr = stairsList.querySelectorAll('li')
+
+        const bgList = document.querySelector('.bg-list')
+        const bgListArr = bgList.querySelectorAll('li')
+
+        
+        let colorArr = ['pink', 'orange', 'green', 'blue', 'purple']
+        for(let i = 0; i<colorArr.length; i++) {
+            // bgListArr[i].style.background = colorArr[i]
+        }
+
+        const leftMax = document.documentElement.clientWidth || document.body.clientWidth
+        const topMax = document.documentElement.clientHeight || document.body.clientHeight
+        const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
+        
+        //stairsLiArr
+        let stairsListArrs = Array.from(stairsListArr)
+        stairsListArrs.map( (con, i) => {
+            let index = i
+            con.onclick = function(){
+                document.documentElement.scrollTop = topMax * index
+            }
+        })  
+        
+
+
+    </script>
+</body>
+</html>
