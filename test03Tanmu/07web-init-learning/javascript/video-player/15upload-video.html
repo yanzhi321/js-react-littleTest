@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>upload-video</title>
+</head>
+<body>
+    <div class="container">
+        <div class="form-con">
+                <div class="input-file" style="width: 200px; height: 200px; border: 1px solid #ccc; margin: 10px 0">
+                    <input type="file" name="" class="file-msg" onChange="showPreview(this)" />
+                    <br><br>
+                    <img src="" alt="position to preview" class="img-show">
+                    <video src="" width="100%" height="100%" controls="controls" autoplay="autoplay" loop="loop" class="video-show"></video>
+        
+                </div>
+        </div>
+    </div>
+
+    <script>
+    
+        //input-file
+        const fileInputOne = document.querySelector('.file-msg')
+        const previewImgOne = document.querySelector('.img-show')
+
+        const videoShow = document.querySelector('.video-show')
+        //FileReader
+        function showPreview(source) {  
+            let file = source.files[0];  
+            //限定上传文件的类型，判断是否是图片类型
+            
+
+            if (window.FileReader) {  
+                let fr = new FileReader();  
+                fr.onloadend = function(e) {  
+                    console.log(e.target)
+                    // previewImgOne.src = e.target.result;  
+                    videoShow.src = e.target.result
+
+                };  
+                // fr.readAsDataURL(file);
+                if (file){
+                    fr.readAsDataURL(file)
+                }  else{
+                    previewImgOne.src = ""
+                }
+            }  
+            
+        }  
+    
+    </script>
+</body>
+</html>

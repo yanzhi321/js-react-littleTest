@@ -1,161 +1,161 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>upload</title>
-	<style type="text/css" media="screen">
-		.upload{
-			width: 100px;
-			height: 100px;
-			border: 1px solid #ccc;
-		}
-		.show-img{
-			width: 100px;
-			height: 30px;
-			border: 1px solid lightgreen;
-			display: none
-		}
-	</style>
+    <meta charset="UTF-8">
+    <title>upload</title>
+    <style type="text/css" media="screen">
+        .upload {
+            width: 100px;
+            height: 100px;
+            border: 1px solid #ccc;
+        }
+
+        .show-img {
+            width: 100px;
+            height: 30px;
+            border: 1px solid lightgreen;
+            display: none
+        }
+    </style>
 </head>
+
 <body>
-	<div class="container">
-		<div class="upload">
-			<p>click me</p>
-			<!-- <img src="" alt=""> -->
-		</div>
-		<div class="show-img">
-			<img src="img/avator.png" alt="avator" width="30" height="30">
-			<img src="img/peo3.jpg" alt="f1" width="30" height="30">
-			<img src="img/pe02.jpg" alt="pe02">
-			
-		</div>
-		
-		<div class="input-file" style="width: 200px; height: 200px; border: 1px solid #ccc; margin: 10px 0">
-			<input type="file" name="" class="file-msg" onChange="showPreview(this)" />
-			<br><br>
-			<img src="" alt="position to preview" class="img-show">
+    <div class="container">
+        <div class="upload">
+            <p>click me</p>
+            <!-- <img src="" alt=""> -->
+        </div>
+        <div class="show-img">
+            <img src="img/avator.png" alt="avator" width="30" height="30">
+            <img src="img/peo3.jpg" alt="f1" width="30" height="30">
+            <img src="img/pe02.jpg" alt="pe02">
 
-		</div>
+        </div>
 
-		<div class="input-file2" style="width: 200px; height: 200px; border: 1px solid #ccc; margin: 10px 0">
-			<input type="file" class="file-msg2"  /><br>
-            <img src=""  alt="Image preview area..." title="preview-img" class="img-show2">
+        <div class="input-file" style="width: 200px; height: 200px; border: 1px solid #ccc; margin: 10px 0">
+            <input type="file" name="" class="file-msg" onChange="showPreview(this)" />
+            <br>
+            <br>
+            <img src="" alt="position to preview" class="img-show">
 
-		</div>	
-		
-		<div class="input-file3" style="width: 200px; height: 200px; border: 1px solid #ccc; margin: 10px 0">
-			<label>请选择一个文件：</label>  
-		    <input type="file" class="file-msg3" multiple="multiple" />  
-		    <input type="button" value="读取图像" onclick="readAsDataURL()" />
+        </div>
 
-			<div class="img-show3" name="result"></div> 
+        <div class="input-file2" style="width: 200px; height: 200px; border: 1px solid #ccc; margin: 10px 0">
+            <input type="file" class="file-msg2" />
+            <br>
+            <img src="" alt="Image preview area..." title="preview-img" class="img-show2">
 
-		</div>
-	</div>
+        </div>
 
-	<script>
+        <div class="input-file3" style="width: 200px; height: 200px; border: 1px solid #ccc; margin: 10px 0">
+            <label>请选择一个文件：</label>
+            <input type="file" class="file-msg3" multiple="multiple" />
+            <input type="button" value="读取图像" onclick="readAsDataURL()" />
 
-		
-			const upload = document.querySelector('.upload')
-			const showImg = document.querySelector('.show-img')
-			upload.onclick = function(){
-				showImg.style.display = 'block'
-				console.log(showImg.children[0].attributes[0].nodeValue)
-				console.log(showImg.children)
+            <div class="img-show3" name="result"></div>
 
-				for(let i = 0; i<showImg.children.length; i++){
-					// console.log(showImg.children[i])
-					showImg.children[i].onclick = function(){
-						let str = `<img src="${this.attributes[0].nodeValue}" alt="">`
-						upload.innerHTML = str
-						showImg.style.display = 'none'
-					}
-				}
+        </div>
+    </div>
 
-			}
+    <script>
+        const upload = document.querySelector('.upload')
+        const showImg = document.querySelector('.show-img')
+        upload.onclick = function () {
+            showImg.style.display = 'block'
+            console.log(showImg.children[0].attributes[0].nodeValue)
+            console.log(showImg.children)
 
-			// console.log(showImg.children)
-			//es6 Array.from() 将类似数组的对象转化为数组（1）
-			let showArr = Array.from(showImg.children)
-			console.log(typeof showArr)
+            for (let i = 0; i < showImg.children.length; i++) {
+                // console.log(showImg.children[i])
+                showImg.children[i].onclick = function () {
+                    let str = `<img src="${this.attributes[0].nodeValue}" alt="">`
+                    upload.innerHTML = str
+                    showImg.style.display = 'none'
+                }
+            }
 
-			showArr.map( (con) => {
-				// console.log(con)
-			})
+        }
 
+        // console.log(showImg.children)
+        //es6 Array.from() 将类似数组的对象转化为数组（1）
+        let showArr = Array.from(showImg.children)
+        console.log(typeof showArr)
 
-			//input-file
-			const fileInputOne = document.querySelector('.file-msg')
-			const previewImgOne = document.querySelector('.img-show')
-			//FileReader
-			function showPreview(source) {  
-		        let file = source.files[0];  
-		        //限定上传文件的类型，判断是否是图片类型
-			    
-
-		        if (window.FileReader) {  
-		            let fr = new FileReader();  
-		            fr.onloadend = function(e) {  
-		                previewImgOne.src = e.target.result;  
-		            };  
-		            // fr.readAsDataURL(file);
-		            if (file){
-		            	fr.readAsDataURL(file)
-		            }  else{
-		            	previewImgOne.src = ""
-		            }
-		        }  
-		        
-		    }  
+        showArr.map((con) => {
+            // console.log(con)
+        })
 
 
-			//预览
-			//input-file2
-			var fileInput = document.querySelector('.file-msg2'),
-		     	previewImg = document.querySelector('.img-show2');
-		  	fileInput.addEventListener('change', function () {
-		      	let file = this.files[0];
-		      	let reader = new FileReader();
-		      	// 监听reader对象的的onload事件，当图片加载完成时，把base64编码賦值给预览图片
-		      	reader.addEventListener("load", function () {
-		          previewImg.src = reader.result;
-		      	}, false);
-		      	// 调用reader.readAsDataURL()方法，把图片转成base64
-		      	// reader.readAsDataURL(file);
-		      	if (file) {
-					reader.readAsDataURL(file);
-				} else {
-					previewImg.src = "";
-				}
-		  	}, false);
-
-			
-			//preview more
-			//var result=document.getElementsByClassName("img-show3")[0];  
-			//var file=document.getElementsByClassName("file-msg3")[0];  
-			  
-			function readAsDataURL(){  
-
-			    let  file = document.querySelector(".file-msg3").files;
-			    let imgShow3=document.querySelector(".img-show3");  
-
-			    for(i = 0; i< file.length; i++) {
-			        var reader  = new FileReader();    
-			        reader.readAsDataURL(file[i]);  
-
-			        console.log(reader)
-
-			        reader.onload=function(e){  
-			            //多图预览
-			            imgShow3.innerHTML = imgShow3.innerHTML + '<img src="' + this.result +'" alt="" />';  
-			        }
-			    }
-			    
-			}  
-			
+        //input-file
+        const fileInputOne = document.querySelector('.file-msg')
+        const previewImgOne = document.querySelector('.img-show')
+        //FileReader
+        function showPreview(source) {
+            let file = source.files[0];
+            //限定上传文件的类型，判断是否是图片类型
 
 
-		
-	</script>
+            if (window.FileReader) {
+                let fr = new FileReader();
+                fr.onloadend = function (e) {
+                    previewImgOne.src = e.target.result;
+                };
+                // fr.readAsDataURL(file);
+                if (file) {
+                    fr.readAsDataURL(file)
+                } else {
+                    previewImgOne.src = ""
+                }
+            }
+
+        }
+
+
+        //预览
+        //input-file2
+        var fileInput = document.querySelector('.file-msg2'),
+            previewImg = document.querySelector('.img-show2');
+        fileInput.addEventListener('change', function () {
+            let file = this.files[0];
+            let reader = new FileReader();
+            // 监听reader对象的的onload事件，当图片加载完成时，把base64编码賦值给预览图片
+            reader.addEventListener("load", function () {
+                previewImg.src = reader.result;
+            }, false);
+            // 调用reader.readAsDataURL()方法，把图片转成base64
+            // reader.readAsDataURL(file);
+            if (file) {
+                reader.readAsDataURL(file);
+            } else {
+                previewImg.src = "";
+            }
+        }, false);
+
+
+        //preview more
+        //var result=document.getElementsByClassName("img-show3")[0];  
+        //var file=document.getElementsByClassName("file-msg3")[0];  
+
+        function readAsDataURL() {
+
+            let file = document.querySelector(".file-msg3").files;
+            let imgShow3 = document.querySelector(".img-show3");
+
+            for (i = 0; i < file.length; i++) {
+                var reader = new FileReader();
+                reader.readAsDataURL(file[i]);
+
+                console.log(reader)
+
+                reader.onload = function (e) {
+                    //多图预览
+                    imgShow3.innerHTML = imgShow3.innerHTML + '<img src="' + this.result + '" alt="" />';
+                }
+            }
+
+        }
+    </script>
 </body>
+
 </html>

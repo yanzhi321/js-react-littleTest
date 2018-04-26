@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>input file</title>
+</head>
+<body>
+    <div class="container">
+            
+        <div class="inner-con">
+            <input type="file" class="file-input" />
+            <button class="start">start</button>
+            <button class="stop">stop</button>
+            <div class="preview">
+                
+                <video src="videos/chuying2.mp4" width="400" height="200" controls="controls"  autoplay="autoplay" loop="loop" class="video-show"></video>
+                <video src="videos/m2.mp4" controls loop></video>
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        
+        
+        const videoShow = document.querySelector('.video-show')
+        const start = document.querySelector('.start')
+        const stop = document.querySelector('.stop')
+        start.onclick = function() {
+            videoShow.play()
+        }
+        stop.onclick = function() {
+            videoShow.pause()
+        }
+
+    </script>
+</body>
+</html>

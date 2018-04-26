@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>type-dazi</title>
+</head>
+<body>
+    <div class="container">
+        <div class="word-con">
+
+        </div>
+    </div>
+
+    <script>
+        
+        //实现打字效果
+
+        const str = 'Hello World  Hello World Hello World Hello World'
+        let index = 0
+        let length = str.length
+        let timer = null
+
+        const wordCon = document.querySelector('.word-con')
+
+        function start() {
+            wordCon.textContent = ''
+
+            timer = setInterval(function() {
+                let txtNode = document.createTextNode(str.charAt(index))
+                wordCon.appendChild(txtNode)
+                
+                wordCon.style.color = 'pink'
+
+                if(index++ === length) {
+                    clearInterval(timer)
+                    index = 0
+                    start()
+                }
+            }, 100)
+        }
+        start()
+
+        
+        function getSyncTime() {
+        return new Promise((resolve, reject) => {
+            try {
+            let startTime = new Date().getTime()
+            setTimeout(() => {
+                let endTime = new Date().getTime()
+                let data = endTime - startTime
+                resolve( data )
+            }, 500)
+            } catch ( err ) {
+            reject( err )
+            }
+        })
+        }
+
+        async function getSyncData() {
+        let time = await getSyncTime()
+        let data = `endTime - startTime = ${time}`
+        return data
+        }
+
+        async function getData() {
+        let data = await getSyncData()
+        console.log( data )
+        }
+
+        getData()
+
+        var sleep = function (time) {
+            return new Promise(function (resolve, reject) {
+                setTimeout(function () {
+                    resolve();
+                }, time);
+            })
+        };
+
+        var start = async function () {
+            // 在这里使用起来就像同步代码那样直观
+            console.log('start');
+            await sleep(3000);
+            console.log('end');
+        };
+
+        start();
+        
+    </script>
+</body>
+</html>

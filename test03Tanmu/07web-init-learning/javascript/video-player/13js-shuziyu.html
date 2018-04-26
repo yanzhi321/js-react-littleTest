@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>number rain</title>
+    <style>
+        html{
+            overflow-y: hidden
+        }
+        html,body, ul{
+            margin: 0; 
+            padding: 0;
+        }
+        .box{
+            width: 30px;
+            height: 30px;
+            background: pink;
+            text-align: center;
+            line-height: 30px;
+            font-size: 15px;
+            position: absolute;
+            border-radius: 50%;
+            top: 0;
+            left: 0;
+        }
+        .addBox{
+            width: 30px;
+            height: 30px;
+            background: lightblue;
+            position: absolute;
+            top: 0;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box">A</div>
+    </div>
+
+    <script>
+        
+        const box = document.querySelector('.box')
+        let leftMax = document.documentElement.clientWidth || document.body.clientWidth
+        let topMax = document.documentElement.clientHeight || document.body.clientHeight
+        
+
+        let count = 0
+        let timer = null
+        timer = setInterval(function() {
+            
+            let div = document.createElement('div')
+            div.className = 'addBox'
+            document.body.appendChild(div)
+            div.style.left = Math.ceil(Math.random() * 1000) + 'px'
+            let divTop = parseInt(box.style.top)
+            if(divTop >= topMax - div.clientHeight) {
+                
+            }
+
+
+            let boxTop = parseInt(box.style.top)
+            console.log(timer)
+
+            if(boxTop >= topMax - box.clientHeight){
+                count = 0;
+                box.style.top = 0
+                return false;
+            }
+            
+            box.style.background = randomColor()
+            count += 5
+            box.style.top = count + 'px'
+        }, 30)
+
+        //randomColor
+        function randomColor() {
+            let arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f']
+            let str = ''
+            for(let i = 0; i<6; i++ ){
+                let n = Math.ceil(Math.random() * 15)
+                str += arr[n]
+            }
+
+            return '#' + str
+        }
+
+
+    </script>
+</body>
+</html>

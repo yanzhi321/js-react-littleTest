@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>fetch post</title>
+</head>
+<body>
+    <div class="container">
+        <div class="inner-con">
+            <div class="show-time">
+
+            </div>
+            <img src="" alt="" width="50" height="50" class="show-img">
+            <ul class="data-list">
+
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        
+        const dataList = document.querySelector('.data-list')
+        const innerCon = document.querySelector('.inner-con')
+        const showTime = document.querySelector('.show-time')
+        const showImg = document.querySelector('.show-img')
+
+        const url2 = 'http://www.phonegap100.com/appapi.php?a=getPortalArticle&aid=121'
+        const url = 'http://192.168.30.229:3006/test'
+        const url3 = 'http://192.168.30.229:3006/logData'
+        
+        let fetchGet = function() {
+        
+            fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+            
+            })
+            .then( (res) => {
+                return res.json()
+            })
+            .then( (json) => {
+                console.log("received", json)
+                
+                const txt = document.createTextNode(json.time)
+                showTime.innerText = json.time
+            })
+            .catch( (err) => {
+                console.log('err', err)
+            })
+            
+            return fetchGet
+        }
+        
+        let timer = null
+        timer = setInterval(fetchGet(), 3000)
+
+        //fetchPost
+        let fetchPost = function() {
+
+            fetch(url3, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                // body: JSON.stringify({
+                //     name: 'hello',
+                //     data: 'wwww'
+                // })
+            })
+            .then( (res) => {
+                return res.json()
+            })
+            .then( (json) => {
+                console.log('received', json)
+                showImg.src = `${json.host}/${json.imgpath}`
+            })
+            .catch( (err) => {
+                console.log('err', err)
+            })
+
+        }
+
+        fetchPost()
+        
+    </script>
+</body>
+</html>

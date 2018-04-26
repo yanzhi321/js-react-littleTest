@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>render-html</title>
+	<style>
+		label{
+			display: inline-block;
+			width: 5rem;
+		}
+		.form-list{
+			width: 20rem;
+			height: 20rem;
+		}
+		.form-list li{
+			margin: 1rem;
+		}
+	</style>
+</head>
+<body>
+	<div id="container">
+		<h3><%= title %></h3>
+
+		<div id="myTabContent" class="tab-content">
+            <form id="tab" action="<%= host %>/register/profile" method="post" enctype="multipart/form-data">
+                <div class="tab-pane active in" id="home">
+					<ul class="form-list">
+						<li>
+							<label for="username">用户名:</label>
+							<input type="text" name="name" id="username" placeholder="用户名">
+						</li>
+						<li>
+							<label for="password">密 码:</label>
+							<input type="password" name="psd" id="password" placeholder="密码">
+						</li>
+						<li>
+							<label for="rpassword">重复密码:</label>
+							<input type="password" name="rpsd" id="rpassword" placeholder="再次输入密码">
+						</li>
+						<li>
+							<label for="email">邮箱:</label>
+							<input type="email" name="email" id="email" placeholder="邮箱">
+						</li>
+						<li>
+							<label for="phone">电话:</label>
+							<input type="tel" name="phone" id="phone" placeholder="电话">
+						</li>
+						<li>
+							<label for="file">上传头像:</label>
+							<input type="file" name="image" id="file">
+							<label for="file">上传头像:</label>
+							<input type="file" name="image" id="file">
+
+						</li>
+						<li>
+							<label for="submit">提交</label>
+							<input type="submit" name="btn" id="submit" >
+							
+						</li>
+					</ul>
+                </div>
+
+            </form>
+        </div>
+
+	</div>
+		
+</body>
+</html>
