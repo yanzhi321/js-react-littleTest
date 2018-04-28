@@ -1,0 +1,157 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>lottery</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <style>
+        /*css reset*/
+
+        html {
+            font-family: "Helvetica Neue", Helvetica, STHeiTi, sans-serif;
+            -webkit-text-size-adjust: 100%;
+            -moz-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+        }
+
+        body {
+            -webkit-overflow-scrolling: touch;
+            margin: 0;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            outline: none;
+        }
+
+        dl,
+        dd {
+            margin: 0;
+        }
+
+        a {
+            display: inline-block;
+            margin: 0;
+            padding: 0;
+            text-decoration: none;
+            background: transparent;
+            outline: none;
+            color: #000;
+        }
+
+        a:link,
+        a:visited,
+        a:hover,
+        a:active {
+            text-decoration: none;
+            color: currentColor;
+        }
+
+        a,
+        dt,
+        dd {
+            -webkit-touch-callout: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        img {
+            border: 0;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        input,
+        button,
+        select,
+        textarea {
+            margin: 0;
+            padding: 0;
+            border: 0;
+            outline: 0;
+            background-color: transparent;
+        }
+
+        /*css*/
+
+        body {
+            height: 100vh;
+            text-align: center;
+        }
+
+        .wrapper {
+            margin: 0 auto;
+            padding: 40px 0;
+            max-width: 750px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <canvas id="lottery" width="600" height="600">
+            您的浏览器不支持canvas
+        </canvas>
+    </div>
+    <script>
+        var img = new Image();
+        img.src = 'images/zp.png';
+        var lotteryArr = [0, 1, 2, 3, 4, 5, 6];
+        var averRotate = 2 * Math.PI / (lotteryArr.length - 1);
+        var lottery = document.getElementById('lottery');
+        var ctx = lottery.getContext('2d');
+        ctx.translate(300, 300);
+
+        ctx.beginPath();
+        ctx.arc(0, 0, 280, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.strokeStyle = 'rgba(0, 0, 0, .2)';
+
+        img.onload = function () {
+            ctx.beginPath();
+            lotteryArr.forEach(function (data, i) {
+                ctx.save();
+                ctx.rotate(averRotate * i);
+                ctx.moveTo(0, 0);
+                ctx.lineTo(0, -280);
+                ctx.stroke();
+                ctx.restore();
+
+                ctx.save();
+                ctx.rotate(averRotate * (i + 1 / 2));
+                ctx.drawImage(img, -25, 180, 50, 50);
+                ctx.restore();
+            })
+            ctx.closePath();
+        }
+
+
+        ctx.fillStyle = '#f50505';
+        ctx.strokeStyle = '#f50505';
+
+        ctx.beginPath();
+        ctx.arc(0, 0, 38, 0, 2 * Math.PI);
+        ctx.stroke();
+        ctx.fill();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.moveTo(-25, 0);
+        ctx.lineTo(0, -80);
+        ctx.lineTo(25, 0);
+        ctx.stroke();
+        ctx.fill();
+        ctx.closePath();
+    </script>
+</body>
+
+</html>

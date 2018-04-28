@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jianying</title>
+
+    <style>
+        
+        html, body{
+            width: 100%;
+            height: 100%;
+            margin:  0;
+        }
+        .container{
+            width: 100%;
+            height: 100%;
+        }
+        .grid-area {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        #img1{
+            opacity: 1;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        
+
+        .grid {
+            position: absolute;
+        }
+
+       
+        @keyframes fadeout {
+            0% {
+                opacity: 1
+            }
+            100% {
+                opacity: 0
+            }
+        }
+
+        @keyframes fadein {
+            0% {
+                opacity: 0
+            }
+            100% {
+                opacity: 1
+            }
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="grid_area" class="grid-area">
+            <img id="img1" src="./images/dm2.jpg" alt="bg" />
+        </div>
+    </div>
+
+
+    <script>
+        
+        let doc = document,
+            fragment = doc.createDocumentFragment,
+            $ = function(node) {
+                return doc.querySelector(node)
+            };
+        
+        console.log($('.grid-area'))
+
+        // grid
+        var gridSetting = {
+            'cell': 10, // 行、列数量
+            'mode': 'fadeout', // 备选参数: fadeout, fadein
+            'sort': 'random', // 备选参数: inturn, random
+            'num': 1, // 每次发生动作的网格数，目前只支持1
+            complete: function () { // 事件完成时的回调函数
+                console.log('ok!');
+            }
+        };
+        
+        var img1 = document.getElementById('img1');
+
+        (function (doc, setting, ele) {
+            var defaults = {
+                'speed': 20,
+            };
+
+            function Grid(ele) {
+                this.ele = ele;
+                this.settings = Object.assign({}, setting, defaults);
+            }
+
+            Grid.prototype = {
+                constructor: Grid,
+
+                // 构建UI
+                _create: function () {
+                    var img = this.ele,
+                        settings = this.settings,
+                        cell = settings.cell,
+                        imgWidth = img.width,
+                        imgHeight = img.height,
+                        gridWidth = imgWidth / cell, // 每个网格宽度
+                        gridHeight = imgHeight / cell, // 每个网格高度
+                        currentTop = 0,
+                        currentLeft = 0,
+                        fragment = doc.createDocumentFragment(),
+                        i = 0,
+                        gridArr = [];
+                    img.style.display = 'none';
+                    for (; i < cell * cell; i++) {
+                        var spanNode = doc.createElement('span');
+                        spanNode.setAttribute('id', i);
+                        spanNode.style.cssText += 'position: absolute;' +
+                            'top: ' + currentTop + 'px;' +
+                            'left: ' + currentLeft + 'px;' +
+                            'margin: 0;' +
+                            'padding: 0;' +
+                            'width: ' + gridWidth + 'px;' +
+                            'height: ' + gridHeight + 'px;' +
+                            'opacity:' + settings.opacity + ';' +
+                            'background: url(' + img.src + ');' +
+                            'background-size: ' + imgWidth + 'px ' + imgHeight + 'px;' +
+                            'background-position: -' + currentLeft + 'px -' + currentTop + 'px;';
+                        if (currentLeft < (imgWidth - gridWidth)) {
+                            currentLeft += gridWidth;
+                        } else {
+                            currentLeft = 0;
+                            currentTop += gridHeight;
+                        }
+                        fragment.appendChild(spanNode);
+                        gridArr.push(i);
+                    }
+                    this.gridArr = gridArr;
+                    doc.getElementById('grid_area').appendChild(fragment);
+                },
+
+                // 渐显、渐隐
+                _fade: function () {
+                    var gridArr = this.gridArr,
+                        cloneArr = gridArr.slice(0),
+                        length = gridArr.length,
+                        settings = this.settings,
+                        sort = settings.sort,
+                        i = 0;
+                    switch (settings.mode) {
+                        case 'fadeout':
+                            if (sort == 'inturn') {
+                                //  按顺序渐隐
+                                var timer = setInterval(function () {
+                                    doc.getElementById(gridArr[i]).style.animation =
+                                        "fadeout 1s forwards";
+                                    i++;
+                                    if (i >= settings.cell * settings.cell) {
+                                        clearInterval(timer);
+                                        settings.complete();
+                                    }
+                                }, settings.speed)
+                            } else if (sort == 'random') {
+                                //  随机渐隐
+                                var timer = setInterval(function () {
+                                    i = cloneArr.splice(Math.random() * length--, 1);
+                                    doc.getElementById(gridArr[i]).style.animation =
+                                        "fadeout 1s forwards";
+                                    if (length == 0) {
+                                        clearInterval(timer);
+                                        settings.complete();
+                                    }
+                                }, settings.speed)
+                            }
+                            break;
+                        case 'fadein':
+                            if (sort == 'inturn') {
+                                //  按顺序渐渐显
+                                var timer = setInterval(function () {
+                                    doc.getElementById(gridArr[i]).style.animation =
+                                        "fadein 1s forwards";
+                                    i++;
+                                    if (i >= settings.cell * settings.cell) {
+                                        clearInterval(timer);
+                                        settings.complete();
+                                    }
+                                }, settings.speed)
+                            } else if (sort == 'random') {
+                                //  随机渐显
+                                var timer = setInterval(function () {
+                                    i = cloneArr.splice(Math.random() * length--, 1);
+                                    doc.getElementById(gridArr[i]).style.animation =
+                                        "fadein 1s forwards";
+                                    if (length == 0) {
+                                        clearInterval(timer);
+                                        settings.complete();
+                                    }
+                                }, settings.speed)
+                            }
+                            break;
+                        default:
+                            console.log('配置错误！');
+                    }
+
+
+                },
+
+                _checkMode: function () {
+                    if (this.settings.mode == 'fadein') {
+                        this.settings.opacity = 0;
+                    } else {
+                        this.settings.opacity = 1;
+                    }
+                },
+
+            };
+
+            var gridArea = doc.getElementById('grid_area');
+            gridArea.addEventListener('click', function () {
+                var event = new Grid(ele);
+                event._checkMode();
+                event._create();
+                event._fade();
+
+            }, false);
+        })(document, gridSetting, img1);
+    </script>
+</body>
+</html>
