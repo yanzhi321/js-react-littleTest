@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>fade in snow</title>
+    <link rel="stylesheet" href="css/jquery-sakura.css">
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+        }
+
+        .grid-area {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        #img1 {
+            opacity: 1;
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+
+        .grid {
+            position: absolute;
+        }
+
+
+        @keyframes fadeout {
+            0% {
+                opacity: 1
+            }
+            100% {
+                opacity: 0
+            }
+        }
+
+        @keyframes fadein {
+            0% {
+                opacity: 0
+            }
+            100% {
+                opacity: 1
+            }
+        }
+
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div id="grid_area" class="grid-area">
+            <img id="img1" src="./images/dm2.jpg" alt="bg" />
+        </div>
+    </div>
+
+    <script src="jq/1.12.4_jquery.min.js"></script>
+    <script src="jq/jquery-sakura.js"></script>
+    <script src="snow/snow0.js"></script>
+    <script>
+        $(function () {
+            $('body').sakura();
+        });
+        $(window).load(function () {
+            $('body').sakura();
+        });
+
+        $(function () {
+
+            let arrUrl = ['images/4.jpg', 'images/junjun.jpg', 'images/th.jpg', 'images/wq.jpg',
+                'images/yy.jpg'
+            ]
+            
+            const img = document.querySelector('#img1')
+            const n = Math.ceil(Math.random() * 5)
+            img.src = arrUrl[n]
+
+            myFadeout(img)
+            
+            function myFadeout(ele) {
+                var target = 1,
+                    speed = 1 / 50;
+
+                var timer = setInterval(function () {
+                    if (!parseFloat(ele.style.opacity) > 0) {
+                        ele.style.opacity = 1;
+
+                    }
+                    if (target > 0) {
+                        target -= speed;
+                        ele.style.opacity = target;
+                    } else {
+                        ele.style.opacity = 0;
+                        clearInterval(timer);
+                    }
+                    
+                }, 30);
+            }
+            
+        
+
+        })
+    </script>
+</body>
+
+</html>

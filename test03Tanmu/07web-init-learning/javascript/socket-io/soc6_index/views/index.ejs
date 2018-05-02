@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>fadeIn</title>
+    <link rel="stylesheet" href="css/jquery-sakura.css">
+    <style>
+    
+        html, body {
+            width: 100%;
+            height: 100%;
+            margin: 0
+        }
+        
+        .container-wrapper {
+            width: 100%;
+            height: 100%
+        }
+
+        .container {
+            width: 100%;
+            height: 100%;
+            background: url(images/4.jpg) no-repeat;
+            background-size: 100% 100%;
+            animation: fadein  3s linear infinite alternate;
+        }
+        
+        .img {
+            width: 100%;
+            height: 100%;
+            animation: fadeout 6s linear infinite alternate;
+        }
+        
+        .box {
+            width: 10%;
+            height: 10%;
+            border-radius: 50%;
+            background: url(images/dm2.jpg) no-repeat;
+            background-size: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            animation: around 6s linear infinite;
+        }
+
+        .box2 {
+            width: 10%;
+            height: 10%;
+            border-radius: 50%;
+            background: url(images/wq.jpg) no-repeat;
+            background-size: cover;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            animation: around 6s linear infinite reverse;
+        }
+
+        .word-con {
+            width: 30px;
+            height: 200px;
+            font-size: 30px;
+            white-space: wrap;
+            word-break: break-all;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-15px, -100px)
+        }
+
+        @keyframes fadeout {
+            0% {
+                opacity: 1
+            }
+            100% {
+                opacity: 0
+            }
+        }
+
+        @keyframes fadein {
+            0% {
+                opacity: 0
+            }
+            100% {
+                opacity: 1
+            }
+        }
+        
+        @keyframes around {
+            0% {
+                left: 0;
+                top: 0
+            }
+            25% {
+                left: 90%;
+                top: 0
+            }
+            50% {
+                left: 90%;
+                top: 90%
+            }
+            75% {
+                left: 0;
+                top: 90%;
+            }
+            100% {
+                left: 0;
+                top: 0
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container-wrapper">
+        <div class="box"></div>
+        <div class="box2"></div>
+        <div class="word-con"></div>
+        <div class="container"></div>
+        <img src="images/wq.jpg" alt="wq" class="img" />
+    </div>
+    
+
+
+    <script src="jq/1.12.4_jquery.min.js"></script>
+    <script src="jq/jquery-sakura.js"></script>
+    <script src="jq/snow0.js"></script>
+    <script>
+        
+        $(function () {
+            $('body').sakura();
+        });
+        $(window).load(function () {
+            $('body').sakura();
+        });
+
+        $(function() {
+
+        
+            const container = document.querySelector('.container')
+            const img = document.querySelector('.img')
+
+            let arrUrl = ['images/4.jpg', 'images/junjun.jpg', 'images/th.jpg', 'images/wq.jpg',
+                    'images/yy.jpg'
+                ]
+            const len = arrUrl.length
+            let timer = null
+            let timer2 = null
+
+            function urlChange() {
+                const n = Math.floor(Math.random() * len)
+                container.style.backgroundImage = `url(${arrUrl[n]})`
+                // console.log(new Date().getSeconds())
+            }
+            timer = setInterval(urlChange, 3000)
+
+            function imgChange() {
+                const count = Math.floor(Math.random() * len)
+                img.src = arrUrl[count]
+            }
+            timer2 = setInterval(imgChange, 7000)
+
+            const str = '你是不是傻'
+            let index = 0
+            let length = str.length
+            let timer3 = null
+
+            const wordCon = document.querySelector('.word-con')
+
+            function start() {
+                wordCon.textContent = ''
+
+                timer3 = setInterval(function() {
+                    let txtNode = document.createTextNode(str.charAt(index))
+                    wordCon.appendChild(txtNode)
+                    
+                    wordCon.style.color = 'pink'
+
+                    if(index++ === length) {
+                        clearInterval(timer3)
+                    
+                        index = 0
+                        start()
+                    }
+                }, 500)
+            }
+            start()
+
+            
+        })
+    </script>
+</body>
+</html>
