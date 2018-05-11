@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>upload json</title>
+    <style>
+        label {
+            display: inline-block;
+            width: 5rem;
+        }
+
+        .form-list {
+            width: 20rem;
+            height: 20rem;
+        }
+
+        .form-list li {
+            margin: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>koa2 upload demo</h1>
+        <form method="POST" action="/upload" enctype="multipart/form-data">
+            <!-- <p>file upload</p>
+            <span>picName:</span><input name="picName" type="text" /><br/>
+            <label for="age">age:</label>
+            <input type="text" name="age" /><br /><br />
+            <input name="file" type="file" /><br/><br/>
+            <button type="submit">submit</button> -->
+
+            <div class="tab-pane active in" id="home">
+                <ul class="form-list">
+                    <li>
+                        <label for="username">用户名:</label>
+                        <input type="text" name="name" id="username" placeholder="用户名">
+                    </li>
+                    <li>
+                        <label for="password">密 码:</label>
+                        <input type="password" name="psd" id="password" placeholder="密码">
+                    </li>
+                    <li>
+                        <label for="rpassword">重复密码:</label>
+                        <input type="password" name="rpsd" id="rpassword" placeholder="再次输入密码">
+                    </li>
+                    <li>
+                        <label for="email">邮箱:</label>
+                        <input type="email" name="email" id="email" placeholder="邮箱">
+                    </li>
+                    <li>
+                        <label for="phone">电话:</label>
+                        <input type="tel" name="phone" id="phone" placeholder="电话">
+                    </li>
+                    <li>
+                        <label for="file">上传头像:</label>
+                        <input type="file" name="file" id="file" onchange="showPreview(this)" />
+
+                        <div class="preview">
+
+                        </div>
+                    </li>
+
+                    <li>
+                        <label for="MD5">md5</label>
+                        <input type="text" name="nameM" id="MD5" placeholder="md5">
+                    </li>
+
+                    <li>
+                        <label for="submit">提交</label>
+                        <input type="submit" name="btn" id="submit">
+
+                    </li>
+
+
+                </ul>
+
+
+            </div>
+
+        </form>
+    </div>
+
+    <script>
+
+        //preview
+        const preview = document.querySelector('.preview')
+
+        function showPreview(source) {
+            let file = source.files[0];
+            if (window.FileReader) {
+                let fr = new FileReader();
+                fr.onloadend = function (e) {
+                    // let str = `<img src="${e.target.result}" alt="">`
+                    console.log(e.target)
+                    let reg = /(image\/jpeg)|(image\/png)|(image\/svg)|(image\/gif)/
+                    let reg2 = /(video\/mp4)|(video\/ogg)|(video\/mov)|(video\/flv)/
+
+                    console.log(reg.test(e.target.result))
+                    if (reg.test(e.target.result)) {
+                        preview.innerHTML = `<img src="${e.target.result}" alt="" width="100" height="100" />`
+                    } else if (reg2.test(e.target.result)) {
+                        preview.innerHTML =
+                            `<video src="${e.target.result}" width="200" height="100" controls="controls" autoplay="autoplay" loop="loop" class="video-show"></video>`
+                    }
+
+                };
+
+                if (file) {
+                    fr.readAsDataURL(file)
+                } else {
+                    preview.innerHTML = ''
+                }
+                // fr.readAsDataURL(file);  
+            }
+
+        }
+    </script>
+</body>
+
+</html>

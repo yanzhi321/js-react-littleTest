@@ -11,14 +11,15 @@
         html, body {
             width: 100%;
             height: 100%;
-            margin: 0
+            margin: 0;
+            overflow: hidden;
         }
         
         @font-face {
             font-family: myFont;
             src: url('font/hanyi.ttf') 
         }
-
+       
         .container-wrapper {
             width: 100%;
             height: 100%
@@ -36,6 +37,9 @@
             width: 100%;
             height: 100%;
             animation: fadeout 6s linear infinite alternate;
+            position: absolute;
+            top:0;
+            left: 0;
         }
         
         .box {
@@ -165,7 +169,7 @@
                 const count = Math.floor(Math.random() * len)
                 img.src = arrUrl[count]
             }
-            timer2 = setInterval(imgChange, 7000)
+            timer2 = setInterval(imgChange,5000)
 
             const str = '瓦特瓦特'
             let index = 0
