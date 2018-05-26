@@ -108,6 +108,7 @@
         height: 100px;
         border: 1px solid #ccc;
         box-sizing:border-box;
+        overflow: hidden;
     }
     .show-list li{
         width: 20%;

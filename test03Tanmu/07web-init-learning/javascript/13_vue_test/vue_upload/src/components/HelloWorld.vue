@@ -4,7 +4,7 @@
             <i class="el-icon-search search-icon" v-on:click="changeFocus"  ></i>
             <input type="text" placeholder="请输入..." class="search-input" ref="change" >
         </div>
-        <ul>
+        <ul class="fruit-list">
             <li v-for="(item, index) in lists"
                 v-bind:key="index"
                 :class="{ 'active' : ind === index }"
@@ -41,9 +41,9 @@
 
 <style scoped>
     .search {
-        width: 100%;
+        width: 90%;
         height: 40px;
-        margin: 10px auto;
+        margin: 10px 5%;
         box-sizing: border-box;
         background: #eee;
         display: flex;
@@ -67,6 +67,10 @@
     }
     .active {
         background: plum
+    }
+
+    .fruit-list {
+        font-size: 0.4rem;
     }
     
 </style>
