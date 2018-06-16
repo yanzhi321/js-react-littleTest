@@ -1,0 +1,27 @@
+html {
+    font-size: calc(100vw / 7.5);
+    /* font-size: 50px; */
+	height: 100%;
+	min-width: 320px;
+	overflow-x: hidden
+}
+
+body {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	font-size: .28em;
+	line-height: 1;
+	margin: 0
+}
+
+body, ul, h1, h2, h3, h4, h5, h6, p,ul {
+    margin: 0;
+    padding: 0;
+}
+
+ul {
+    list-style: none
+}
+
+i {
+    font-style: normal
+}

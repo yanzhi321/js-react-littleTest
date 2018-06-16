@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>touch_ball</title>
+    <link rel="stylesheet" href="css/common.css">
+    <style>
+        html, body {
+            width:100%;
+            height: 100%;
+        }
+        .container {
+            width: 100%;
+            height: 100%;
+            background: url(images/wq.jpg) no-repeat;
+            background-size: 100% 100%;
+        }
+        .ball {
+            width: 1rem;
+            height: 1rem;
+            background: #ccc;
+            position: absolute;
+            border-radius: 50%;
+            left: 0;
+            top: 0;
+        }
+
+        .box {
+            width: 1rem;
+            height:1rem;
+            visibility: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="box"></div>
+    </div>
+
+    <script>
+        //document && body --node
+        const balls = document.querySelector('.box');
+        console.log(balls)
+        // let oBall = document.body
+            let oBall = document.querySelector('.container')
+            leftNum = 0,
+            topNum = 0,
+            aBall = null,
+            length = 0,
+            leftMax = 0,
+            topMax = 0;
+
+        //reSize
+
+        const reSize = () => {
+            leftMax = document.documentElement.clientWidth - balls.clientWidth;
+            topMax = document.documentElement.clientHeight - balls.clientHeight;
+        }
+        reSize();
+        window.onresize = reSize;
+
+        //createBall
+
+        const createBall = (obj, num) => {
+            for (let i = 0; i < num; i++) {
+                let cBall = document.createElement('div')
+                cBall.className = 'ball'
+                //这里去i+1而不取i的原因是，一个小球的i为0，如果不取i+1，那么第一个小球会永远在左上角不动并且不停地变颜色
+                cBall.leftNum = cBall.topNum = (i + 1) * 1
+                obj.appendChild(cBall)
+            }
+        }
+        createBall(oBall, 10)
+        aBall = oBall.children
+        length = aBall.length;
+
+
+        //interFun
+        const interFun = () => {
+            //console.log(aBall)
+            for (let i = 0; i < length; i++) {
+
+                //bainjie
+                let left = aBall[i].offsetLeft + aBall[i].leftNum,
+                    top = aBall[i].offsetTop + aBall[i].topNum;
+
+                //rgba
+                //randomRgba(aBall[i])
+                randomColor(aBall[i])
+
+                //left
+                if (left >= leftMax) {
+                    left = leftMax;
+                    aBall[i].leftNum = -aBall[i].leftNum * Math.random()
+                } else if (left <= 0) {
+                    left = 0;
+                    aBall[i].leftNum = -aBall[i].leftNum * Math.random()
+                }
+
+                //top
+                if (top >= topMax) {
+                    top = topMax
+                    aBall[i].topNum = -aBall[i].topNum * Math.random()
+                } else if (top <= 0) {
+                    top = 0;
+                    aBall[i].topNum = -aBall[i].topNum * Math.random()
+                }
+
+                //'px'
+                aBall[i].style.left = left + 'px'
+                aBall[i].style.top = top + 'px'
+                console.log(aBall[i].style.top)
+
+                dragEle(aBall[i])
+                touchEle(aBall[i])
+
+            }
+        }
+        //timer
+        let timer = setInterval(interFun, 30)
+
+        //randomRgba
+        const randomRgba = (ele) => {
+            let r = Math.ceil(Math.random() * 225),
+                g = Math.ceil(Math.random() * 225),
+                b = Math.ceil(Math.random() * 225),
+                a = Math.random();
+            ele.style.background = `rgba(${r}, ${g}, ${b}, ${a}`
+        }
+
+        //randomColor
+        const randomColor = (ele) => {
+            let arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 'a', 'b', 'c', 'd', 'e', 'f']
+            let str = ''
+            for (let i = 0; i < 6; i++) {
+                let n = Math.ceil(Math.random() * 15)
+                str += arr[n]
+            }
+            str = '#' + str
+            ele.style.background = str
+        }
+
+
+        function dragEle(ele) {
+            ele.onmousedown = function (evt) {
+                let e = evt || window.event
+                let disX = e.clientX - ele.offsetLeft
+                let disY = e.clientY - ele.offsetTop
+
+                document.onmousemove = function (evt) {
+                    let e = evt || window.event
+                    let left = e.clientX - disX
+                    let top = e.clientY - disY
+
+                    let leftMax = window.innerWidth - ele.offsetWidth
+                    let topMax = window.innerHeight - ele.offsetHeight
+
+                    if (left <= 0) {
+                        left = 0
+                    } else if (left >= leftMax) {
+                        left = leftMax
+                    }
+
+                    if (top <= 0) {
+                        top = 0
+                    } else if (top >= topMax) {
+                        top = topMax
+                    }
+
+                    ele.style.left = left + 'px'
+                    ele.style.top = top + 'px'
+
+                }
+
+                document.onmouseup = function (e) {
+                    document.onmousemove = null
+                }
+            }
+        }
+
+        function touchEle(ele) {
+
+            ele.ontouchstart = function (evt) {
+                let e = evt || window.event
+                let touchX = e.changedTouches[0].clientX - ele.offsetLeft
+                let touchY = e.changedTouches[0].clientY - ele.offsetTop
+
+                document.ontouchmove = function (evt) {
+                    let e = evt || window.event
+                    let left = e.changedTouches[0].clientX - touchX
+                    let top = e.changedTouches[0].clientY - touchY
+
+                    let leftMax = window.innerWidth - ele.offsetWidth
+                    let topMax = window.innerHeight - ele.offsetHeight
+
+                    if (left <= 0) {
+                        left = 0
+                    } else if (left >= leftMax) {
+                        left = leftMax
+                    }
+
+                    if (top <= 0) {
+                        top = 0
+                    } else if (top >= topMax) {
+                        top = topMax
+                    }
+
+                    ele.style.left = left + 'px'
+                    ele.style.top = top + 'px'
+                }
+
+                document.ontouchend = function (evt) {
+                    document.ontouchmove = null
+                }
+            }
+
+        }
+    </script>
+
+</body>
+
+</html>
