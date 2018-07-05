@@ -1,0 +1,32 @@
+/* .ant-tree-title {
+    word-wrap: break-word;
+    overflow: hidden;
+    width: 300px;
+} */
+
+.ant-tree-node-content-wrapper {
+    word-break: break-allj
+}
+
+.container {
+    width: 100%;
+    height:  100%;
+    padding: 30px;
+    box-sizing: border-box;
+}
+.ant-tree li .ant-tree-node-content-wrapper {
+    color: 'purple'!important
+}
+
+.show-text {
+    width: 500px;
+    min-height: 300px;
+    max-height: 600px;
+    overflow-y: auto;
+    position: absolute;
+    left: 20%;
+    top: 5%;
+    padding: 20px;
+    box-sizing: border-box;
+    border: 1px solid #ccc ;
+}
